@@ -1,0 +1,185 @@
+
+/*
+    STYLES -> FIRST MOBILE
+*/
+
+/*
+    Background - Colors
+*/
+
+.gray_bgcolor{
+    background-color: var(--gray);
+}
+
+.lightBlue_bgcolor{
+    background-color: var(--lightBlue);
+}
+
+.bgColor-blueDark{
+  background-color: var(--blueDark);
+}
+
+/*
+    Colors
+*/
+
+.gray_color{
+    color: var(--gray);
+}
+
+.lightBlue_color{
+    color: var(--lightBlue);
+}
+
+.blue-dark-color{
+  color: var(--blueDark);
+}
+
+.black-color{
+  color: var(--black);
+}
+
+.white-color{
+  color: var(--white);
+}
+
+/*
+    Font weith
+*/
+.font-weight-400{
+    font-weight: 400;
+}
+
+.font-weight-600{
+    font-weight: 600;
+}
+
+.font-weight-700{
+    font-weight: 700;
+}
+
+
+
+/*
+    Font Sizes
+*/
+
+.font_title_card{
+    font-size: var(--size-16);
+    opacity: .7;
+}
+
+
+/*
+    text sizes
+*/
+
+.font_size_10_12{
+    font-size: var(--size-10);
+}
+
+.font-size-12-14{
+  font-size: var(--size-12);
+}
+
+
+.font-size-14-16{
+  font-size: var(--size-14);
+}
+
+/*
+    Customs components
+*/
+.card_custom{
+    border-radius: var(--radius-12);
+    -webkit-border-radius: var(--radius-12);
+    -moz-border-radius: var(--radius-12);
+    -ms-border-radius: var(--radius-12);
+    -o-border-radius: var(--radius-12);
+    box-shadow: var(--shadow);
+}
+
+.custom-form{
+  min-height: 38;
+  padding: 10px 10px;
+  border-radius: var(--radius-8);
+  -webkit-border-radius: var(--radius-8);
+  -moz-border-radius: var(--radius-8);
+  -ms-border-radius: var(--radius-8);
+  -o-border-radius: var(--radius-8);
+  font-size: var(--size-12);
+  color: var(--blueDark);
+}
+
+.custom-form::placeholder{
+  font-size: var(--size-12);
+  color: var(--blueDark);
+}
+
+.custom-text-area-form{
+  font-size: var(--size-12);
+  color: var(--blueDark);
+}
+
+.custom-button-cancel{
+  border-radius: var(--radius-12);
+  -webkit-border-radius: var(--radius-12);
+  -moz-border-radius: var(--radius-12);
+  -ms-border-radius: var(--radius-12);
+  -o-border-radius: var(--radius-12);
+  border: none;
+}
+
+
+/*
+  DROPDOWS CARDS
+*/
+
+.custom-dropdown-card{
+  width: 300px;
+  border-radius: var(--radius-8);
+  -webkit-border-radius: var(--radius-8);
+  -moz-border-radius: var(--radius-8);
+  -ms-border-radius: var(--radius-8);
+  -o-border-radius: var(--radius-8);
+  border: 2px solid var(--blueDark);
+}
+
+
+/*
+  SWITCH
+*/
+
+.custom-switch{
+  height: 18px;
+  width: 38px !important;
+  cursor: pointer;
+}
+
+
+.is-fetching{
+  opacity: .7;
+}
+
+
+/*
+  links
+*/
+
+@media (min-width: 768px) {
+    .font_title_card{
+        font-size: var(--size-20);
+    }
+
+    .font_size_10_12{
+        font-size: var(--size-12);
+    }
+
+    .font-size-12-14{
+      font-size: var(--size-14);
+    }
+
+    .font-size-14-16{
+      font-size: var(--size-16);
+    }
+}

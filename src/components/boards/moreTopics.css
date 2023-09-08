@@ -1,0 +1,50 @@
+.container-custom-modal{
+  position: fixed;
+  z-index: 2000;
+  width: 85%;
+  will-change: top, left;
+  top: 100px;
+  left: 15px;
+  display: none;
+}
+
+.container-moreTopics{
+  font-size: var(--size-14);
+  color: var(--blueDark);
+  font-weight: var(--fw-400);
+  border-radius: var(--radius-8);
+  -webkit-border-radius: var(--radius-8);
+  -moz-border-radius: var(--radius-8);
+  -ms-border-radius: var(--radius-8);
+  -o-border-radius: var(--radius-8);
+  background-color: var(--white);
+  outline: 0;
+  overflow: hidden;
+}
+
+.is-open-modal{
+ display: block;
+}
+
+.close-modal{
+  margin: 0;
+  outline: 0;
+  border: 0px;
+}
+
+.close-modal:hover{
+  background-color: var(--gray-600);
+  border-radius: var(--radius-3);
+  -webkit-border-radius: var(--radius-3);
+  -moz-border-radius: var(--radius-3);
+  -ms-border-radius: var(--radius-3);
+  -o-border-radius: var(--radius-3);
+}
+
+@media (min-width: 768px) {
+  .container-custom-modal{
+    width: 304px;
+    top: 126px;
+    left: 269px;
+  }
+}

@@ -1,0 +1,70 @@
+.header-board-container-title{
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 1;
+  overflow: hidden;
+  display: -webkit-box;
+  text-overflow: ellipsis;
+  word-break: break-all;
+  width: 150px;
+}
+
+
+.header-board-container-input{
+  outline: none;
+  border-radius: var(--radius-3);
+  -webkit-border-radius: var(--radius-3);
+  -moz-border-radius: var(--radius-3);
+  -ms-border-radius: var(--radius-3);
+  -o-border-radius: var(--radius-3);
+  height: 35px;
+  color: var(--blueDark);
+  /* background-color: var(--gray); */
+}
+
+.header-board-container-input:focus{
+  border: none;
+}
+
+
+/*
+  ------------ NAV HEADER BOARD ---------------
+*/
+
+/* .header-board-container-nav{
+
+} */
+
+.header-board-container-nav-item{
+  color: var(--blueDark);
+  border-bottom: 3px solid transparent;
+  transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out;
+  -webkit-transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out;
+  -moz-transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out;
+  -ms-transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out;
+  -o-transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out;
+}
+
+.header-board-container-nav-item:hover{
+  border-bottom-color: var(--blueDark);
+}
+
+.header-board-container-nav-item.active{
+  border-bottom: 3px solid var(--blueDark) !important;
+  /* border-bottom-width: ; */
+}
+.header-board-button-filter{
+  /* background-color: transparent; */
+  transition: background-color .20s ease-in-out;
+  -webkit-transition: background-color .20s ease-in-out;
+  -moz-transition: background-color .20s ease-in-out;
+  -ms-transition: background-color .20s ease-in-out;
+  -o-transition: background-color .20s ease-in-out;
+}
+
+.header-board-container-nav-right li:nth-child(2){
+  border-left: 3px solid var(--blueDark) ;
+}
+
+.header-board-button-filter:hover{
+  background-color: var(--grayDarkHover);
+}

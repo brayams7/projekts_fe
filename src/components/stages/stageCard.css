@@ -1,0 +1,196 @@
+/*-------------- CARD STAGES-------------*/
+
+
+.card-stage-container{
+  /* background-color:black; */
+  /* color:white; */
+  width: 272px;
+  height: calc(100vh - 125px);
+  /* overflow-y: auto; */
+}
+
+.stage-card{
+  position: relative;
+  max-height: 100%;
+  white-space: normal;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  border-top: 4px solid;
+  border-radius: var(--radius-8);
+  -webkit-border-radius: var(--radius-8);
+  -moz-border-radius: var(--radius-8);
+  -ms-border-radius: var(--radius-8);
+  -o-border-radius: var(--radius-8);
+  background-color: var(--white);
+  color: var(--blueDark);
+  font-size: var(--size-14);
+}
+
+/*-------------- CARD HEADER -------------*/
+
+.stage-card-header{
+  flex: 0 0 auto;
+  min-height: 20px;
+  padding: 10px 8px;
+  position: relative;
+}
+
+.stage-card-header .stage-card-header-name-assist{
+  font-weight: 600;
+  display: none;
+}
+
+.stage-card-header-target{
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  cursor: pointer;
+}
+
+.stage-card-header-name.mod-header-name{
+  background:#0000;
+  border-radius: var(--radius-3);
+  -webkit-border-radius: var(--radius-3);
+  -moz-border-radius: var(--radius-3);
+  -ms-border-radius: var(--radius-3);
+  -o-border-radius: var(--radius-3);
+  box-shadow: none;
+  font-weight: var(--fw-600);
+  /* height: 20px; */
+  color: var(--blueDark);
+  /* max-height: 265px; */
+  /* min-height: 20px; */
+  /* resize: none; */
+  /* width: 224px; */
+  /* margin: -4px 0px; */
+  padding: 4px 8px 4px 12px;
+  border: none;
+}
+
+.mod-header-name.is-editing{
+  background-color: var(--gray,#f3f3f3);
+}
+.mod-header-name.is-editing:focus{
+  border: none;
+  outline: none;
+  box-shadow: inset 0 0 0 1px var(--blue);
+}
+
+.stage-card-header-options{
+  position: absolute;
+  right: 8px;
+  top: 8px;
+  z-index: 1;
+  height: 30px;
+}
+.stage-card-header-options a{
+  text-decoration: none;
+}
+
+
+/*-------------- CARD LIST FEATURES (FEATURES)-------------*/
+
+.stage-card-list-features{
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  /* gap: 7px; */
+  justify-content: space-between;
+  margin: 0 4px;
+  padding: 0px 10px;
+  min-height: 0px;
+  overflow-x: hidden;
+  overflow-y: auto;
+  /* z-index: 1; */
+}
+
+.stage-card-list-features::-webkit-scrollbar{
+  width: var(--size-8);
+}
+
+.stage-card-list-features::-webkit-scrollbar-thumb{
+  width: var(--size-4);
+}
+
+/*-------------- ITEM CARD FEATURE (FEATURES)-------------*/
+/* .item-card-feature{
+  text-decoration: none;
+  background-color: var(--gray);
+  cursor: pointer;
+  display: block;
+  max-width: 300px;
+  min-height: 20px;
+  position: relative;
+  scroll-margin: 8px;
+  z-index: 0;
+  margin: 0 8px;
+  box-shadow: var(--shadow);
+} */
+
+
+/*-------------- CARD ADD CARD (FEATURES)-------------*/
+
+.stage-card-composer-container{
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+  justify-content: center;
+  text-align: start;
+  max-height: revert;
+  min-height: revert;
+  color: var(--blueDark);
+  margin-bottom: 12px;
+  margin-left: 12px;
+  margin-right: 12px;
+}
+
+.stage-card-composer-container:hover{
+  background-color: var(--gray);
+  border-radius: var(--radius-3);
+  -webkit-border-radius: var(--radius-3);
+  -moz-border-radius: var(--radius-3);
+  -ms-border-radius: var(--radius-3);
+  -o-border-radius: var(--radius-3);
+}
+
+.stage-open-card-composer{
+  display: block;
+  flex: 1 0 auto;
+  text-decoration: none;
+  user-select: none;
+  border-radius: var(--radius-8);
+  -webkit-border-radius: var(--radius-8);
+  -moz-border-radius: var(--radius-8);
+  -ms-border-radius: var(--radius-8);
+  -o-border-radius: var(--radius-8);
+  position: relative;
+}
+
+textarea.add-card-feature-textarea{
+  background: none;
+  border: none;
+  box-shadow: none;
+  max-height: 162px;
+  min-height: 54px;
+  padding: 0;
+  font-size: var(--size-13);
+  color: var(--blueDark);
+  width: 100%;
+
+}
+
+textarea.add-card-feature-textarea::placeholder{
+  font-size: var(--size-13);
+}
+
+textarea.add-card-feature-textarea:focus{
+  outline: none;
+}
+
+.add-card-feature-controls{
+  margin-top: 10px;
+}
+

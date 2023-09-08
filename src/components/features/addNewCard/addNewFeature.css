@@ -1,0 +1,31 @@
+/*-------------- ADD CARD FEATURE (FEATURES)-------------*/
+
+.add-card-feature{
+  border-radius: var(--radius-8);
+  -webkit-border-radius: var(--radius-8);
+  -moz-border-radius: var(--radius-8);
+  -ms-border-radius: var(--radius-8);
+  -o-border-radius: var(--radius-8);
+  flex-shrink: 0;
+}
+
+.add-card-feature .item-card-feature{
+  border-radius: var(--radius-8);
+  -webkit-border-radius: var(--radius-8);
+  -moz-border-radius: var(--radius-8);
+  -ms-border-radius: var(--radius-8);
+  -o-border-radius: var(--radius-8);
+
+}
+
+.add-card-feature-details{
+  overflow: hidden;
+  position: relative;
+  border: 1px solid var(--blueDark);
+  z-index: 10;
+  border-radius: var(--radius-8);
+  -webkit-border-radius: var(--radius-8);
+  -moz-border-radius: var(--radius-8);
+  -ms-border-radius: var(--radius-8);
+  -o-border-radius: var(--radius-8);
+}

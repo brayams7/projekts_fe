@@ -1,0 +1,42 @@
+/*-------------- ADD CARD STAGE (FEATURES)-------------*/
+
+.add-card-stage.mod-add{
+  background-color: var(--white);
+  border-radius: var(--radius-12);
+  -webkit-border-radius: var(--radius-12);
+  -moz-border-radius: var(--radius-12);
+  -ms-border-radius: var(--radius-12);
+  -o-border-radius: var(--radius-12);
+  height: auto;
+  min-height: 30px;
+  padding: 8px;
+  transition: background 85ms ease-in,opacity 40ms ease-in,border-color 85ms ease-in;
+  -webkit-transition: background 85ms ease-in,opacity 40ms ease-in,border-color 85ms ease-in;
+  -moz-transition: background 85ms ease-in,opacity 40ms ease-in,border-color 85ms ease-in;
+  -ms-transition: background 85ms ease-in,opacity 40ms ease-in,border-color 85ms ease-in;
+  -o-transition: background 85ms ease-in,opacity 40ms ease-in,border-color 85ms ease-in;
+}
+
+.add-card-stage.mod-add.is-idle{
+  cursor: pointer;
+}
+
+.content-idle:hover{
+  background-color: var(--gray);
+  border-radius: var(--radius-3);
+  -webkit-border-radius: var(--radius-3);
+  -moz-border-radius: var(--radius-3);
+  -ms-border-radius: var(--radius-3);
+  -o-border-radius: var(--radius-3);
+}
+
+.content-form-add-stage input{
+  font-size: var(--size-14);
+}
+
+.content-form-add-stage input::placeholder{
+  font-size: var(--size-14);
+}
+
+
+

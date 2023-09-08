@@ -1,0 +1,14 @@
+.card-feature{
+  background-color: var(--gray);
+  border-radius: var(--radius-8);
+  -webkit-border-radius: var(--radius-8);
+  -moz-border-radius: var(--radius-8);
+  -ms-border-radius: var(--radius-8);
+  -o-border-radius: var(--radius-8);
+  font-size: var(--size-14);
+  /* min-height: 60px; */
+}
+
+.card-feature:hover{
+  background-color: rgba(198, 195, 200,.5);
+}

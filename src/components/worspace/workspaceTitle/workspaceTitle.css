@@ -1,0 +1,25 @@
+
+.workspace-avata-title{
+  height: 40px;
+  width: 40px;
+  line-height: 40px;
+  font-size: var(--size-18);
+  font-weight: var(--fw-600);
+  color: var(--gray);
+  border-radius: var(--radius-3);
+  -webkit-border-radius: var(--radius-3);
+  -moz-border-radius: var(--radius-3);
+  -ms-border-radius: var(--radius-3);
+  -o-border-radius: var(--radius-3);
+}
+
+
+@media (min-width: 576px) {
+
+  .workspace-avata-title{
+    height: 60px;
+    width: 60px;
+    line-height: 60px;
+    font-size: var(--size-28);
+  }
+}

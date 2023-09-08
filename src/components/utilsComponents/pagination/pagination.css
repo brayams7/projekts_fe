@@ -1,0 +1,21 @@
+.container-pagination button{
+  color: var(--white);
+  border-radius: var(--radius-8);
+  -webkit-border-radius: var(--radius-8);
+  -moz-border-radius: var(--radius-8);
+  -ms-border-radius: var(--radius-8);
+  -o-border-radius: var(--radius-8);
+}
+
+.container-pagination button:disabled{
+  background-color: var(--grayDarkHover) !important;
+}
+
+.container-pagination-inputpage input{
+  width: 60px;
+}
+
+
+.container-pagination-selectSizePage .select-numberPage{
+  max-width: 80px;
+}

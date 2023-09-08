@@ -1,0 +1,43 @@
+
+.contianerListWorkspaces{
+  color: var(--blueDark);
+}
+
+.workspace-avatar{
+  height: 32px;
+  width: 32px;
+  line-height: 32px;
+  font-size: var(--size-18);
+  color: var(--gray);
+  border-radius: var(--radius-3);
+  -webkit-border-radius: var(--radius-3);
+  -moz-border-radius: var(--radius-3);
+  -ms-border-radius: var(--radius-3);
+  -o-border-radius: var(--radius-3);
+}
+
+.updateAt-workspace{
+  font-size: var(--size-12);
+  font-weight: normal;
+}
+
+.workspace-option{
+  cursor: pointer;
+  font-size: var(--size-14);
+
+  background-color: var(--grayDark);
+  border-radius: var(--radius-3);
+  -webkit-border-radius: var(--radius-3);
+  -moz-border-radius: var(--radius-3);
+  -ms-border-radius: var(--radius-3);
+  -o-border-radius: var(--radius-3);
+  min-width: 110px;
+}
+
+.workspace-option > a{
+  color: inherit !important;
+}
+
+.workspace-option:hover{
+  opacity: .7;
+}

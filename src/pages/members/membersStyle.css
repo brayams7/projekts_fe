@@ -1,0 +1,17 @@
+.container-nav-members > a{
+  color: var(--blueDark) !important;
+  border-radius: var(--radius-8);
+  -webkit-border-radius: var(--radius-8);
+  -moz-border-radius: var(--radius-8);
+  -ms-border-radius: var(--radius-8);
+  -o-border-radius: var(--radius-8);
+}
+
+.container-nav-members > a:hover{
+  border:1px solid var(--blueDarkHover);
+}
+
+.container-nav-members > a.active{
+  border: none;
+  background-color: var(--blueDarkHover);
+}
