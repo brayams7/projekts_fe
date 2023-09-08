@@ -89,22 +89,22 @@ const StageCard = ({
   }
 
 
-  if(isDragging){
-    return (
-      <div
-        ref={setNodeRef}
-        style={styles}
-        className="card-stage-container"
-      >
-        <div
-          className="stage-card"
-          style={{height:"auto", opacity:.6}}
-        >
+  // if(isDragging){
+  //   return (
+  //     <div
+  //       ref={setNodeRef}
+  //       style={styles}
+  //       className="card-stage-container"
+  //     >
+  //       <div
+  //         className="stage-card"
+  //         style={{height:"auto", opacity:.6}}
+  //       >
 
-        </div>
-      </div>
-    )
-  }
+  //       </div>
+  //     </div>
+  //   )
+  // }
 
 
   return (
@@ -120,8 +120,10 @@ const StageCard = ({
         {...attributes}
       >
         <div
-          className="stage-card-container-header d-flex justify-content-between mx-3 mt-2"
-
+          className={
+            isDragging ? "stage-card-container-header d-flex justify-content-between mx-3 my-2 opacity-25":
+            "stage-card-container-header d-flex justify-content-between mx-3 my-2"
+          }
         >
 
             <div
@@ -243,6 +245,7 @@ const StageCard = ({
         </div>
       </div>
     </div>
+
   );
 };
 

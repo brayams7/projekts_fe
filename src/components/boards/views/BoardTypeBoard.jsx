@@ -1,7 +1,7 @@
-import { DndContext, DragOverlay, PointerSensor, TouchSensor, useSensor, useSensors } from "@dnd-kit/core";
+import { DndContext, DragOverlay, PointerSensor, TouchSensor, closestCorners, useSensor, useSensors } from "@dnd-kit/core";
 import { SortableContext, arrayMove } from "@dnd-kit/sortable";
 import { useMemo, useState } from "react";
-import { createPortal } from "react-dom";
+// import { createPortal } from "react-dom";
 import { typesCards } from "../../../Menu";
 import StageCard from "../../stages/StageCard";
 import FeatureCard from "../../features/featureCard/FeatureCard";
@@ -86,20 +86,20 @@ const BoardTypeBoard = ({
 
     //arrastrando una tarea sobre otra tarea
     if(isActiveFeature && isOverFeature){
-      setListFeatures(
-        listFeatures=>{
-          // const mapFeatures = listFeatures.map(feature=>({...feature}))
 
-          const activeIndex = listFeatures.findIndex(feature=>feature.id === activeId)
-          const overIndex = listFeatures.findIndex(feature=>feature.id === overId)
+      setListFeatures(listFeatures=>{
+        const activeIndex = listFeatures.findIndex(feature=>feature.id === activeId)
 
+        const overIndex = listFeatures.findIndex(feature=>feature.id === overId)
+
+        if(listFeatures[activeIndex].stage_id !== listFeatures[overIndex].stage_id){
           listFeatures[activeIndex].stage_id = listFeatures[overIndex].stage_id
-
-          return arrayMove(listFeatures,activeIndex,overIndex)
+          return arrayMove(listFeatures,activeIndex,overIndex-1)
         }
-      )
-    }
 
+        return arrayMove(listFeatures,activeIndex,overIndex)
+      })
+    }
     //arrastrando una tarea a otra columna
     const isOverStage = over.data.current?.type === typesCards.STAGE
 
@@ -140,6 +140,7 @@ const BoardTypeBoard = ({
   return (
     <div className="board-canvas-list d-flex align-items-start px-4">
       <DndContext
+        collisionDetection={closestCorners}
         onDragStart={handleDragStart}
         onDragEnd={handleDragEnd}
         onDragOver={handleDragOver}
@@ -175,32 +176,29 @@ const BoardTypeBoard = ({
           </div>
         </div>
 
-        {createPortal(
-          <DragOverlay>
-            {activeBoardStage && (
-              <StageCard
-                id={activeBoardStage.id}
-                name={activeBoardStage.name}
-                isDefault={activeBoardStage.isDefault}
-                order={activeBoardStage.order}
-                isFinal={activeBoardStage.isFinal}
-                description={activeBoardStage.description}
-                boardId={boardId}
-                listFeatures={listFeatures.filter(
-                  (feature) => feature.stage_id === activeBoardStage.id
-                )}
-                setListFeatures={setListFeatures}
-              />
-            )}
-            {activeFeature && (
-              <FeatureCard
-                id={activeFeature.id}
-                feature={activeFeature}
-              />
-            )}
-          </DragOverlay>,
-          document.body
-        )}
+        <DragOverlay>
+              {activeBoardStage && (
+                <StageCard
+                  id={activeBoardStage.id}
+                  name={activeBoardStage.name}
+                  isDefault={activeBoardStage.isDefault}
+                  order={activeBoardStage.order}
+                  isFinal={activeBoardStage.isFinal}
+                  description={activeBoardStage.description}
+                  boardId={boardId}
+                  listFeatures={listFeatures.filter(
+                    (feature) => feature.stage_id === activeBoardStage.id
+                  )}
+                  setListFeatures={setListFeatures}
+                />
+              )}
+              {activeFeature && (
+                <FeatureCard
+                  id={activeFeature.id}
+                  feature={activeFeature}
+                />
+              )}
+            </DragOverlay>
       </DndContext>
     </div>
   );

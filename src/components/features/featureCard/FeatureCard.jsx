@@ -32,36 +32,43 @@ const FeatureCard = ({
     transform:CSS.Transform.toString(transform),
   }
 
-  if(isDragging){
-    return(
-      <div
-        ref={setNodeRef}
-        style={styles}
-        className='card-feature px-2 py-3 opacity-50 border border-secondary'
-      />
-    )
-  }
+  // if(isDragging){
+  //   return(
+  //     <div
+  //       ref={setNodeRef}
+  //       style={styles}
+  //       className='border border-top-2'
+  //     />
+  //   )
+  // }
 
   return (
 
     <div
-      className="card-feature px-2 py-3"
+      ref={setNodeRef}
+      style={styles}
+      {...attributes}
+      {...listeners}
+      className={
+        isDragging ? "card-feature px-2 py-3 opacity-25 border border-secondary" :
+        "card-feature px-2 py-3"
+      }
       onMouseEnter={
        ()=>setMouseIsOver(true)
       }
       onMouseLeave={
         ()=>setMouseIsOver(false)
       }
-      ref={setNodeRef}
-      style={styles}
-      {...attributes}
-      {...listeners}
     >
-      <div className='d-flex justify-content-between'>
+      <div
+
+        className={
+        'd-flex justify-content-between'
+      }>
         <div>
           {feature.title}
         </div>
-        <button type="button" onClick={()=>console.log("hola")}>
+        {/* <button type="button" onClick={()=>console.log("hola")}>
           <span>
             {
               mouseIsOver && (
@@ -69,7 +76,7 @@ const FeatureCard = ({
               )
             }
           </span>
-        </button>
+        </button> */}
       </div>
     </div>
   );

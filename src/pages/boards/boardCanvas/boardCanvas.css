@@ -33,7 +33,7 @@
 }
 
 .board-canvas-list{
-  position: relative;
+  /* position: relative; */
   overflow-x: auto;
   overflow-y: auto;
   height: calc(100vh - 106px);
