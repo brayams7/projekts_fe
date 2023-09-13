@@ -1,5 +1,5 @@
-import { useState } from 'react';
-import { DeleteIcon } from '../../../utils/icons/iconsMenu';
+// import { useState } from 'react';
+// import { DeleteIcon } from '../../../utils/icons/iconsMenu';
 import './featureCard.css'
 import { useSortable } from '@dnd-kit/sortable';
 import { typesCards } from '../../../Menu';
@@ -7,9 +7,10 @@ import { CSS } from '@dnd-kit/utilities';
 
 const FeatureCard = ({
   id,
-  feature
+  feature,
+  setSelectedFeature
 }) => {
-  const [mouseIsOver, setMouseIsOver] = useState(false)
+  // const [mouseIsOver, setMouseIsOver] = useState(false)
 
   const {
     attributes,
@@ -53,19 +54,24 @@ const FeatureCard = ({
         isDragging ? "card-feature px-2 py-3 opacity-25 border border-secondary" :
         "card-feature px-2 py-3"
       }
-      onMouseEnter={
-       ()=>setMouseIsOver(true)
-      }
-      onMouseLeave={
-        ()=>setMouseIsOver(false)
-      }
+      // onMouseEnter={
+      //  ()=>setMouseIsOver(true)
+      // }
+      // onMouseLeave={
+      //   ()=>setMouseIsOver(false)
+      // }
     >
       <div
 
         className={
         'd-flex justify-content-between'
       }>
-        <div>
+        <div
+          type="button"
+          data-bs-toggle="modal"
+          data-bs-target="#modalBoard"
+          onClick={()=>setSelectedFeature(feature)}
+        >
           {feature.title}
         </div>
         {/* <button type="button" onClick={()=>console.log("hola")}>

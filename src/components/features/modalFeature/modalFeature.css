@@ -1,0 +1,7 @@
+.menu-modal-feature-mobile a{
+  color: var(--blueDark);
+}
+
+.menu-modal-feature-mobile .active{
+  color: var(--purple);
+}

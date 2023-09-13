@@ -12,10 +12,19 @@ export const apiSliceFeature = apiSlice.injectEndpoints({
       }),
       invalidatesTags:(result, error,body) => [{type:TYPES_BOARD.TYPE_DETAIL_BOARD, id:body.board_id}]
     }),
+    changeOrderFeature: builder.mutation({
+      query:({featureId,body})=>({
+        url:`/changeOrderFeatureOrMovingToAnotherStage/${featureId}`,
+        method:"PUT",
+        body
+      }),
+      invalidatesTags:(result, error,body) => [{type:TYPES_BOARD.TYPE_DETAIL_BOARD, id:body.board_id}]
+    }),
   })
 })
 
 
 export const {
-  useCreateFeatureMutation
+  useCreateFeatureMutation,
+  useChangeOrderFeatureMutation
 } = apiSliceFeature

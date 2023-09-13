@@ -1,0 +1,9 @@
+.editor-topbar{
+  background-color: #f0f0f0;
+  /* border: 1px solid var(--gray-600); */
+  border-radius: var(--radius-8);
+  -webkit-border-radius: var(--radius-8);
+  -moz-border-radius: var(--radius-8);
+  -ms-border-radius: var(--radius-8);
+  -o-border-radius: var(--radius-8);
+}

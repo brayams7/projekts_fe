@@ -19,6 +19,9 @@
   background-color: var(--blueDark);
 }
 
+.bgPurple-color{
+  background-color: var(--purple);
+}
 /*
     Colors
 */
