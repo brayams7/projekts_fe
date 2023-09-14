@@ -1,0 +1,36 @@
+.custom-modal{
+  position: fixed;
+  z-index: 1100;
+  top: 0;
+  left: 0;
+  width: 100%;
+  min-height: 100vh;
+  display: none;
+  justify-content: center;
+  align-items: center;
+}
+
+.custom-modal.is-open{
+  display: flex;
+}
+
+.custom-modal-container{
+  position: relative;
+  padding: 1rem;
+  background-color: var(--white);
+  border: 3px solid var(--gray);
+  border-radius: var(--radius-8);
+  -webkit-border-radius: var(--radius-8);
+  -moz-border-radius: var(--radius-8);
+  -ms-border-radius: var(--radius-8);
+  -o-border-radius: var(--radius-8);
+  min-width: 320px;
+  max-width: 500px;
+  min-height: 100px;
+}
+
+.custom-modal-closer{
+  position: absolute;
+  right: 10px;
+  top:10px
+}

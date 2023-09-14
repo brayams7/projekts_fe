@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { useLexicalComposerContext } from "@lexical/react/LexicalComposerContext";
 import {
   // CAN_REDO_COMMAND,
@@ -14,7 +14,6 @@ import {
   // $getNodeByKey,
 } from "lexical";
 import { $getNearestNodeOfType, mergeRegister } from "@lexical/utils";
-import { useCallback } from "react";
 import {
   INSERT_ORDERED_LIST_COMMAND,
   INSERT_UNORDERED_LIST_COMMAND,
@@ -35,22 +34,21 @@ import { $isLinkNode, TOGGLE_LINK_COMMAND } from "@lexical/link";
 //   getCodeLanguages,
 // } from "@lexical/code";
 import {
-  $isParentElementRTL,
   $wrapNodes,
   $isAtNodeEnd,
 } from "@lexical/selection";
 import { eventTypes } from "./topBarIconsList";
-// import { InsertImageDialog } from "../CustomPlugins/ImagePlugin";
-// import useModal from "../../common/hooks/useModal";
+import { InsertImageDialog } from "../wysiwyg/plugins/imagePlugin/ImagePlugin";
+import useModal from "../../hooks/modal/useModal";
 
 const LowPriority = 1;
 
 const useOnClickListener = () => {
   const [editor] = useLexicalComposerContext();
-  // const [modal, showModal] = useModal();
+  const [modal, showModal] = useModal();
   const [blockType, setBlockType] = useState("paragraph");
   // const [selectedElementKey, setSelectedElementKey] = useState(null);
-  const [isRTL, setIsRTL] = useState(false);
+  // const [isRTL, setIsRTL] = useState(false);
   const [isLink, setIsLink] = useState(false);
 
   const [selectedEventTypes, setSelectedEventTypes] = useState([]);
@@ -70,13 +68,13 @@ const useOnClickListener = () => {
       }
     };
 
-    // Seccion de rango ( selecciona una parte de texto)
+    // range selection ( e.g like to bold only the particular area of the text)
     if ($isRangeSelection(selection)) {
       const anchorNode = selection.anchor.getNode();
       const element =
-      anchorNode.getKey() === "root"
-      ? anchorNode
-      : anchorNode.getTopLevelElementOrThrow();
+        anchorNode.getKey() === "root"
+          ? anchorNode
+          : anchorNode.getTopLevelElementOrThrow();
       const elementKey = element.getKey();
       const elementDOM = editor.getElementByKey(elementKey);
       if (elementDOM !== null) {
@@ -94,10 +92,7 @@ const useOnClickListener = () => {
         }
       }
 
-      pushInEventTypesState(
-        selection.hasFormat("bold"),
-        eventTypes.formatBold
-      );
+      pushInEventTypesState(selection.hasFormat("bold"), eventTypes.formatBold);
       pushInEventTypesState(
         selection.hasFormat("italic"),
         eventTypes.formatItalic
@@ -110,17 +105,13 @@ const useOnClickListener = () => {
         selection.hasFormat("strikethrough"),
         eventTypes.formatStrike
       );
-      pushInEventTypesState(
-        selection.hasFormat("code"),
-        eventTypes.formatCode
-      );
+      pushInEventTypesState(selection.hasFormat("code"), eventTypes.formatCode);
 
-      setIsRTL($isParentElementRTL(selection));
+      // setIsRTL($isParentElementRTL(selection));
 
       // Update links
       const node = getSelectedNode(selection);
       const parent = node.getParent();
-
       if ($isLinkNode(parent) || $isLinkNode(node)) {
         if (!allSelectedEvents.includes(eventTypes.formatInsertLink))
           allSelectedEvents.push(eventTypes.formatInsertLink);
@@ -190,14 +181,12 @@ const useOnClickListener = () => {
     } else if (eventType === eventTypes.formatCode) {
       formatCode();
     } else if (eventType === eventTypes.formatInsertLink) {
-      console.log("es link")
       insertLink();
+    } else if (eventType === eventTypes.insertImage) {
+      showModal("Inserte una imagen", (onClose) => (
+        <InsertImageDialog activeEditor={editor} onClose={onClose} />
+      ));
     }
-    // else if (eventType === eventTypes.insertImage) {
-    //   showModal("Insert Image", (onClose) => (
-    //     <InsertImageDialog activeEditor={editor} onClose={onClose} />
-    //   ));
-    // }
   };
 
   const insertLink = useCallback(() => {
@@ -287,7 +276,7 @@ const useOnClickListener = () => {
     }
   };
 
-  return { onClick, selectedEventTypes, blockType, isLink, editor };
+  return { modal, onClick, selectedEventTypes, blockType, isLink, editor };
 };
 
 function getSelectedNode(selection) {

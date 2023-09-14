@@ -3,6 +3,7 @@ import { AddMemberIcon, ExpandIcon, MoreIcon, NewTagIcon, VisibilityIcon } from 
 import './detailFeature.css'
 import TitleDetailFeature from "../titleFeature/TitleDetailFeature";
 import Wysiwyg from "../../wysiwyg/Wysiwyg";
+// import Wysiwyg from "../../wysiwyg/Wysiwyg";
 
 const DetailFeature = () => {
 

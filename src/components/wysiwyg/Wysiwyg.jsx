@@ -5,82 +5,96 @@ import {HistoryPlugin} from '@lexical/react/LexicalHistoryPlugin';
 import LexicalErrorBoundary from '@lexical/react/LexicalErrorBoundary';
 // import { MyCustomAutoFocusPlugin } from './plugins/AutoFocusPlugin';
 import {RichTextPlugin} from '@lexical/react/LexicalRichTextPlugin'
-import { HeadingNode, QuoteNode } from "@lexical/rich-text";
-import { TableCellNode, TableNode, TableRowNode } from "@lexical/table";
-import { ListItemNode, ListNode } from "@lexical/list";
-import { CodeHighlightNode, CodeNode } from "@lexical/code";
-import { AutoLinkNode, LinkNode } from "@lexical/link";
+
 
 import { OnChangePlugin } from "@lexical/react/LexicalOnChangePlugin";
 // import TreeViewPlugin from "./plugins/TreeViewPlugin";
 import { LinkPlugin } from "@lexical/react/LexicalLinkPlugin";
 import { ListPlugin } from "@lexical/react/LexicalListPlugin";
 import { AutoFocusPlugin } from "@lexical/react/LexicalAutoFocusPlugin";
-
-
-// import OnChangePlugin from './plugins/OnChangePlugin';
-import './wysiwyg.css'
-import theme from './themes';
 import LexicalEditorTopBar from '../lexicalEditorTopBar/LexicalEditorTopBar';
+import ImagesPlugin from './plugins/imagePlugin/ImagePlugin';
 
-const editorConfig = {
-  namespace: 'MyEditor',
-  // The editor theme
-  theme: theme,
-  // Handling of errors during update
-  onError(error) {
-    throw error;
-  },
-  nodes: [
-    HeadingNode,
-    ListNode,
-    ListItemNode,
-    QuoteNode,
-    CodeNode,
-    CodeHighlightNode,
-    TableNode,
-    TableCellNode,
-    TableRowNode,
-    AutoLinkNode,
-    LinkNode
-  ]
+import './wysiwyg.css'
+import { editorConfig } from '../../config/lexicalEditorConfig';
+import { useCallback, useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
+import { useLexicalComposerContext } from "@lexical/react/LexicalComposerContext";
+
+
+const MyCustomPluginInitStage = ()=>{
+  const {boardId} = useParams()
+  const [editor] = useLexicalComposerContext();
+  const [isFirstRender, setIsFirstRender] = useState(true)
+
+  const handleInitStage = useCallback(async()=>{
+
+      const data = JSON.parse(localStorage.getItem("editorStage"))
+
+      if(data){
+        const editorState = editor.parseEditorState(data);
+        editor.setEditorState(editorState);
+      }
+
+  },[editor])
+
+
+  useEffect(()=>{
+    if(isFirstRender){
+      setIsFirstRender(false)
+      handleInitStage()
+    }
+
+  },[boardId, editor, handleInitStage, isFirstRender])
+
+
+  return null
 }
 
+
 const Wysiwyg = () => {
+  const [editorState, setEditorState] = useState();
 
-  // const [editorState, setEditorState] = useState();
-
-  // const initialConfig = {
-  //   namespace: 'MyEditor',
-  //   theme,
-  //   onError,
-  // };
-
-  const handleChangeContent = (editorStage)=>{
-    // setEditorState(editorStage)
-    // console.log(editorStage)
+  const handleChangeContent = (editorState)=>{
+    editorState.read(() => {
+      const stringifiedEditorState = JSON.stringify(editorState.toJSON());
+      setEditorState(stringifiedEditorState);
+   });
   }
+
+  const onSubmit = ()=>{
+    localStorage.setItem("editorStage", editorState)
+  }
+
+
 
   return (
     <LexicalComposer initialConfig={editorConfig}>
       <LexicalEditorTopBar/>
       <div className="editor-container">
-        <RichTextPlugin
-          contentEditable={<ContentEditable className="content-editable" />}
-          placeholder={
-            <div className="editor-placeholder">Enter some text...</div>
-          }
-          ErrorBoundary={LexicalErrorBoundary}
-        />
-        <HistoryPlugin />
-        <AutoFocusPlugin />
-        <OnChangePlugin onChange={handleChangeContent}/>
+        <div className="editor-scroller">
+          <RichTextPlugin
+            contentEditable={<div className='editor'><ContentEditable className="content-editable" /></div>}
+            placeholder={
+              <div className="editor-placeholder">Escribe una descripción...</div>
+            }
+            ErrorBoundary={LexicalErrorBoundary}
+          />
+          <OnChangePlugin onChange={handleChangeContent}/>
+          <HistoryPlugin />
+          <AutoFocusPlugin />
+          <MyCustomPluginInitStage/>
+          {/* <TreeViewPlugin /> */}
 
-        {/* <TreeViewPlugin /> */}
-        <ListPlugin />
-        <LinkPlugin />
+          <ImagesPlugin captionsEnabled={false}/>
+          <ListPlugin />
+          <LinkPlugin />
+        </div>
 
       </div>
+      <button type="button" onClick={()=>onSubmit()}>
+        Enviar
+      </button>
     </LexicalComposer>
   );
 };

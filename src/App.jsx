@@ -1,11 +1,17 @@
-// import { useEffect, useState } from 'react'
+import { Suspense, lazy } from 'react'
 
 import { Navigate, Route} from "react-router-dom";
 import { initAxios, publicAxios } from "./services/settings";
 import { PrivateRoutes, PublicRoutes } from "./routes";
+// const Auth = lazy(() => import('./pages/Auth/Auth'));
 import Auth from "./pages/Auth/Auth";
 import ProtectedRoute from "./ProtectedRoute";
 import RoutesWithNotFound from "./routes/RoutesWithNotFound";
+
+
+// const RoutesHome = lazy(() => import('./routes/RoutesHome'));
+// const RoutesWorkspace = lazy(() => import('./routes/RoutesWorkspace'));
+
 import RoutesHome from "./routes/RoutesHome";
 import RoutesWorkspace from "./routes/RoutesWorkspace";
 import Permission from "./Permission"
@@ -18,43 +24,29 @@ function App() {
   // const { workspaceId } = useParams()
   // console.log(workspaceId)
   return (
-    <RoutesWithNotFound>
-      <Route path="/" element={<Navigate to={PrivateRoutes.PRIVATE_HOME} />} />
-      <Route path={PublicRoutes.LOGIN} element={<Auth/>}/>
+    // <Suspense fallback={<span className="fs-5">Cargando...</span>}>
+      <RoutesWithNotFound>
+        <Route path="/" element={<Navigate to={PrivateRoutes.PRIVATE_HOME} />} />
+        <Route path={PublicRoutes.LOGIN} element={<Auth/>}/>
 
-
-      {/* -------------------- PROTECTED ROUTES---------------------- */}
-      <Route element={<ProtectedRoute/>}>
-
-        <Route
-          path={`${PrivateRoutes.PRIVATE_HOME}/*`}
-          element={<RoutesHome/>}
-        />
-
-        {/* <Route
-          loader={async ({request})=>{
-            console.log("test")
-              const data = await getWokspaceById()
-              console.log({data})
-              return "hola"
-            }}
-          path="test/"
-
-          element={<h1>hola mundo</h1>}
-        >
-        </Route> */}
-
-        <Route element={<Permission permission={PrivateRoutes.WORKSAPCE} />}>
+        {/* -------------------- PROTECTED ROUTES---------------------- */}
+        <Route element={<ProtectedRoute/>}>
 
           <Route
-
-            path={`${PrivateRoutes.PRIVATE_WORKSPACE}/*`}
-            element={<RoutesWorkspace/>}
+            path={`${PrivateRoutes.PRIVATE_HOME}/*`}
+            element={<RoutesHome/>}
           />
-        </Route>
+          <Route element={<Permission permission={PrivateRoutes.WORKSAPCE} />}>
 
-      </Route>
-    </RoutesWithNotFound>
+            <Route
+              path={`${PrivateRoutes.PRIVATE_WORKSPACE}/*`}
+              element={<RoutesWorkspace/>}
+            />
+          </Route>
+
+        </Route>
+      </RoutesWithNotFound>
+    // </Suspense>
   );
 }
 

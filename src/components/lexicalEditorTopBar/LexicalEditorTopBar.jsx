@@ -1,12 +1,14 @@
 
-import { createPortal } from 'react-dom';
+// import { createPortal } from 'react-dom';
 import './style.css'
 import pluginsList from './topBarIconsList';
 import useOnClickListener from './useOnClickListener';
 import FloatingLinkEditor from './floatingLinkEditor/FloatingLinkEditor';
+import { createPortal } from 'react-dom';
+
 const LexicalEditorTopBar = () => {
   const {
-    onClick, selectedEventTypes, blockType, isLink, editor
+    onClick, selectedEventTypes, blockType, isLink, editor, modal
   } = useOnClickListener()
 
   const isIconSelected = (plugin) => selectedEventTypes.includes(plugin.event) || blockType.includes(plugin.event);
@@ -32,7 +34,10 @@ const LexicalEditorTopBar = () => {
         ))
       }
       {isLink &&
-        createPortal(<FloatingLinkEditor editor={editor} />, document.body)}
+        // <FloatingLinkEditor editor={editor} />
+        createPortal(<FloatingLinkEditor editor={editor} />, document.body)
+      }
+      {modal}
     </div>
   );
 };

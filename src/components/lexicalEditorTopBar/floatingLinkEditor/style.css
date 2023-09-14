@@ -40,6 +40,7 @@
 .editor-floating-link-container .link{
   /* width: calc(100% - 24px); */
   border: 1px solid var(--gray);
+  color: var(--blue);
   outline: none;
   font-family: inherit;
   background-color: var(--white);
@@ -49,4 +50,8 @@
   -ms-border-radius: var(--radius-12);
   -o-border-radius: var(--radius-12);
 
+}
+
+.editor-floating-link-container .link-edit:hover{
+  background-color: var(--gray);
 }

@@ -13,6 +13,7 @@ import { $isLinkNode, TOGGLE_LINK_COMMAND } from "@lexical/link";
 
 import './style.css'
 import { getSelectedNode } from "../../../utilsFunctions/getSelectNode";
+import { DoneIcon, EditIcon } from "../../../utils/icons/iconsLexicalEditor";
 
 const LowPriority = 1;
 
@@ -122,9 +123,9 @@ const FloatingLinkEditor = ({editor}) => {
                 <input
                 type="text"
                 name="insert-link"
-                className="d-block w-100 position-relative insert-link"
+                className="d-block w-100 insert-link"
                 ref={inputRef}
-
+                value={linkUrl}
                 onChange={(event) => {
                   setLinkUrl(event.target.value);
                 }}
@@ -138,7 +139,6 @@ const FloatingLinkEditor = ({editor}) => {
                       setEditMode(false);
                     }
                   } else if (event.key === "Escape") {
-                    event.preventDefault();
                     setEditMode(false);
                   }
                 }}
@@ -165,7 +165,7 @@ const FloatingLinkEditor = ({editor}) => {
             }}
           >
             {
-              isEditMode ? "E": "N"
+              isEditMode ? <DoneIcon fill="var(--purple)"/>: <EditIcon fill="var(--purple)"/>
             }
           </div>
         </div>
