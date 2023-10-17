@@ -17,11 +17,13 @@ import Toaster from './Toaster.jsx';
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <Provider store={store}>
+
       <Toaster>
         <BrowserRouter>
           <App />
         </BrowserRouter>
       </Toaster>
+
     </Provider>
 
   </React.StrictMode>,

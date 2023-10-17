@@ -1,0 +1,22 @@
+.activity-container .timeline-comments{
+  min-height: 380px;
+  background-color: var(--gray);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+
+}
+
+/* .new-comment-container{
+  height: 60px;
+} */
+
+.activity-container .new-comment-container{
+  position: relative;
+  z-index: 10;
+}
+
+/* .new-comment-container .comment-content-container{
+  max-height: 300px;
+  position: relative;
+} */

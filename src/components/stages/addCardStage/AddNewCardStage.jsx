@@ -5,11 +5,15 @@ import LoadingIcon from '../../../assets/loadings/EllipsisLoading40px.svg'
 import { useForm } from "react-hook-form";
 import { useCreateStageAndAssingToBoardMutation } from "../../../rtkQuery/apiSliceStage";
 import { toast } from "react-toastify";
+import { LIST_COLORS_STAGES } from "../../../utils/contants/colorsHex";
 
 const IS_DEFAULT = 0
 const IS_FINAL = 0
 
 const AddNewCardStage = ({listStages=[], boardId}) => {
+
+  const [colorStage, setColorStage] = useState("")
+
   const {
     register,
     handleSubmit,
@@ -27,7 +31,7 @@ const AddNewCardStage = ({listStages=[], boardId}) => {
     const body = {
       name:data.name,
       description:'',
-      color:'',
+      color:colorStage,
       is_default:IS_DEFAULT,
       is_final:IS_FINAL
     }
@@ -39,6 +43,7 @@ const AddNewCardStage = ({listStages=[], boardId}) => {
       const response = await createNewStage(data).unwrap()
       if(response.code === 200){
         setValue("name","")
+        setColorStage("")
         toast.success("Tablero creado!",{icon:"😃"})
       }else{
         toast.error("Upss! ocurrió un error",{icon:"😕"})
@@ -49,6 +54,7 @@ const AddNewCardStage = ({listStages=[], boardId}) => {
     }
 
   }
+
   return (
     <div className={
       isIdle ? "add-card-stage mod-add is-idle":
@@ -81,12 +87,51 @@ const AddNewCardStage = ({listStages=[], boardId}) => {
             name="name"
             className="form-control mb-2"
             placeholder="Introduzca el título"
+            style={{
+              ...(colorStage ? {border:`1px solid ${colorStage}`} : {})
+            }}
             // value={nameTextStage}
             // onChange={(e)=>setNameTextStage(e.target.value)}
           />
 
+          <ul className="list-unstyled d-flex justify-content-center align-items-start flex-wrap mb-2" style={{width:230}}>
+            {
+              // eslint-disable-next-line no-unused-vars
+              Object.entries(LIST_COLORS_STAGES).map(([_,color], key)=>(
+                <li
+                  key={key}
+                  role="button"
+                  className="p-1 rounded-circle h-auto d-flex justify-content-center align-items-center"
+                  style={{
+                    // width:28,
+                    // height:20,
+                    ...(colorStage === color) ? {border:`2px solid ${color}`} : {}
+                  }}
+                  onClick={()=>setColorStage(color)}
+                >
+                  <span
+                    className="rounded-circle d-inline-block"
+                    style={{
+                      backgroundColor:color,
+                      width:20,
+                      height:20,
+                    }}
+
+                  >
+
+                  </span>
+                </li>
+              ))
+            }
+            {/* <input
+              type="color"
+              name="color"
+              className="form-control"
+            /> */}
+          </ul>
+
           <div className="d-flex flex-wrap justify-content-start align-items-center">
-            <button type="submit" className="btn btn-primary me-2" disabled={(!isValid || isLoading)}>
+            <button type="submit" className="btn btn-primary me-2" disabled={(!isValid || !colorStage || isLoading)}>
               {
                 listStages.length > 0 ? "Añadir lista":
                 "Añadir nueva lista"
@@ -95,7 +140,10 @@ const AddNewCardStage = ({listStages=[], boardId}) => {
             <a
               role="button"
               type="button"
-              onClick={()=>setIsIdle(true)}
+              onClick={()=>{
+                setIsIdle(true)
+                setColorStage("")
+              }}
             >
               <span>
                 <CloseIcon fill="var(--blueDark)"/>

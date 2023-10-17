@@ -15,6 +15,7 @@ import RoutesWithNotFound from "./routes/RoutesWithNotFound";
 import RoutesHome from "./routes/RoutesHome";
 import RoutesWorkspace from "./routes/RoutesWorkspace";
 import Permission from "./Permission"
+import InvitationToWorkspace from './pages/Auth/InvitationToWorkspace';
 // import { getWokspaceById } from "./services/workpaceService";
 
 publicAxios();
@@ -28,6 +29,7 @@ function App() {
       <RoutesWithNotFound>
         <Route path="/" element={<Navigate to={PrivateRoutes.PRIVATE_HOME} />} />
         <Route path={PublicRoutes.LOGIN} element={<Auth/>}/>
+        <Route path={PublicRoutes.ACCEPT_INVITATION_TO_WORKSPACE} element={<InvitationToWorkspace/>}/>
 
         {/* -------------------- PROTECTED ROUTES---------------------- */}
         <Route element={<ProtectedRoute/>}>

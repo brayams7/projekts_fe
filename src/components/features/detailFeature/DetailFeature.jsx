@@ -1,226 +1,100 @@
-import { useState } from "react";
-import { AddMemberIcon, ExpandIcon, MoreIcon, NewTagIcon, VisibilityIcon } from "../../../utils/icons/iconsMenu";
+import { useEffect, useRef, useState } from "react";
+import { NewTagIcon } from "../../../utils/icons/iconsMenu";
 import './detailFeature.css'
 import TitleDetailFeature from "../titleFeature/TitleDetailFeature";
 import Wysiwyg from "../../wysiwyg/Wysiwyg";
+import ListsTasks from "../../tasks/listTaks/ListsTasks";
+import HeaderDetailFeature from "./headerDetailFeature/HeaderDetailFeature";
+import { useSelector } from "react-redux";
+import { useUpdateFeatureMutation } from "../../../rtkQuery/apiSliceFeature";
+// import { setLoading } from "../../../redux/slices/featureSlice";
+import { toast } from "react-toastify";
+import ViewsFeature from "./viewsFeature/ViewsFeature";
+import TrakingFeture from "./trakingFeature/TrakingFeture";
+import SystemFile from "../../tasks/systemFiles/SystemFile";
 // import Wysiwyg from "../../wysiwyg/Wysiwyg";
 
-const DetailFeature = () => {
+const DetailFeature = ({feature, isFetching}) => {
+  const [updateFeatureRequest] = useUpdateFeatureMutation()
+  const [currentId, setCurrentId] = useState(null)
+  // const dispatch = useDispatch()
+  const loadingFeature = useSelector(state=>state.feature.loading)
+  const editorStateRef = useRef();
+  const debounceRef = useRef()
 
-  const [editModeTitle, setEditModeTitle] = useState(false)
-  const [titleFeature, setTitleFeature] = useState("")
+  const handleUpdateFeature = async (titleFeature, description) =>{
+    try {
+
+      // const description = localStorage.getItem("editorStage")
+      if(debounceRef.current)
+        clearTimeout(debounceRef.current)
+
+      const body = {
+        title:titleFeature,
+        description,
+        is_watcher:false,
+      }
+
+      const timer = titleFeature ? 400 : description ? 3000 : 1000
+      debounceRef.current = setTimeout(()=>{
+        updateFeatureRequest({featureId:feature.id,body}).unwrap()
+      },timer)
+
+      // console.log(body, description)
+
+      // dispatch(setLoading(true))
+      // const response = await updateFeatureRequest({featureId:feature.id,body}).unwrap()
+      // if(response.code === 200){
+      //   toast.success("Tablero creado!",{icon:"😃"})
+
+      // }else{
+      //   toast.error("Upss! ocurrió un error",{icon:"😕"})
+
+      // }
+
+    } catch (error) {
+
+      toast.error("Upss! ocurrió un error",{icon:"😕"})
+
+      console.log(error)
+    }finally{
+
+      // dispatch(setLoading(false))
+    }
+  }
 
 
-  // const handleTextareaInput = (e) => {
-  //   const textarea = e.target;
-  //   textarea.style.height = 'auto'; // Restablecer la altura a 'auto' antes de calcular
+  useEffect(()=>{
 
-  //   // Ajustar la altura al contenido scrollHeight
-  //   console.log(textarea.scrollHeight)
-  //   textarea.style.height = textarea.scrollHeight + 'px';
-  // };
+    if(feature){
+      editorStateRef.current = feature.description
+      setCurrentId(feature.id)
+      // localStorage.setItem("idFeatureCurrent", feature.id)
+      // setShowWisiwyg(!showWisiwyg)
+      // console.log(feature.title)
+    }
+
+  },[feature])
 
   return (
-    <div className="mb-2">
-      <section className="d-flex justify-content-start align-items-center gap-2 mb-2">
-        <ul className="d-flex align-items-center gap-2 ist-unstyled">
-          <li className="dropdown">
-            <a
-              href={`#stagesOption`}
-              type="button"
-              role="button"
-              data-bs-toggle="dropdown"
-              aria-expanded="false"
-              data-bs-auto-close="outside"
-            >
-              Backlog
-            </a>
-            <ul
-              className="dropdown-menu p-2 custom-dropdown-card"
-              id={"stagesOption"}
-            >
-              <div className="font-size-14-16 font-weight-600 text-center">
-                Enumerar acciones
-              </div>
-              <li>
-                <a type="button" role="button" className="dropdown-item">
-                  Backlog
-                </a>
-              </li>
-            </ul>
-          </li>
+    <div className={`p-3 pt-xl-0 ${(isFetching || loadingFeature) ? 'opacity-25 disabled-container':''}`}>
 
-          <li className="dropdown">
-            <a
-              href={`#addMemberOption`}
-              type="button"
-              role="button"
-              data-bs-toggle="dropdown"
-              aria-expanded="false"
-              data-bs-auto-close="outside"
-            >
-              <span>
-                <AddMemberIcon fill="var(--gray-600)" />
-              </span>
-            </a>
-            <ul
-              className="dropdown-menu p-2 custom-dropdown-card"
-              id="addMemberOption"
-            >
-              <div className="font-size-14-16 font-weight-600 text-center">
-                Enumerar acciones
-              </div>
-              <li>
-                <a type="button" role="button" className="dropdown-item">
-                  Backlog
-                </a>
-              </li>
-            </ul>
-          </li>
-        </ul>
-        <span
-          className="d-block mx-2"
-          style={{ height: 20, borderLeft: "1px solid var(--gray-600)" }}
-        ></span>
-        <ul className="d-flex align-items-center gap-2 ist-unstyled ms-auto">
-          <li className="dropdown">
-            <a
-              href={`#addMemberOption`}
-              type="button"
-              role="button"
-              data-bs-toggle="dropdown"
-              aria-expanded="false"
-              data-bs-auto-close="outside"
-            >
-              <span>
-                <MoreIcon fill="var(--lightDark)" />
-              </span>
-            </a>
-            <ul
-              className="dropdown-menu p-2 custom-dropdown-card"
-              id="addMemberOption"
-            >
-              <div className="font-size-14-16 font-weight-600 text-center">
-                Enumerar acciones
-              </div>
-              <li>
-                <a type="button" role="button" className="dropdown-item">
-                  Backlog
-                </a>
-              </li>
-            </ul>
-          </li>
-        </ul>
-      </section>
+      <HeaderDetailFeature
+        feature={feature}
+
+      />
+
       <section className="d-flex flex-wrap justify-content-start align-items-center gap-2 mb-2 font-size-12-14">
-        <ul className="d-flex align-items-center gap-2 ist-unstyled">
-          <li
-            className="d-flex flex-column align-items-center ps-3"
-            style={{ borderLeft: "1px solid var(--gray-600)" }}
-          >
-            <span>FECHA DE CREACIÓN</span>
-            <span>sep. 10, 10:49 pm</span>
-          </li>
 
-          <div
-            className="d-flex flex-column align-items-center ps-3"
-            style={{ borderLeft: "1px solid var(--gray-600)" }}
-          >
-            <span>TIEMPO REGISTRADO</span>
-            <li className="dropdown">
-              <a
-                href={`#recordTime`}
-                type="button"
-                role="button"
-                data-bs-toggle="dropdown"
-                aria-expanded="false"
-                data-bs-auto-close="outside"
-              >
-                <span>8:00:00</span>
-                <span>
-                  <ExpandIcon fill="var(--gray-600)" height="20" width="20" />
-                </span>
-              </a>
-              <ul
-                className="dropdown-menu p-2 custom-dropdown-card"
-                id="recordTime"
-              >
-                <div className="font-size-14-16 font-weight-600 text-center">
-                  Enumerar acciones
-                </div>
-                <li>
-                  <a type="button" role="button" className="dropdown-item">
-                    Backlog
-                  </a>
-                </li>
-              </ul>
-            </li>
-          </div>
+      <TrakingFeture
+          feature={feature}
+        />
 
-          <div
-            className="d-flex flex-column align-items-center ps-3"
-            style={{ borderLeft: "1px solid var(--gray-600)" }}
-          >
-            <span>FECHA LÍMITE</span>
-            <li className="dropdown">
-              <a
-                href={`#dueDateOption`}
-                type="button"
-                role="button"
-                data-bs-toggle="dropdown"
-                aria-expanded="false"
-                data-bs-auto-close="outside"
-              >
-                <span>Sep. 10</span>
-              </a>
-              <ul
-                className="dropdown-menu p-2 custom-dropdown-card"
-                id="dueDateOption"
-              >
-                <div className="font-size-14-16 font-weight-600 text-center">
-                  Enumerar acciones
-                </div>
-                <li>
-                  <a type="button" role="button" className="dropdown-item">
-                    Backlog
-                  </a>
-                </li>
-              </ul>
-            </li>
-          </div>
-        </ul>
-        <div className="dropdown ms-auto">
-          <a
-            href={`#VisibilityOption`}
-            type="button"
-            role="button"
-            className="position-relative me-3"
-            data-bs-toggle="dropdown"
-            aria-expanded="false"
-            data-bs-auto-close="outside"
-          >
-            <VisibilityIcon fill="var(--purple)" />
-            <span
-              style={{ top: 8 }}
-              className="position-absolute start-100 translate-middle badge rounded-pill bgPurple-color fw-normal"
-            >
-              99+
-            </span>
-          </a>
-          <ul
-            className="dropdown-menu p-2 custom-dropdown-card"
-            id="VisibilityOption"
-          >
-            <div className="font-size-14-16 font-weight-600 text-center">
-              Enumerar acciones
-            </div>
-            <li>
-              <a type="button" role="button" className="dropdown-item">
-                Backlog
-              </a>
-            </li>
-          </ul>
-        </div>
+
+        <ViewsFeature
+          featureId={feature.id}
+          usersAssigned={feature.list_of_users_assigned}
+        />
       </section>
 
       <section className="section-tags-feature d-flex flex-wrap justify-content-start align-items-center gap-2 mb-2 font-size-12-14">
@@ -255,28 +129,36 @@ const DetailFeature = () => {
         </ul>
       </section>
 
-      <section className="section-title-feature d-flex flex-wrap justify-content-start align-items-center gap-2 mb-2">
-        <div
-          className="w-100"
-          role="button"
-          onClick={()=>{if(editModeTitle) return; setEditModeTitle(true); setTitleFeature("Este es un titulo")}}
-        >
-          {
-            editModeTitle ? (
-              <TitleDetailFeature
-                setEditModeTitle={setEditModeTitle}
-                setTitleFeature={setTitleFeature}
-                titleFeature={titleFeature}
-              />
-            ):(
-              <h3 className="fw-bold">Este es un titulo</h3>
-            )
-          }
-        </div>
+      <TitleDetailFeature
+        feature={feature}
+        handleUpdateFeature={handleUpdateFeature}
+      />
+
+      {
+        feature && (
+          <section className="section-description-feature mb-2">
+            <Wysiwyg
+              editorState={feature.description}
+              // setEditorState={setEditorState}
+              currentId={currentId}
+              handleUpdateFeature={handleUpdateFeature}
+              featureId={feature.id}
+            />
+          </section>
+        )
+      }
+
+      <section className="section-tasks mb-2">
+        <ListsTasks
+          feature={feature}
+        />
       </section>
 
-      <section className="section-description-feature mb-2">
-        <Wysiwyg/>
+      <section>
+        <SystemFile
+          feature={feature}
+
+        />
       </section>
     </div>
   );

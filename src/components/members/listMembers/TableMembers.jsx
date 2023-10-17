@@ -46,7 +46,7 @@ const TableMembers = ({
         className="table table-hover rounded table-borderless"
         style={{ backgroundColor: "var(--gray)" }}
       >
-        {table.getHeaderGroups().map((headerGroup) => (
+        {/* {table.getHeaderGroups().map((headerGroup) => (
           <thead key={headerGroup.id}>
             <tr>
               {headerGroup.headers.map((header) => (
@@ -59,13 +59,13 @@ const TableMembers = ({
               ))}
             </tr>
           </thead>
-        ))}
+        ))} */}
         <tbody>
           {table.getRowModel().rows.length ? (
             table.getRowModel().rows.map((row, i) => (
               <tr key={i}>
                 {row.getVisibleCells().map((cell) => (
-                  <td key={cell.id}>
+                  <td key={cell.id} >
                     {flexRender(cell.column.columnDef.cell, cell.getContext())}
                   </td>
                 ))}

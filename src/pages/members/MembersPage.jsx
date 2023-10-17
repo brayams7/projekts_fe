@@ -36,6 +36,7 @@ const MembersPage = () => {
               workspaceId={data.id}
               userId={data.user_id}
               initials={data.initials}
+              members={data?.members || []}
             />
           )
         }

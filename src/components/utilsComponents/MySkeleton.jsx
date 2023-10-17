@@ -204,3 +204,94 @@ export const HeaderWorkspaceLoader = (
     </ContentLoader>
   );
 };
+
+
+export const DetailFeatureLoader = (
+  {
+    width = "100%",
+    height = 300,
+    backgroundColor = "#677ca8",
+    foregroundColor = "#f1eeee",
+    speed = 2,
+    ...props
+  }
+)=> {
+  return (
+    <ContentLoader
+      // viewBox="0 0 400 160"
+      backgroundColor={backgroundColor}
+      foregroundColor={foregroundColor}
+      speed={speed}
+      height={height}
+      width={width}
+      {...props}
+    >
+      <rect x="0" y="29" rx="4" ry="4" width={width} height="8" />
+      {/* <rect x="0" y="50" rx="4" ry="4" width={width} height="10" /> */}
+      <rect x="0" y="13" rx="4" ry="4" width={width} height="9" />
+      {/* <rect x="0" y="65" rx="4" ry="4" width={width} height="10" /> */}
+      <rect x="0" y="50" rx="4" ry="4" width={width} height="30" />
+      <rect x="0" y="99" rx="5" ry="5" width={width} height="200" />
+    </ContentLoader>
+  )
+}
+
+export const AttachmentLoader = (
+  {
+    width = 230,
+    height = 180,
+    backgroundColor = "#677ca8",
+    foregroundColor = "#f1eeee",
+    speed = 2,
+    ...props
+  })=>{
+
+    return(
+      <ContentLoader
+        viewBox="0 0 500 420"
+        height={width}
+        width={height}
+        backgroundColor={backgroundColor}
+        foregroundColor={foregroundColor}
+        speed={speed}
+
+        {...props}
+
+      >
+        <rect x="16" y="17" rx="0" ry="0" width="100%" height="200" />
+        {/* <circle cx="35" cy="248" r="20" /> */}
+        <rect x="16" y="229" rx="2" ry="2" width="100%" height="15" />
+        <rect x="16" y="253" rx="2" ry="2" width="100%" height="15" />
+      </ContentLoader>
+    )
+}
+
+export const TaskListLoader =(
+  {
+    width = "100%",
+    height = 160,
+    backgroundColor = "#677ca8",
+    foregroundColor = "#f1eeee",
+    speed = 2,
+    ...props
+  })=>{
+
+    return(
+      <ContentLoader
+      speed={speed}
+      width={width}
+      height={height}
+      // viewBox="0 0 400 160"
+      backgroundColor={backgroundColor}
+      foregroundColor={foregroundColor}
+      {...props}
+    >
+      <rect x="50" y="6" rx="4" ry="4" width="90%" height="28" />
+      <rect x="8" y="6" rx="4" ry="4" width="35" height="28" />
+      <rect x="50" y="55" rx="4" ry="4" width="90%" height="28" />
+      <rect x="8" y="55" rx="4" ry="4" width="35" height="28" />
+      <rect x="50" y="104" rx="4" ry="4" width="90%" height="28" />
+      <rect x="8" y="104" rx="4" ry="4" width="35" height="28" />
+    </ContentLoader>
+    )
+}

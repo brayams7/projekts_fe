@@ -19,7 +19,7 @@
   outline: 0;
   z-index: 0;
   overflow: auto;
-  resize: vertical;
+  resize: none;
 }
 
 .editor-scroller .editor {
@@ -35,6 +35,32 @@
   border: 1px solid var(--gray-600);
   outline: none;
   padding: 15px 10px;
+  border-radius: var(--radius-12);
+  -webkit-border-radius: var(--radius-12);
+  -moz-border-radius: var(--radius-12);
+  -ms-border-radius: var(--radius-12);
+  -o-border-radius: var(--radius-12);
+  resize: none;
+}
+/*EDITOR DE COMENTARIO*/
+.editor-container-comment{
+  max-height: 300px;
+  position: relative;
+}
+.ontent-editable-comment-wrapper{
+  min-height: 80px;
+  overflow: hidden;
+  height: 100%;
+  position: relative;
+}
+.content-editable-comment{
+  display: block;
+  width: 100%;
+  outline: none;
+  padding: 15px 10px;
+  min-height: 80px;
+  max-height: 300px;
+  overflow: auto;
   border-radius: var(--radius-12);
   -webkit-border-radius: var(--radius-12);
   -moz-border-radius: var(--radius-12);

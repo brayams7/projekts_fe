@@ -38,3 +38,7 @@
   max-height: 170px;
   overflow-y: auto;
 }
+
+.disabled-container{
+  pointer-events: none;
+}

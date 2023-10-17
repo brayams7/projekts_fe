@@ -30,3 +30,27 @@ export const editorConfig = {
     ImageNode
   ]
 }
+
+export const editorCommentConfig = {
+  namespace: 'Comment',
+  // The editor theme
+  theme: theme,
+  editorState:null,
+  onError(error) {
+    throw error;
+  },
+  nodes: [
+    HeadingNode,
+    ListNode,
+    ListItemNode,
+    QuoteNode,
+    CodeNode,
+    CodeHighlightNode,
+    TableNode,
+    TableCellNode,
+    TableRowNode,
+    AutoLinkNode,
+    LinkNode,
+    ImageNode
+  ]
+}

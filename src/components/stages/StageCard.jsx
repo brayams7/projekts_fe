@@ -51,12 +51,13 @@ const StageCard = ({
         name,
         id,
         order,
+        color,
         isDefault,
         isFinal,
         description,
       },
     },
-    disabled: Boolean(isFinal) || isEditTitleStage,
+    disabled: Boolean(isFinal) || isEditTitleStage || isShowAddCardFeature,
   });
 
   const styles = {

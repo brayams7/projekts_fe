@@ -22,6 +22,14 @@
 .bgPurple-color{
   background-color: var(--purple);
 }
+
+.bgWhite-color{
+  background-color: var(--white);
+}
+
+.bgGray600-color{
+  background-color: var(--gray-600);
+}
 /*
     Colors
 */
@@ -46,6 +54,17 @@
   color: var(--white);
 }
 
+.gray-color-600{
+  color: var(--gray-600);
+}
+
+.red-color{
+  color: var(--red);
+}
+
+.purple-color{
+  color: var(--purple);
+}
 /*
     Font weith
 */
@@ -90,6 +109,10 @@
   font-size: var(--size-14);
 }
 
+.font-size-18-20{
+  font-size: var(--size-18);
+}
+
 /*
     Customs components
 */
@@ -122,6 +145,7 @@
 .custom-text-area-form{
   font-size: var(--size-12);
   color: var(--blueDark);
+  resize: none;
 }
 
 .custom-button-cancel{
@@ -132,6 +156,7 @@
   -o-border-radius: var(--radius-12);
   border: none;
 }
+
 
 
 /*
@@ -148,6 +173,19 @@
   border: 2px solid var(--blueDark);
 }
 
+
+/*
+  SWITCH
+*/
+
+.title-break-all{
+  word-break: break-all;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 1;
+  display: -webkit-box;
+}
 
 /*
   SWITCH
@@ -184,5 +222,9 @@
 
     .font-size-14-16{
       font-size: var(--size-16);
+    }
+
+    .font-size-18-20{
+      font-size: var(--size-20);
     }
 }

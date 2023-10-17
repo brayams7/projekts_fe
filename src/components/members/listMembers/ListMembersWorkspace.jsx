@@ -2,9 +2,13 @@ import { createColumnHelper} from "@tanstack/react-table";
 import { useEffect, useState } from "react";
 import { useOutletContext } from "react-router-dom";
 import TableMembers from "./TableMembers";
+import { API_BASE_UI_AVATARS } from "../../../services/settings";
 
 
 const columnHelper = createColumnHelper()
+
+const SIZE_AVATAR = 32
+
 
 const ListMembersWorkspace = () => {
 
@@ -35,23 +39,60 @@ const ListMembersWorkspace = () => {
 
   const columns = [
 
-    columnHelper.accessor("picture_url",{
-      header:"profile",
-      cell:(info)=>(
-        info?.getValue() ? <img className="d-block rounded-circle" style={{width:32, height:32}} src={info.getValue()} alt="profile" />
-        : <span className="d-block rounded-circle" style={{width:32, height:32}}>
+    // columnHelper.accessor("picture_url",{
+    //   header:"profile",
+    //   cell:(info)=>(
+    //     info?.getValue() ? <img className="d-block rounded-circle" style={{width:32, height:32}} src={info.getValue()} alt="profile" />
+    //     : <span className="d-block rounded-circle" style={{width:32, height:32}}>
 
-        </span>
-      )
-    }),
+    //     </span>
+    //   )
+    // }),
     columnHelper.accessor("username",{
-      cell:(info)=><span>{info.getValue()}</span>,
+      cell:(info)=>{
+
+        const original = info.row.original
+        const username = original.username
+        const email = original.email
+
+        return (
+          <div className="d-flex align-items-center gap-2">
+            <span>
+              <img
+                src={`${API_BASE_UI_AVATARS}/?name=${username}&background=random&color=fff&size=${SIZE_AVATAR}`}
+                alt="avatar"
+                className="rounded-circle"
+              />
+            </span>
+            <div className="d-flex flex-column">
+              <span>{info.getValue()}</span>
+              <span className="lightBlue_color">{email}</span>
+            </div>
+          </div>
+        )
+      },
       header:"Usuario"
     }),
-    columnHelper.accessor("email",{
-      cell:(info)=><span>{info.getValue()}</span>,
-      header:"Correo"
+    columnHelper.accessor("memberType",{
+      id:"memberType",
+      cell:(info)=><span className="fw-bold h-100 d-flex align-items-center">{info.getValue()}</span>
     }),
+    // columnHelper.accessor("actions",{
+    //   id:"actions",
+    //   cell:({row})=>{
+    //     const original = row.original
+
+    //     return (
+    //       <div>
+
+    //       </div>
+    //     )
+    //   }
+    // })
+    // columnHelper.accessor("email",{
+    //   cell:(info)=><span>{info.getValue()}</span>,
+    //   header:"Correo"
+    // }),
   ]
 
   const [dataList, setDataList] = useState([])

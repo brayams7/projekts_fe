@@ -1,0 +1,19 @@
+
+
+.new-task-container .new-task-input{
+  border: none;
+}
+
+.new-task-container .new-task-input::placeholder{
+  color: var(--gray-600);
+}
+
+.new-task-container .new-task-input:focus{
+  outline: none !important;
+  border: 1px solid var(--purple);
+}
+
+.new-task-container .new-task-button{
+  background-color: var(--purple);
+  color: var(--white);
+}

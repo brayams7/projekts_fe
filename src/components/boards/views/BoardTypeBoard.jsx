@@ -213,9 +213,9 @@ const BoardTypeBoard = ({
   return (
     <div className="board-canvas-list d-flex align-items-start px-4">
       <ModalFeature
-        selectedFeature={selectedFeature}
-        setSelectedFeature={setSelectedFeature}
-      />
+            selectedFeature={selectedFeature}
+            setSelectedFeature={setSelectedFeature}
+          />
       <DndContext
         collisionDetection={closestCorners}
         onDragStart={handleDragStart}
@@ -263,6 +263,7 @@ const BoardTypeBoard = ({
               order={activeBoardStage.order}
               isFinal={activeBoardStage.isFinal}
               description={activeBoardStage.description}
+              color={activeBoardStage.color}
               boardId={boardId}
               listFeatures={listFeatures.filter(
                 (feature) => feature.stage_id === activeBoardStage.id

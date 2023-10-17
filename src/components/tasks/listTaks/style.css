@@ -1,0 +1,23 @@
+/* ROW TASK*/
+.row-taks-container:hover .dropdown-option-task-container > a{
+  opacity: 1;
+}
+
+
+/* DROPDOWN TASK */
+
+.row-taks-container .dropdown-option-task-container > a{
+  opacity: 0;
+  transition: opacity 0.3s ease-out;
+  -webkit-transition: opacity 0.3s ease-out;
+  -moz-transition: opacity 0.3s ease-out;
+  -ms-transition: opacity 0.3s ease-out;
+  -o-transition: opacity 0.3s ease-out;
+}
+
+/* .dropdown-option-task-container > a:hover{
+  color: var(--purple);
+} */
+
+
+

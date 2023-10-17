@@ -75,7 +75,7 @@ const SingUp = ({isSingUp,setIsSingUp}) => {
           </div>
 
           <button className="btn_login mb-3" type="submit">
-            Iniciar sesión
+            Registrate
           </button>
         </form>
 
