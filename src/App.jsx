@@ -1,4 +1,4 @@
-import { Suspense, lazy } from 'react'
+import { Suspense, lazy, useEffect } from 'react'
 
 import { Navigate, Route} from "react-router-dom";
 import { initAxios, publicAxios } from "./services/settings";
@@ -16,6 +16,7 @@ import RoutesHome from "./routes/RoutesHome";
 import RoutesWorkspace from "./routes/RoutesWorkspace";
 import Permission from "./Permission"
 import InvitationToWorkspace from './pages/Auth/InvitationToWorkspace';
+import dayjs from 'dayjs';
 // import { getWokspaceById } from "./services/workpaceService";
 
 publicAxios();
@@ -24,6 +25,19 @@ initAxios();
 function App() {
   // const { workspaceId } = useParams()
   // console.log(workspaceId)
+
+  const versionRepo = () =>{
+    const fecha = dayjs("2023-10-17 10:35").format("MMM. DD YYYY, HH:mm a")
+    const nemeProject = "PROJEKTS"
+    const version = "1.0.0.1"
+    const message = `Version ${version} - ${nemeProject} - ${fecha}`
+    console.log(message)
+  }
+
+  useEffect(()=>{
+    versionRepo()
+  },[])
+
   return (
     // <Suspense fallback={<span className="fs-5">Cargando...</span>}>
       <RoutesWithNotFound>
