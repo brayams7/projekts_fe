@@ -11,43 +11,7 @@ import { toast } from "react-toastify";
 import BoardTypeBoard from "../../../components/boards/views/BoardTypeBoard";
 import { PrivateActionsRoutes } from "../../../routes";
 
-// const elemets = [
-//   {
-//     id: 1,
-//     name: "Estado 1",
-//   },
-//   {
-//     id: 2,
-//     name: "Estado 2",
-//   },
-//   {
-//     id: 3,
-//     name: "Estado 3",
-//   }
-// ];
-
-// const features = [
-//   {
-//     id: 10,
-//     title: "tarea 1",
-//     stage_id:15
-//   },
-//   {
-//     id:11,
-//     title: "tarea 2",
-//     stage_id:15
-//   },
-//   {
-//     id: 12,
-//     title: "Tarea 3",
-//     stage_id:16
-//   },
-//   {
-//     id: 13,
-//     title: "Tarea 4",
-//     stage_id:16
-//   },
-// ]
+const initStage = {"root":{"children":[{"children":[{"detail":0,"format":0,"mode":"normal","style":"","text":"","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1}],"direction":"ltr","format":"","indent":0,"type":"root","version":1}}
 
 // const TYPES = {
 //   STAGE:"STAGE",
@@ -89,6 +53,8 @@ const BoardCanvas = () => {
       setDetailBoard(detailBoad)
       setListStages(stages)
       setListFeatures(mapFeatures(stages))
+
+      localStorage.setItem("initStage", JSON.stringify(initStage))
     }
   },[data])
 

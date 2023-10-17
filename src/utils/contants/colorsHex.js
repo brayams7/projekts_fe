@@ -18,6 +18,22 @@ export const LIST_COLORS_HEX = {
   brownColor:"#b04632"
 }
 
+export const LIST_COLORS_STAGES = {
+  grayColor:"#656f7d",
+  brownColor:"#aa8d80",
+  violetColor:"#b660e0",
+  pinkColor:"#ee5e99",
+  redColor:"#d33d44",
+  orangeColor:"#e16b16",
+  yellowColor:"#f8ae00",
+  greenColor:"#008844",
+  minColor:"#64c6a2",
+  tailColor:"#0f9d9f",
+  azureBlueColor:"#1090e0",
+  blueColor:"#4466ff",
+  purpleColor:"#5f55ee"
+}
+
 export const DEFAULT_COLORS_LAYOUT = {
   siderbar:{
     backgroundColor:"#fff",

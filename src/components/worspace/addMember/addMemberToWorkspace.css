@@ -1,0 +1,51 @@
+.input-add-member-container .email-member{
+  background-color: var(--purple);
+  color: white;
+}
+
+.list-users-content .item-user{
+  background-color: transparent;
+  transition: background-color .3s ease-in ;
+  -webkit-transition: background-color .3s ease-in ;
+  -moz-transition: background-color .3s ease-in ;
+  -ms-transition: background-color .3s ease-in ;
+  -o-transition: background-color .3s ease-in ;
+  border-radius: var(--radius-8);
+  -webkit-border-radius: var(--radius-8);
+  -moz-border-radius: var(--radius-8);
+  -ms-border-radius: var(--radius-8);
+  -o-border-radius: var(--radius-8);
+}
+
+.list-users-content .item-user:hover{
+  color:var(--white);
+  background-color: rgba(127, 119, 241, .7);
+}
+
+.list-users-content .item-user-ismember:hover{
+  color: var(--white);
+  background-color: rgba(164, 164, 164, 0.7);
+  cursor: no-drop;
+}
+
+.list-of-users-to-invite .item-member-to-invite{
+  background-color: var(--gray-600);
+  color: var(--white);
+  border-radius: var(--radius-8);
+  -webkit-border-radius: var(--radius-8);
+  -moz-border-radius: var(--radius-8);
+  -ms-border-radius: var(--radius-8);
+  -o-border-radius: var(--radius-8);
+}
+
+.list-of-users-to-invite .item-member-to-invite button:hover{
+  color: var(--purple);
+}
+
+.button-send-invitation{
+  opacity: 1;
+}
+
+.button-send-invitation:disabled{
+  opacity: .7;
+}

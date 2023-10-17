@@ -4,7 +4,7 @@
   --blue:#205c96;
   --sipson:#6980bc;
   --sipsonDark:#15658f;
-  --purple:#b5acdd;
+  --purple:#7f77f1;
   --pink:#ead2ea;
   --gray:#f3f3f3;
   --lightBlue: #4c93ff;
@@ -14,9 +14,10 @@
   --yellow: #c8c54e;
   --lightOrange: #ffa483;
   --grayDark:#c6c3c8;
-  --gray-600:#626f86;
+  --gray-600:#a5a9b0;
   --white:#ffffff;
   --black:#141415;
+  --red:#C22B2B;
 
   --ds-skeleton: #0a1f420f;
 
@@ -67,6 +68,7 @@
   --size-18: 18px;
   --size-20: 20px;
   --size-24: 24px;
+  --size-26: 26px;
   --size-28: 28px;
   --size-32: 32px;
 

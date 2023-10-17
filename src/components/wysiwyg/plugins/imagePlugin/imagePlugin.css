@@ -1,0 +1,24 @@
+.image-plugin-uploadimage-container .uploadimage-button{
+  width: 100%;
+  padding: 8px 10px;
+  outline: none;
+  border: 1px solid var(--purple);
+  color: var(--purple);
+  border-radius: var(--radius-8);
+  -webkit-border-radius: var(--radius-8);
+  -moz-border-radius: var(--radius-8);
+  -ms-border-radius: var(--radius-8);
+  -o-border-radius: var(--radius-8);
+  cursor: pointer;
+}
+
+.image-plugin-uploadimage-container .confirm-uploadimage-button{
+  background-color: #f0f0f0;
+  border: none;
+  color: var(--lightDark);
+  border-radius: var(--radius-8);
+  -webkit-border-radius: var(--radius-8);
+  -moz-border-radius: var(--radius-8);
+  -ms-border-radius: var(--radius-8);
+  -o-border-radius: var(--radius-8);
+}

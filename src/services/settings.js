@@ -5,6 +5,8 @@ import { removeTokenCookie, removeUserDataCookie, getTokenCookie, getUserDataCoo
 export const API_BASE = 'http://localhost:8000/api'
 export const API_BASE_STORAGE = 'http://127.0.0.1:8000/storage/'
 
+export const API_BASE_UI_AVATARS = 'https://ui-avatars.com/api/'
+
 export const axiosIntance = axios.create({
     baseURL:API_BASE,
     headers:{
@@ -26,12 +28,21 @@ export const axiosToken = axios.create({
 
 export const publicAxios = () => {
   axiosIntance.interceptors.response.use(
+
     function(response){
       return response.data
     },
+
     function(error){
-      console.log("error interceptor", error)
-      return error
+
+      const e  = {
+        code: 500,
+        data: null,
+        description:"Ocurrió un error en el servidor, Intente mas tarde",
+      }
+
+      const {response} = error
+      return response?.data ? response?.data : e
     }
   )
 }
@@ -42,16 +53,16 @@ export const initAxios = () => {
 
     axiosToken.interceptors.request.use( (configAxios) => {
 
-        const token = getTokenCookie()
+        const session = getTokenCookie()
         const user = getUserDataCookie()
         console.log({
           headers:configAxios,
-          user
+          user, session
         })
-        if(token && user) {
+        if(session && user) {
             configAxios.headers = {
               'username': user.username,
-              'Authorization': "Bearer "+ token,
+              'Authorization': "Bearer "+ session?.token,
               "Content-Type":"application/json",
               ...configAxios.headers
             }

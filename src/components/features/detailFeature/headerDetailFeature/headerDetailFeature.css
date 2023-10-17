@@ -1,0 +1,54 @@
+
+.header-detail-feature-container .dropwown-stage{
+  display: inline-block;
+  padding: 8px 8px;
+  color: whitesmoke;
+}
+
+
+
+
+.dropdown-stages-feature-card .item-stage-feature{
+  background-color: transparent;
+  transition: background-color 0.2s ease-in;
+  -webkit-transition: background-color 0.2s ease-in;
+  -moz-transition: background-color 0.2s ease-in;
+  -ms-transition: background-color 0.2s ease-in;
+  -o-transition: background-color 0.2s ease-in;
+}
+
+.dropdown-stages-feature-card .item-stage-feature:hover{
+  background-color: var(--gray);
+}
+
+/* .header-detail-feature-container .stage-final:hover{
+  border: 1px solid ;
+} */
+
+/*
+  LIST USERS ASSIGNED
+*/
+
+.list-users-assigned-feature-container .item-user-assigned-feature{
+  margin-left: -14px;
+}
+
+.list-users-assigned-feature-container > ul{
+  padding: 0 0 0 12px
+}
+
+/*
+  LIST USERS ASSIGNED TO WORKSPACE
+*/
+
+.users-assigned-to-workspace-container .item-user-assigned-to-workspace{
+  background-color: transparent;
+  transition: background-color 0.2s ease-in;
+  -webkit-transition: background-color 0.2s ease-in;
+  -moz-transition: background-color 0.2s ease-in;
+  -ms-transition: background-color 0.2s ease-in;
+  -o-transition: background-color 0.2s ease-in;
+}
+.users-assigned-to-workspace-container .item-user-assigned-to-workspace:hover{
+  background-color: var(--gray);
+}

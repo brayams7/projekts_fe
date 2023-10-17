@@ -76,6 +76,28 @@ export const apiSliceWorkspace = apiSlice.injectEndpoints({
         }
       },
       invalidatesTags:[TYPES_WORKSPACE.TYPE_WORKSPACE_BY_ID]
+    }),
+
+    //invite a user through email
+    inviteMemberToWorkspace:builder.mutation({
+      query:({body, workspaceId})=>{
+        return {
+          url:`/workspace/inviteMemberToWorkspace/${workspaceId}`,
+          method:"POST",
+          body
+        }
+      },
+      invalidatesTags:[TYPES_WORKSPACE.TYPE_WORKSPACE_BY_ID]
+    }),
+    acceptInvitationOfTheWorkspace:builder.mutation({
+      query:({body})=>{
+        return {
+          url:`/workspace/acceptInvitationToWorkspace/`,
+          method:"POST",
+          body
+        }
+      },
+      invalidatesTags:[TYPES_WORKSPACE.TYPE_WORKSPACE_BY_ID]
     })
   })
 })
@@ -84,5 +106,7 @@ export const {
   useGetAllWorkspacesQuery,
   useGetAllWorkspacesUserQuery,
   useGetWorkspaceByIDQuery,
-  useUpdateWorkspaceMutation
+  useUpdateWorkspaceMutation,
+  useInviteMemberToWorkspaceMutation,
+  useAcceptInvitationOfTheWorkspaceMutation
 } = apiSliceWorkspace

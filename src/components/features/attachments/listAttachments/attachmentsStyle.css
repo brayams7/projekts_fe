@@ -1,0 +1,110 @@
+
+/*
+  ITEM ATTACHMENT
+*/
+
+.attachment-item-container{
+  background-color: var(--white);
+  transition: all .3s ease-in;
+  -webkit-transition: all .3s ease-in;
+  -moz-transition: all .3s ease-in;
+  -ms-transition: all .3s ease-in;
+  -o-transition: all .3s ease-in;
+}
+
+.attachment-item-container:hover{
+  box-shadow: var(--shadow);
+}
+
+.attachment-list-container .attachment-item-container{
+  height: 180px;
+  width: 230px;
+  background-color: var(--white);
+  position: relative;
+}
+
+.attachment-item-container .attachment-preview-container{
+  position: relative;
+  background-position: 50%;
+  background-repeat: no-repeat;
+  background-size: cover;
+  display: flex;
+  /* align-items: flex-end; */
+  justify-content: center;
+  height: 70%;
+}
+
+.attachment-preview-container .attachment-preview{
+  text-decoration: none;
+  position: relative;
+}
+
+.attachment-preview-container .preview--container{
+  display: flex;
+  max-width: 100%;
+  align-items: center;
+}
+
+.preview--container .preview-img{
+  margin: 0 auto auto;
+  cursor: pointer;
+  display: block;
+  min-height: 100%;
+  max-height: 100%;
+  max-width: 100%;
+  object-fit: contain;
+}
+
+.attachment-preview-container .attachment-open-toggle{
+  transition: opacity .2s ease-in;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  opacity: 0;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  cursor: pointer;
+  background: rgba(0,0,0,.5);
+  z-index: 10;
+  border-radius: var(--radius-8) var(--radius-8) 0 0;
+  -webkit-border-radius: var(--radius-8) var(--radius-8) 0 0;
+  -moz-border-radius: var(--radius-8) var(--radius-8) 0 0;
+  -ms-border-radius: var(--radius-8) var(--radius-8) 0 0;
+  -o-border-radius: var(--radius-8) var(--radius-8) 0 0;
+  -webkit-transition: opacity .2s ease-in;
+  -moz-transition: opacity .2s ease-in;
+  -ms-transition: opacity .2s ease-in;
+  -o-transition: opacity .2s ease-in;
+}
+
+.attachment-preview-container .attachment-open-toggle:hover{
+  opacity: .6;
+}
+
+.attachment-preview-container .preview-content{
+  width: 100%;
+  position: relative;
+  text-decoration: none;
+}
+
+
+.attachment-title-container{
+  /* position: relative; */
+  /* z-index: 2; */
+  margin-top: 10px;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+}
+
+.attachment-title-container .attachment-title{
+  word-break: break-all;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 1;
+  display: -webkit-box;
+}

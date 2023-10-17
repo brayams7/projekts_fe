@@ -47,3 +47,19 @@ export const createRoute = ({
   stylesLayout,
   ...(icon?{icon}:{}),
 })
+
+
+export function debounceFuntion(fn, delay){
+  let timer
+
+  return function(){
+    const self = this.self
+    const args = this.arguments
+
+    clearTimeout(timer)
+
+    timer = setTimeout(function(){
+      fn.apply(self, args)
+    }, delay)
+  }
+}

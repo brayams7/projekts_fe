@@ -1,6 +1,6 @@
 export const PublicRoutes = {
   LOGIN: "login",
-  TEST: "test"
+  ACCEPT_INVITATION_TO_WORKSPACE: "inviteTeam"
 };
 
 export const PrivateRoutes = {
