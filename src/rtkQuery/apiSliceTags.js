@@ -73,4 +73,5 @@ export const apiSliceTags = apiSlice.injectEndpoints({
 
 export const {
   useListTagsQuery,
+  useCreateTagMutation
 } = apiSliceTags

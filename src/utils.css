@@ -96,7 +96,11 @@
     text sizes
 */
 
-.font_size_10_12{
+.font-size-8-10{
+  font-size: var(--size-8);
+}
+
+.font-size-10-12{
     font-size: var(--size-10);
 }
 
@@ -157,6 +161,9 @@
   border: none;
 }
 
+.custom-button-disabled:disabled{
+  opacity: .7;
+}
 
 
 /*
@@ -212,7 +219,11 @@
         font-size: var(--size-20);
     }
 
-    .font_size_10_12{
+    .font-size-8-10{
+      font-size: var(--size-10);
+    }
+
+    .font-size-10-12{
         font-size: var(--size-12);
     }
 

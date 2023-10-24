@@ -43,7 +43,7 @@ const NewTask = ({feature}) => {
         onFocus={() => setIsFocusText(true)}
       />
       {isFocusText && (
-        <div className="d-flex gap-2">
+        <div className="d-flex gap-2 align-items-center">
           <div className="dropdown">
             <a
               href={`#addTagOption`}
@@ -59,7 +59,7 @@ const NewTask = ({feature}) => {
             </a>
             <ul
               className="dropdown-menu border-0 shadow px-3 py-2"
-              style={{height:100, width:250}}
+              style={{minHeight:100, width:250}}
               id="addTagOption"
             >
               <ListTags
@@ -114,7 +114,7 @@ const NewTask = ({feature}) => {
           </div>
 
           <button
-            className="new-task-button font-size-12-14 px-2 rounded"
+            className="new-task-button font-size-10-12 px-2 py-1 rounded"
             onClick={handleCreateTask}
             disabled={isLoading}
           >

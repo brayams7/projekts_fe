@@ -5,7 +5,7 @@ import LoadingIcon from '../../../assets/loadings/EllipsisLoading40px.svg'
 import { useForm } from "react-hook-form";
 import { useCreateStageAndAssingToBoardMutation } from "../../../rtkQuery/apiSliceStage";
 import { toast } from "react-toastify";
-import { LIST_COLORS_STAGES } from "../../../utils/contants/colorsHex";
+import ListColorsTags from "../../tags/colors/ListColorsTags";
 
 const IS_DEFAULT = 0
 const IS_FINAL = 0
@@ -94,41 +94,10 @@ const AddNewCardStage = ({listStages=[], boardId}) => {
             // onChange={(e)=>setNameTextStage(e.target.value)}
           />
 
-          <ul className="list-unstyled d-flex justify-content-center align-items-start flex-wrap mb-2" style={{width:230}}>
-            {
-              // eslint-disable-next-line no-unused-vars
-              Object.entries(LIST_COLORS_STAGES).map(([_,color], key)=>(
-                <li
-                  key={key}
-                  role="button"
-                  className="p-1 rounded-circle h-auto d-flex justify-content-center align-items-center"
-                  style={{
-                    // width:28,
-                    // height:20,
-                    ...(colorStage === color) ? {border:`2px solid ${color}`} : {}
-                  }}
-                  onClick={()=>setColorStage(color)}
-                >
-                  <span
-                    className="rounded-circle d-inline-block"
-                    style={{
-                      backgroundColor:color,
-                      width:20,
-                      height:20,
-                    }}
-
-                  >
-
-                  </span>
-                </li>
-              ))
-            }
-            {/* <input
-              type="color"
-              name="color"
-              className="form-control"
-            /> */}
-          </ul>
+          <ListColorsTags
+            colorStage={colorStage}
+            setColorStage={setColorStage}
+          />
 
           <div className="d-flex flex-wrap justify-content-start align-items-center">
             <button type="submit" className="btn btn-primary me-2" disabled={(!isValid || !colorStage || isLoading)}>
