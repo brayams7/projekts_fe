@@ -10,7 +10,7 @@ import { createRoute, getIdParams } from "../../../utilsFunctions/generalFuntion
 import { Menu, typesMenu } from "../../../Menu";
 import { PrivateRoutes } from "../../../routes";
 import { DEFAULT_COLORS_LAYOUT } from "../../../utils/contants/colorsHex";
-import { API_BASE_STORAGE } from "../../../services/settings";
+// import { API_BASE_STORAGE } from "../../../services/settings";
 import { useLazyGetBoardsByWorkspaceAndUserQuery } from "../../../rtkQuery/apiSliceBoard";
 // import { setMenuHome, setMenuWorkspace } from "../../../redux/slices/menuSlice";
 import { useStylesLayout } from "../../../hooks/layout/useStylesLayout";
@@ -85,7 +85,7 @@ const SiderbarGeneral = ({
               },
               content:{
                 backgroundColor:board.bg_color,
-                ...(board?.bg_img ?  {backgroundImage:`url(${API_BASE_STORAGE}${board.bg_img})`}: {})
+                ...(board?.bg_img ?  {backgroundImage:`url(${board.bg_img})`}: {})
               }
             }
 
