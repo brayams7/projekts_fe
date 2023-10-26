@@ -27,9 +27,9 @@ function App() {
   // console.log(workspaceId)
 
   const versionRepo = () =>{
-    const fecha = dayjs("2023-10-25 16:11").format("MMM. DD YYYY, HH:mm a")
+    const fecha = dayjs("2023-10-25 22:08").format("MMM. DD YYYY, HH:mm a")
     const nemeProject = "PROJEKTS"
-    const version = "1.0.4"
+    const version = "1.0.5"
     const message = `Version ${version} - ${nemeProject} - ${fecha}`
     console.log(message)
   }

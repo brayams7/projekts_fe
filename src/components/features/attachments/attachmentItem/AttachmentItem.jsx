@@ -38,7 +38,7 @@ const AttachmentItem = ({
           {mouseIsOver && <VisibilityIcon fill="var(--white)" />}
         </a>
       </div>
-      <div className="attachment-title-container font_size_10_12 d-flex flex-column px-2">
+      <div className="attachment-title-container font-size-10-12 d-flex flex-column px-2">
         <div className="d-flex justify-content-center">
           <span className="attachment-title" title={name}>
             {name}
