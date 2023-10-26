@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { API_BASE_STORAGE } from "../../../../services/settings";
+// import { API_BASE_STORAGE } from "../../../../services/settings";
 import { DeleteIcon, DownloadIcon, VisibilityIcon } from "../../../../utils/icons/iconsMenu";
 
 const AttachmentItem = ({
@@ -26,11 +26,11 @@ const AttachmentItem = ({
           <img
             className={isImage ? "preview-img" : "preview-no-img"}
             alt="preview image"
-            src={isImage ? `${API_BASE_STORAGE}${url}` : iconPreview}
+            src={isImage ? url: iconPreview}
           />
         </div>
         <a
-          href={`${API_BASE_STORAGE}${url}`}
+          href={url}
           className="attachment-open-toggle"
           target="_blank"
           rel="noreferrer"
