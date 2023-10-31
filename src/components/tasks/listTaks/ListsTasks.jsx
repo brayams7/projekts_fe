@@ -5,6 +5,9 @@ import './style.css'
 import { useListTasksOfFeatureQuery } from '../../../rtkQuery/apiSliceTasks';
 import { TaskListLoader } from '../../utilsComponents/MySkeleton';
 import { useEffect, useState } from 'react';
+import ColumnUsersAssignedToTask from '../columUsersAssignedToTask/ColumnUsersAssignedToTask';
+import ColumnTagsUser from '../columnTagsUser/ColumnTagsUser';
+import dayjs from 'dayjs';
 
 const columnHelper = createColumnHelper()
 
@@ -41,7 +44,6 @@ const columnHelper = createColumnHelper()
 //   }
 // ]
 
-
 const ListsTasks = ({feature}) => {
   const [listTasks, setListTask] = useState([])
   const {
@@ -52,6 +54,8 @@ const ListsTasks = ({feature}) => {
   } = useListTasksOfFeatureQuery(feature?.id)
 
   const columns = [
+
+
     columnHelper.accessor("select",{
       header:({table})=>{
         return (
@@ -88,9 +92,63 @@ const ListsTasks = ({feature}) => {
       }
     }),
 
+    columnHelper.accessor("assigned_users",{
+      cell:({row})=>{
+        const original = row.original
+        return (
+          <ColumnUsersAssignedToTask
+            taskId={original.id}
+            assignedUsers={original.assigned_users}
+            usersAddedToTheWorkspace={original.list_of_users_added_to_the_workspace}
+          />
+        )
+      }
+    }),
+
     columnHelper.accessor("title",{
-      cell:(info)=><span>{info.getValue()}</span>,
+      cell:(info)=><span
+        className='font-size-12-14 title-break-all'
+        style={{maxWidth:350}}
+        title={info.getValue()}
+        >{info.getValue()}</span>,
       header:"title"
+    }),
+
+    columnHelper.accessor("starts_at",{
+      cell:({row})=>{
+        const original = row.original
+
+        const startsAt = original.starts_at ? dayjs.unix(original.starts_at) : ""
+
+        const format = startsAt ? startsAt.format("MMM. DD") : ""
+
+        return <span className='font-size-10-12' title='Fecha de inicio'>{ format }</span>
+      },
+      header:"fecha de inicio"
+    }),
+
+    columnHelper.accessor("due_date",{
+      cell:({row})=>{
+        const original = row.original
+
+        const startsAt = original.due_date ? dayjs.unix(original.due_date) : ""
+
+        const format = startsAt ? startsAt.format("MMM. DD") : ""
+
+        return <span className='font-size-10-12' title='Fecha de fin'>{ format }</span>
+      },
+      header:"fecha de fin"
+    }),
+
+    columnHelper.accessor("tags",{
+      cell:({row})=>{
+        const original = row.original
+        return (
+          <ColumnTagsUser
+            tags={original.tags}
+          />
+        )
+      }
     }),
 
     columnHelper.accessor("actions",{
@@ -120,10 +178,14 @@ const ListsTasks = ({feature}) => {
 
   useEffect(()=>{
     if(Array.isArray(data)){
-      setListTask(data)
+
+      const mapDataTask = data.map(task=>({
+        ...task,
+        list_of_users_added_to_the_workspace:feature.list_of_users_added_to_the_workspace
+      }))
+      setListTask(mapDataTask)
 
     }
-
   },[data, feature])
 
 

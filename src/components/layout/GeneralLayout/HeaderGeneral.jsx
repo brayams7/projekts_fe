@@ -7,9 +7,14 @@ import SearchWhite from "../../../assets/iconsHeader/search_white.svg";
 import Notification from "../../../assets/iconsHeader/notifications.svg";
 // import Help from "../../../assets/iconsHeader/help.svg";
 import MenuBar from "../../../assets/iconsHeader/menu_mobile.svg";
+import { useSelector } from "react-redux";
+import DropDownProfile from "../../user/profile/dropDownProfile/DropDownProfile";
+import { PrivateRoutes } from "../../../routes";
 // import ProfileDefault from "../../../assets/iconsHeader/profile_default.png";
 // eslint-disable-next-line react/prop-types
 const HeaderGeneral = ({openMenu,setOpenMenu,styleHeader}) => {
+
+  const user = useSelector((state) => state.auth.user);
   return (
     <div
       className="container-fluid header-navbar"
@@ -27,7 +32,7 @@ const HeaderGeneral = ({openMenu,setOpenMenu,styleHeader}) => {
               <img src={MenuBar} alt="menu bar" />
             </div>
 
-            <Link className="w-100 header-container-logo" to={"/private_home/dashboard"}>
+            <Link className="w-100 header-container-logo" to={`/${PrivateRoutes.PRIVATE_HOME}/${PrivateRoutes.BOARD}`}>
               <img
                 src={Logo}
                 alt="logo"
@@ -225,38 +230,10 @@ const HeaderGeneral = ({openMenu,setOpenMenu,styleHeader}) => {
             <img src={Help} alt="help" className="d-block header-icon-rigth" />
           </li> */}
 
-          <li className="nav-item dropdown">
-            <a
-              className="nav-link custom-item-link-white p-2 p-md-3"
-              href="#"
-              role="button"
-              data-bs-toggle="dropdown"
-              aria-expanded="false"
-            >
-              <span className="d-block rounded-circle text-center header-profile">
-                BG
-              </span>
-            </a>
-            <ul className="dropdown-menu">
-              <li>
-                <a className="dropdown-item" href="#">
-                  Action
-                </a>
-              </li>
-              <li>
-                <a className="dropdown-item" href="#">
-                  Another action
-                </a>
-              </li>
-              <li>
-                <hr className="dropdown-divider" />
-              </li>
-              <li>
-                <a className="dropdown-item" href="#">
-                  Something else here
-                </a>
-              </li>
-            </ul>
+          <li className="nav-item">
+            <DropDownProfile
+              user={user}
+            />
           </li>
         </ul>
       </div>

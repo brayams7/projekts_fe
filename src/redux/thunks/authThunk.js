@@ -2,6 +2,7 @@ import {
   removeRefreshTokenCookie,
   removeTokenCookie,
   removeUserDataCookie,
+  removeUserPermissionsCookie,
   removeUserRolCookie,
   setRefreshTokenCookie,
   setTokenCookie,
@@ -33,8 +34,8 @@ export const login = (data, navigate) => async (dispatch) => {
     setUserRolCookie(role)
     setRefreshTokenCookie(session);
 
-    dispatch(setLoading(false));
-    navigate(`/${PrivateRoutes.PRIVATE_HOME}/${PrivateRoutes.DASHBOARD}`);
+    dispatch(setLoading(false))
+    navigate(`/${PrivateRoutes.PRIVATE_HOME}/${PrivateRoutes.BOARD}`);
   } else {
     const message = response.data
     dispatch(setUser({}));
@@ -48,12 +49,15 @@ export const login = (data, navigate) => async (dispatch) => {
 };
 
 export const logout = () => (dispatch) => {
-  removeTokenCookie();
-  removeUserDataCookie();
-  removeRefreshTokenCookie();
-  removeRefreshTokenCookie({})
-  removeUserRolCookie({})
-  dispatch(setUser({}));
-  dispatch(setToken({}));
-  dispatch(setIsError(false));
+  removeTokenCookie()
+  removeUserDataCookie()
+  removeRefreshTokenCookie()
+  removeUserRolCookie()
+  removeUserPermissionsCookie()
+
+  dispatch(setUser({}))
+  dispatch(setToken({}))
+  dispatch(setIsError(false))
+  dispatch(setPermissions({}))
+  dispatch(setRol({}))
 };

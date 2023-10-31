@@ -7,7 +7,7 @@ export const apiSliceTasks = apiSlice.injectEndpoints({
   endpoints:(builder)=>({
     listTasksOfFeature:builder.query({
       query:(featureId)=>({
-        url:`/listTasks/${featureId}`
+        url:`/listTaskOfFeature/${featureId}`
       }),
       providesTags: (result, error, featureId) => {
         return [
@@ -23,9 +23,11 @@ export const apiSliceTasks = apiSlice.injectEndpoints({
 
             list = data.map(task =>{
               const createDate = dayjs(task.created_at)
-              task.created_at = createDate.format("MMM. DD YYYY, HH:mm a")
-              task.due_date = task.due_date ?? dayjs(task.due_date).format("MMM. DD YYYY, HH:mm a")
-              task.calculated_time = task.calculated_time ?? dayjs(task.calculated_time).format("MMM. DD YYYY, HH:mm a")
+              task.created_at = createDate.format("MMM. DD, HH:mm")
+
+              // task.starts_at = task.starts_at ?? dayjs(task.starts_at).format("MMM. DD, HH:mm")
+              // task.due_date = task.due_date ?? dayjs(task.due_date).format("MMM. DD YYYY, HH:mm a")
+              // task.calculated_time = task.calculated_time ?? dayjs(task.calculated_time).format("MMM. DD YYYY, HH:mm a")
 
               return task
             })

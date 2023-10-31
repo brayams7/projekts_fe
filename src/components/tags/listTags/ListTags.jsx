@@ -1,71 +1,59 @@
-import LoadingIcon from "../../../assets/loadings/EllipsisLoading40px.svg";
 
 import "./listTags.css";
-import { useListTags } from "../../../hooks/tags/useListTags";
-import { useState } from "react";
-import CreateTag from "../createTag/CreateTag";
 
-const TagItem = ({ tag, color }) => {
+export const TagItem = ({ tag, color, handleClickTag=null, id, DeleteComponent=null }) => {
+
+  const handleTagClick = () => {
+    if (handleClickTag && typeof handleClickTag === "function") {
+      handleClickTag({
+        id,
+        tag,
+        color,
+      });
+    }
+  };
+
   return (
     <li
       style={{
-        color,
+        color:"white",
+        backgroundColor: color,
         cursor: "pointer",
         borderBottom: `1px solid var(--gray)`,
+        maxWidth: 100,
+        padding:0
       }}
-      className="fw-medium w-100 mb-1 "
+      onClick={handleTagClick}
+      className="fw-medium rounded-pill rounded-start-0 font-size-10-12 item-tag"
     >
-      {tag}
+      <span className="title-break-all d-inline-block ps-1" style={{verticalAlign:"middle"}}>
+        {tag}
+      </span>
+
+      <span className="ms-2 fw-bold d-inline-block pe-1 " style={{verticalAlign:"middle"}}>
+        {
+          DeleteComponent && DeleteComponent
+        }
+      </span>
     </li>
   )
 };
 
-const ListTags = () => {
-  const { isLoading, listTags, inputText, handleChangeInput, existTag } = useListTags()
-  const [colorStage, setColorStage] = useState("")
+const ListTags = ({listTags, handleClickTag}) => {
 
-  if (isLoading) {
-    return (
-      <div className="d-flex align-items-start justify-content-center">
-        <img src={LoadingIcon} alt="loading" />
-      </div>
-    );
-  }
   return (
-    <div className="list-tags ont-size-12-14">
-      {Array.isArray(listTags) && (
-        <input
-          type="text"
-          name="tag"
-          id="tag"
-          onChange={handleChangeInput}
-          placeholder="Escribe el nombre del tag"
-          className="form-control"
-          value={inputText}
-          style={{
-            ...(colorStage ? {border:`1px solid ${colorStage}`} : {})
-          }}
-        />
-      )}
-
-      <hr />
-
-      {listTags.length > 0 && (
-        <ul className="d-flex flex-row align-items-center gap-2">
-          {Array.isArray(listTags) &&
-            listTags.map((item) => <TagItem key={item.id} tag={item.tag} color={item.color} />)}
-        </ul>
-      )}
-
-      {inputText && !existTag && (
-        <CreateTag
-          name={inputText}
-          colorStage={colorStage}
-          setColorStage={setColorStage}
-          listTags={listTags}
-        />
-      )}
-    </div>
+    <ul className="d-flex flex-column justify-content-start gap-2">
+      {Array.isArray(listTags) &&
+        listTags.map((item) => (
+          <TagItem
+            key={item.id}
+            tag={item.tag}
+            color={item.color}
+            handleClickTag={handleClickTag}
+            id={item.id}
+          />
+        ))}
+    </ul>
   );
 };
 
