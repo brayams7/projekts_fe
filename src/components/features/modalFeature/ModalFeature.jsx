@@ -23,12 +23,13 @@ const ModalFeature = ({ selectedFeature }) => {
   return (
     <div
       className="modal fade"
-      id="modalBoard"
+      // style={{}}
+      id="modalFeature"
       tabIndex="-1"
       aria-labelledby="staticBackdropLabel"
       aria-hidden="true"
     >
-      <div className="modal-dialog modal-xl">
+      <div className="modal-dialog modal-fullscreen">
         {/* <ModalMoreTopics/> */}
         <div className="modal-content">
           <div className="modal-body p-0">

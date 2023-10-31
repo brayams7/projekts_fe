@@ -69,7 +69,7 @@ const FeatureCard = ({
         <div
           type="button"
           data-bs-toggle="modal"
-          data-bs-target="#modalBoard"
+          data-bs-target="#modalFeature"
           onClick={()=>setSelectedFeature(feature)}
         >
           {feature.title}

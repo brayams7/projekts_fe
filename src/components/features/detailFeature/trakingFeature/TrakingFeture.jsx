@@ -29,6 +29,7 @@ const TrakingFeture = ({ feature }) => {
 
       const newDate = e.target.value;
       const timestampValue = dayjs(newDate).unix()
+      console.log(timestampValue)
 
       const body = {
         due_date: timestampValue,

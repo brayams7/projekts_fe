@@ -61,7 +61,7 @@ const HeaderDetailFeature = ({feature}) => {
   return (
     <section className="d-flex justify-content-start align-items-center gap-2 mb-2">
         <ul className="d-flex align-items-center gap-2 list-unstyled header-detail-feature-container">
-          <li className="dropdown">
+          <li className="dropdown me-2">
             {
                 currentStage && (
                   <a

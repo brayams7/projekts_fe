@@ -13,7 +13,6 @@ export const useListTags = () => {
     const value = e.target.value
     setInputText(value)
     handleChange(value)
-
   }
 
   const handleChange = (text="")=>{

@@ -1,0 +1,6 @@
+.react-datepicker-popper{
+  z-index: 15;
+}
+.react-datepicker-ignore-onclickoutside{
+  display: none !important;
+}

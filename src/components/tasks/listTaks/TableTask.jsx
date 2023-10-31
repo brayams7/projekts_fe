@@ -22,7 +22,7 @@ const TableTask = ({columns, data, feature}) => {
     <div className="w-100">
       <div className="container">
         <div className="d-flex flex-wrap gap-3 mb-3">
-          <span>3 tareas</span>
+          <span>{data.length} tareas</span>
           <div className="form-group position-relative has-search ms-auto">
                 <img
                   className="form-control-feedback"
@@ -43,7 +43,7 @@ const TableTask = ({columns, data, feature}) => {
         </div>
         {table.getRowModel().rows.length ? (
             table.getRowModel().rows.map((row, i) => (
-              <div className="row row-cols-auto row-taks-container" key={i}>
+              <div className="row row-cols-auto align-items-center row-taks-container mb-2" key={i}>
                 {row.getVisibleCells().map((cell) => (
                   <div className={`col ${typeof cell.column.columnDef.header === 'string' && cell.column.columnDef.header}`} key={cell.id}>
                     {flexRender(cell.column.columnDef.cell, cell.getContext())}

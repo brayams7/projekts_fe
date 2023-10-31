@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { NewTagIcon } from "../../../utils/icons/iconsMenu";
+// import { NewTagIcon } from "../../../utils/icons/iconsMenu";
 import './detailFeature.css'
 import TitleDetailFeature from "../titleFeature/TitleDetailFeature";
 import Wysiwyg from "../../wysiwyg/Wysiwyg";
@@ -97,7 +97,7 @@ const DetailFeature = ({feature, isFetching}) => {
         />
       </section>
 
-      <section className="section-tags-feature d-flex flex-wrap justify-content-start align-items-center gap-2 mb-2 font-size-12-14">
+      {/* <section className="section-tags-feature d-flex flex-wrap justify-content-start align-items-center gap-2 mb-2 font-size-12-14">
         <ul className="d-flex align-items-center gap-2 ist-unstyled">
           <li className="dropdown">
             <a
@@ -127,7 +127,7 @@ const DetailFeature = ({feature, isFetching}) => {
             </ul>
           </li>
         </ul>
-      </section>
+      </section> */}
 
       <TitleDetailFeature
         feature={feature}

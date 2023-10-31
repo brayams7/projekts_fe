@@ -96,6 +96,10 @@
     text sizes
 */
 
+.font-size-6-8{
+  font-size: var(--size-6);
+}
+
 .font-size-8-10{
   font-size: var(--size-8);
 }
@@ -237,5 +241,9 @@
 
     .font-size-18-20{
       font-size: var(--size-20);
+    }
+
+    .font-size-6-8{
+      font-size: var(--size-8);
     }
 }

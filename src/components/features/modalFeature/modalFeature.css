@@ -5,3 +5,20 @@
 .menu-modal-feature-mobile .active{
   color: var(--purple);
 }
+
+.modal-feature-dialog{
+  width: 100% !important;
+}
+
+@media (min-width: 768px) {
+  .modal-feature-dialog{
+    width: 75% !important;
+  }
+}
+
+@media (min-width: 992px) {
+
+  .modal-feature-dialog{
+    width: 90% !important;
+  }
+ }
