@@ -66,7 +66,6 @@ const MyCustomPluginInitStage = ({featureId, content, currentId})=>{
       // setIsFirstRender(false)
       // if(currentId.current !== featureId)
         handleInitStage()
-        console.log("cambio id")
       // console.log({currentId:currentId.current})
     // }
     // console.log(isFirstRender, featureId)

@@ -55,4 +55,21 @@ export const validatePathInMenu = (menuItems=[], routeBase, pathname)=>{
   return currentRoute[0] ? currentRoute[0] : null
 }
 
+export const  removeDuplicates = (arr, campo)=> {
+  const unique = []
+  const valoresUnicos = new Set()
+
+  for (const item of arr) {
+
+    const valorCampo = item[campo]
+
+    if (!valoresUnicos.has(valorCampo)) {
+      valoresUnicos.add(valorCampo)
+      unique.push(item)
+    }
+  }
+
+  return unique
+}
+
 

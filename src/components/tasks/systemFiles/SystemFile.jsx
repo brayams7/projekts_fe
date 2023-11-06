@@ -18,7 +18,7 @@ const SystemFile = ({ feature }) => {
 
 
   const [newAttachment, setNewAttachment] = useState(null);
-  const inputFileRef = useRef();
+  const inputFileRef = useRef()
 
   const handleChange = (e) => {
     if (e.target.files && e.target.files[0]) {
@@ -152,7 +152,7 @@ const SystemFile = ({ feature }) => {
           )}
               <button
               style={{minWidth:110}}
-                className="font-size-12-14 px-2 rounded button-upload px-2 py-2 ms-auto"
+                className="font-size-12-14 px-2 rounded button-upload px-2 py-2 ms-auto custom-button-disabled"
                 disabled={(!newAttachment|| isLoadingUploadFile)}
                 onClick={handleSubmit}
               >
