@@ -213,6 +213,17 @@ export const apiSliceFeature = apiSlice.injectEndpoints({
       }
       //invalidatesTags:(result, error,{featureId}) => [{type:TYPES_FEATURE.TYPE_LIST_ATTACHMENTS, id:featureId}]
     }),
+
+    // Comentarios
+    getFeatureComments: builder.query({
+      query: (featureId) => ({
+        url: `/listCommentsFeature/${featureId}`,
+      }),
+      providedTags: (_result, _error, featureId) => {
+        return [{ type: TYPES_FEATURE.TYPE_LIST_COMMENTS, id: featureId }];
+      },
+      transformResponse: (result) => result.response
+    })
   })
 })
 
@@ -227,5 +238,6 @@ export const {
   useListAttachmentsOfFeatureQuery,
   useUploadAttachmentOfFeatureMutation,
   useDeleteAttachmentOfFeatureMutation,
-  useChangeVisibilityFromUserToAFeatureMutation
+  useChangeVisibilityFromUserToAFeatureMutation,
+  useGetFeatureCommentsQuery
 } = apiSliceFeature

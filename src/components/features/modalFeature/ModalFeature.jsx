@@ -17,7 +17,7 @@ const ModalFeature = ({ selectedFeature }) => {
   const { data, isFetching, isLoading } = useGetDetailFeatureQuery(
     selectedFeature?.id
   );
-  const {width} = useWindowsSize();
+  const { width } = useWindowsSize();
   //if (isError) console.log("error");
 
   return (
@@ -45,7 +45,6 @@ const ModalFeature = ({ selectedFeature }) => {
             {selectedFeature &&
               (width < 1200 ? (
                 <div className="d-block d-xl-none">
-
                   <ul className="menu-modal-feature-mobile list-unstyled menu d-flex justify-content-center gap-2">
                     {OPTIONS_MENU_MODAL.map((item) => (
                       <li
@@ -92,9 +91,8 @@ const ModalFeature = ({ selectedFeature }) => {
                       )
                     } */}
 
-                  {optionSelected.toUpperCase() === ACTIVITY.toUpperCase() && (
-                    <Activity />
-                  )}
+                  {optionSelected.toUpperCase() === ACTIVITY.toUpperCase() &&
+                    data && <Activity feature={data} />}
                 </div>
               ) : (
                 <div className="row">
@@ -110,7 +108,7 @@ const ModalFeature = ({ selectedFeature }) => {
                     )}
                   </div>
                   <div className="col-12 col-xl-6">
-                    <Activity />
+                    {data && <Activity feature={data} />}
                   </div>
                 </div>
               ))}
