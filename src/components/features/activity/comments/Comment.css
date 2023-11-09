@@ -1,0 +1,38 @@
+:root {
+  --reaction-button-color: #6f42c1;
+  --reaction-button-background: #ffffff;
+  --reaction-button-hover-background: #6f42c1;
+  --reaction-button-hover-color: #ffffff;
+  --reaction-button-active-background: #ffffff;
+  --reaction-button-active-color: #6f42c1;
+}
+
+/* Botón de Reacción */
+button.btn.reaction-button {
+  color: var(--reaction-button-color);
+  background-color: var(--reaction-button-background);
+  border-color: transparent;
+}
+
+button.btn.reaction-button:hover {
+  background-color: var(--reaction-button-hover-background);
+  border-color: var(--reaction-button-hover-background);
+  color: var(--reaction-button-hover-color);
+}
+
+button.btn.reaction-button:active {
+  background-color: var(--reaction-button-active-background);
+  border-color: var(--reaction-button-active-color);
+  color: var(--reaction-button-active-color);
+}
+
+/* Icono de persona */
+.person-icon {
+  color: var(--reaction-button-color);
+  opacity: 0.8;
+}
+
+/* Texto de la fecha */
+.date-text {
+  font-size: 12px;
+}

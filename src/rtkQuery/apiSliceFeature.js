@@ -215,18 +215,24 @@ export const apiSliceFeature = apiSlice.injectEndpoints({
     }),
 
     // Comentarios
-    getFeatureComments: builder.query({
-      query: (featureId) => ({
-        url: `/listCommentsFeature/${featureId}`,
-      }),
-      providedTags: (_result, _error, featureId) => {
+    getComments: builder.query({
+      query: (featureId) => `listCommentsFeature/${featureId}`,
+      providesTags: (featureId) => {
         return [{ type: TYPES_FEATURE.TYPE_LIST_COMMENTS, id: featureId }];
       },
-      transformResponse: (result) => result.response
-    })
-  })
-})
-
+    }),
+    postComment: builder.mutation({
+      query: (body) => ({
+        url: "createCommentFeature",
+        method: "POST",
+        body: body,
+      }),
+      invalidatesTags: (body) => [
+        { type: TYPES_FEATURE.TYPE_LIST_COMMENTS, id: body.feature_id },
+      ],
+    }),
+  }),
+});
 
 export const {
   useCreateFeatureMutation,
@@ -239,5 +245,6 @@ export const {
   useUploadAttachmentOfFeatureMutation,
   useDeleteAttachmentOfFeatureMutation,
   useChangeVisibilityFromUserToAFeatureMutation,
-  useGetFeatureCommentsQuery
+  useGetCommentsQuery,
+  usePostCommentMutation
 } = apiSliceFeature

@@ -1,26 +1,18 @@
 import { useEffect, useState } from "react";
 import "./activity.css";
 import PostComment from "./comments/PostComment";
-import { useGetFeatureCommentsQuery } from "../../../rtkQuery/apiSliceFeature";
+import { useGetCommentsQuery } from "../../../rtkQuery/apiSliceFeature";
 import Comment from "./comments/Comment";
 
 const Activity = ({ feature }) => {
-  const [postComment, setPostComment] = useState();
   const [comments, setComments] = useState([]);
-  const { isLoading, isError, data } = useGetFeatureCommentsQuery(feature.id);
+  const { isLoading, data } = useGetCommentsQuery(feature.id);
 
   useEffect(() => {
-    if (data) {
-      // Ordenar comentarios por fecha y colocarlos en el estado
-      const dataCopy = [...data];
-      dataCopy.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
-      setComments(dataCopy);
+    if (data?.response) {
+      setComments(data.response);
     }
   }, [data]);
-
-  const handleSubmit = () => {
-    console.log(postComment);
-  };
 
   return (
     <div className="activity-container postion-relative mt-3">
@@ -35,10 +27,7 @@ const Activity = ({ feature }) => {
         )}
       </div>
       <div className="rounded new-comment-container">
-        <PostComment
-          setCommentState={setPostComment}
-          handleSubmit={handleSubmit}
-        />
+        <PostComment featureId={feature.id} />
       </div>
     </div>
   );

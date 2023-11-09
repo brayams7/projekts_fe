@@ -1,8 +1,13 @@
-import { useState } from "react";
+import React from "react";
+import "./Comment.css";
 
-const Comment = ({ comment }) => {
-  // Convertir fecha
-  const date = new Date(comment.created_at);
+/**
+ * Función que convierte una fecha en formato ISO a una fecha en formato local
+ * @param {string} dateString Fecha en formato ISO
+ * @returns Fecha en formato local
+ */
+const convertDate = (dateString) => {
+  const date = new Date(dateString);
   const options = {
     year: "numeric",
     month: "numeric",
@@ -11,43 +16,29 @@ const Comment = ({ comment }) => {
     minute: "numeric",
   };
 
-  const dateString = date.toLocaleDateString(navigator.language, options);
+  if (isNaN(date)) {
+    return "Fecha inválida";
+  } else {
+    return date.toLocaleDateString(
+      navigator.language || navigator.userLanguage || "es-ES",
+      options
+    );
+  }
+};
 
-  // Manejar estado del botón de reacción
-  const [isReactionButtonHovered, setIsReactionButtonHovered] = useState();
-  const [isReactionButtonClicked, setIsReactionButtonClicked] = useState();
+const Comment = ({ comment }) => {
+  const dateString = convertDate(comment.created_at);
 
-  const handleReactionButtonHover = () => {
-    setIsReactionButtonHovered(!isReactionButtonHovered);
-  };
-
-  const handleReactionButtonClick = () => {
-    setIsReactionButtonClicked(true);
-  };
-
-  const handleReactionButtonRelease = () => {
-    setIsReactionButtonClicked(false);
-  };
-
-  // Retornar JSX
   return (
     <div className="card m-2 w-75">
       <div className="card-body">
         <div className="card-title d-flex align-items-center">
           <p className="mb-0">
-            <i
-              className="bi bi-person-circle me-2 fs-1"
-              style={{
-                color: "#6f42c1",
-                opacity: 0.8,
-              }}
-            ></i>
+            <i className="bi bi-person-circle me-2 fs-1 person-icon"></i>
           </p>
           <div>
             <p className="m-0 fw-semibold">{comment.user.name}</p>
-            <p className="m-0 opacity-50" style={{ fontSize: "12px" }}>
-              {dateString}
-            </p>
+            <p className="m-0 opacity-50 date-text">{dateString}</p>
           </div>
         </div>
         <p className="card-text">{comment.comment}</p>
@@ -55,39 +46,9 @@ const Comment = ({ comment }) => {
       <div className="card-footer text-end">
         <button
           type="button"
-          className="btn btn-sm rounded-circle"
-          onTouchStart={handleReactionButtonClick}
-          onTouchEnd={handleReactionButtonRelease}
-          onTouchCancel={handleReactionButtonRelease}
-          onMouseEnter={handleReactionButtonHover}
-          onMouseLeave={handleReactionButtonHover}
-          onMouseDown={handleReactionButtonClick}
-          onMouseUp={handleReactionButtonRelease}
-          style={{
-            backgroundColor: isReactionButtonClicked
-              ? "#6f42c1"
-              : !isReactionButtonHovered
-              ? "#6f42c1"
-              : "",
-            color: isReactionButtonClicked
-              ? "#ffffff"
-              : isReactionButtonHovered
-              ? "#6f42c1"
-              : "#ffffff",
-            border: "1px solid #6f42c1",
-            opacity: 0.8,
-          }}
+          className="btn btn-sm rounded-circle reaction-button"
         >
-          <i
-            className="bi bi-hand-thumbs-up-fill"
-            style={{
-              color: isReactionButtonClicked
-                ? "#ffffff"
-                : isReactionButtonHovered
-                ? "#6f42c1"
-                : "#ffffff",
-            }}
-          ></i>
+          <i className="bi bi-hand-thumbs-up-fill"></i>
         </button>
       </div>
     </div>
