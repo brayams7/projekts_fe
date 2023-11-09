@@ -18,7 +18,7 @@ export const ItemUserAssigned = ({name, style, sizeAvatar, componentDelete=null}
   return (
     <li
       style={style}
-      className="position-relative item-user-assigned-feature"
+      className="position-relative item-user-assigned"
     >
       <img
         src={`${API_BASE_UI_AVATARS}/?name=${name}&background=random&color=ffff&size=${sizeAvatar}`}
@@ -148,7 +148,7 @@ const ListUsersAssignedFeature = ({
                 name={user.name}
                 id={user.id}
                 featureId={featureId}
-                style={{ height: 46, width: 46 }}
+                style={{ height: 40, width: 40 }}
                 sizeAvatar={SIZE_AVATAR}
               />
             ))

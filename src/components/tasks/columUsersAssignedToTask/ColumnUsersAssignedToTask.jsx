@@ -5,7 +5,6 @@ const ColumnUsersAssignedToTask = ({
   assignedUsers,
   usersAddedToTheWorkspace
 }) => {
-
   return (
     <AssignTaskToUser
       taskId={taskId}

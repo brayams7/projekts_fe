@@ -4,7 +4,7 @@ const ListMembersPending = () => {
     <div>
       <div className="mb-3">
         <span className="font-weight-600 blue-dark-color" style={{fontSize:22}}>
-          Pendients
+          Pendientes
         </span>
         <p>
           Estas personas han solicitado unirse a este Espacio de trabajo.

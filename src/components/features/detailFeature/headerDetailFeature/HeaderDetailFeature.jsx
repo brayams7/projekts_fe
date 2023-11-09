@@ -95,7 +95,7 @@ const HeaderDetailFeature = ({feature}) => {
           {
             stageFinal && (
               <li
-                className="border rounded p-2 stage-final"
+                className="border rounded p-2 stage-final me-3"
                 role="button"
                 onClick={()=>handleChangeStage()}
               >

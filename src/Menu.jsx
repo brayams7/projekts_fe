@@ -36,15 +36,15 @@ const CALENDAR = "calendar"
 
 
 export const Menu = [
-  {
-    name: "Dashboard",
-    icon: (fill)=><DashboardIcon fill={fill}/>,
-    path: PrivateRoutes.DASHBOARD,
-    isShowInSidebar: true,
-    type:typesMenu.HOME,
-    permission: PrivateRoutes.DASHBOARD,
-    stylesLayout:DEFAULT_COLORS_LAYOUT
-  },
+  // {
+  //   name: "Dashboard",
+  //   icon: (fill)=><DashboardIcon fill={fill}/>,
+  //   path: PrivateRoutes.DASHBOARD,
+  //   isShowInSidebar: true,
+  //   type:typesMenu.HOME,
+  //   permission: PrivateRoutes.DASHBOARD,
+  //   stylesLayout:DEFAULT_COLORS_LAYOUT
+  // },
   {
     name: "Tableros",
     icon: (fill)=><BoardIcon fill={fill}/>,
@@ -106,16 +106,16 @@ export const Menu = [
     stylesLayout:DEFAULT_COLORS_LAYOUT
 
   },
-  {
-    name: "Configuración",
-    icon: (fill)=><SettingsIcon fill={fill}/>,
-    path: PrivateRoutes.SETTINGS,
-    type:typesMenu.WOKSPACE,
-    isShowInSidebar: true,
-    permission: PrivateRoutes.SETTINGS,
-    stylesLayout:DEFAULT_COLORS_LAYOUT
+  // {
+  //   name: "Configuración",
+  //   icon: (fill)=><SettingsIcon fill={fill}/>,
+  //   path: PrivateRoutes.SETTINGS,
+  //   type:typesMenu.WOKSPACE,
+  //   isShowInSidebar: true,
+  //   permission: PrivateRoutes.SETTINGS,
+  //   stylesLayout:DEFAULT_COLORS_LAYOUT
 
-  },
+  // },
   {
     name: "Modos de vista",
     icon: (fill)=><ViewsIcon fill={fill}/>,

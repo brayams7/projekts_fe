@@ -124,7 +124,7 @@ const HeaderBoard = ({
 
       </ul>
 
-      <ul className="nav nav-underline header-board-container-nav-right gap-2 ms-auto">
+      {/* <ul className="nav nav-underline header-board-container-nav-right gap-2 ms-auto">
           <li className="nav-item">
             <a className="blue-dark-color px-2 py-1 rounded-3 header-board-button-filter" type="button" role="button">
               <span className="me-2">
@@ -144,7 +144,7 @@ const HeaderBoard = ({
               </span>
             </a>
           </li>
-      </ul>
+      </ul> */}
     </div>
   );
 };
