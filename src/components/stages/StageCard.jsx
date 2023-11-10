@@ -57,7 +57,8 @@ const StageCard = ({
         description,
       },
     },
-    disabled: Boolean(isFinal) || isEditTitleStage || isShowAddCardFeature,
+    disabled: isEditTitleStage || isShowAddCardFeature,
+    // disabled: Boolean(isFinal) || isEditTitleStage || isShowAddCardFeature,
   });
 
   const styles = {

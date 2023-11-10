@@ -153,6 +153,7 @@ const AddMemberToWorkspace = ({
     try {
       setLoading(true)
       const body = listOfMembersToInvite[0]
+      console.log(body)
       const response = await inviteMemberToWorkspaceRequest({workspaceId,body}).unwrap()
       if(response.code === 200){
 

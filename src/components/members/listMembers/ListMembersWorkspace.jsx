@@ -107,7 +107,7 @@ const ListMembersWorkspace = () => {
     <div className="">
       <div className="mb-2">
         <span className="font-weight-600 blue-dark-color" style={{fontSize:22}}>
-          Miembros del Espacio de trabajo {Array.isArray(data?.members) && data.members.length}
+          Miembros del Espacio de trabajo
         </span>
         <p className="w-75">
           Los miembros del Espacio de trabajo pueden ver todos los tableros visibles
@@ -115,7 +115,7 @@ const ListMembersWorkspace = () => {
         </p>
       </div>
       <hr />
-      <div className="mb-2">
+      {/* <div className="mb-2">
         <span className="font-weight-600 blue-dark-color" style={{fontSize:22}}>
         Invite a los miembros a unirse
         </span>
@@ -132,8 +132,8 @@ const ListMembersWorkspace = () => {
             </button>
           </div>
         </div>
-      </div>
-      <hr />
+      </div> */}
+      {/* <hr /> */}
       <TableMembers
         dataList={dataList}
         columns={columns}

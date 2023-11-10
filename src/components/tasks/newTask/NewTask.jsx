@@ -239,6 +239,7 @@ const NewTask = ({ feature }) => {
               }
               taskId={feature.board_id}
               setListUsersAssigned={setListUsersAssigned}
+              isEditable={true}
             />
 
             <button
