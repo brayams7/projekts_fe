@@ -92,12 +92,13 @@ const ModalFeature = ({ selectedFeature }) => {
                       )
                     } */}
 
-                  {optionSelected.toUpperCase() === ACTIVITY.toUpperCase() &&
-                    data && <Activity feature={data} />}
+                  {optionSelected.toUpperCase() === ACTIVITY.toUpperCase() && data && (
+                    <Activity feature={data}/>
+                  )}
                 </div>
               ) : (
                 <div className="row">
-                  <div className="col-12 col-xl-6">
+                  <div className="col-12 col-xl-7">
                     {isLoading ? (
                       <div className="m-3">
                         <DetailFeatureLoader />
@@ -108,8 +109,12 @@ const ModalFeature = ({ selectedFeature }) => {
                       )
                     )}
                   </div>
-                  <div className="col-12 col-xl-6">
-                    {data && <Activity feature={data} />}
+                  <div className="col-12 col-xl-5">
+                    {
+                      data && (
+                        <Activity feature={data}/>
+                      )
+                    }
                   </div>
                 </div>
               ))}

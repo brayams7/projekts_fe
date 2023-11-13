@@ -63,8 +63,9 @@ const BoardTypeBoard = ({
 
     try{
       if(isActiveStage){
-        const overStage = over.data.current
-        if(activeStageId === overStageId || overStage?.stage.isFinal) return
+        // const overStage = over.data.current
+        if(activeStageId === overStageId) return
+        // if(activeStageId === overStageId || overStage?.stage.isFinal) return
 
         body = {
           modified_order:{

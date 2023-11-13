@@ -65,7 +65,7 @@ const AssignMember = ({
   // featureId,
   usersAssigned,
   handleAssign,
-  handleDelete
+  handleDelete,
 }) => {
 
   const user = useSelector(stage=>stage.auth.user)
