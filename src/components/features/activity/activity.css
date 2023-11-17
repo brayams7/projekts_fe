@@ -2,3 +2,6 @@
 	height: 70vh;
 }
 
+#spinner {
+  color: var(--purple);
+}

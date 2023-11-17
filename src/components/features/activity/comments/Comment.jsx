@@ -50,7 +50,25 @@ const Comment = ({ comment }) => {
 				</div>
 				<p className="card-text">{comment.comment}</p>
 			</div>
-			<div className="card-footer text-end">
+			<div className="card-footer text-end d-flex justify-content-end">
+				{comment.attachments.length ? (
+					comment.attachments.map((attachment, index) => (
+						<a
+							key={index}
+							href={attachment.url}
+							target="_blank"
+							rel="noopener noreferrer">
+							<button
+								type="button"
+								className="btn btn-outline-secondary btn-sm me-2">
+								<i className="bi bi-paperclip me-1"></i>
+								{attachment.url.split("/").pop()}
+							</button>
+						</a>
+					))
+				) : (
+					<></>
+				)}
 				<button
 					type="button"
 					className="btn btn-sm rounded-circle reaction-button">

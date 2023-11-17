@@ -16,8 +16,12 @@ const Activity = ({ feature }) => {
 	const { isLoading, data } = useGetCommentsQuery(feature.id);
 
 	useEffect(() => {
-		if (data?.response) {
-			setComments(data.response);
+		if (data?.response?.data) {
+			let comments = [...data.response.data];
+
+			setComments(
+				comments.sort((comment1, comment2) => new Date(comment2.created_at) - new Date(comment1.created_at))
+			);
 		}
 	}, [data]);
 
@@ -25,10 +29,16 @@ const Activity = ({ feature }) => {
 		<div className="container vh-100 d-flex flex-column">
 			<div
 				id="comments"
-				className="d-flex flex-column overflow-y-scroll border mt-3 mx-1">
+				className="d-flex flex-column-reverse overflow-y-scroll border mt-3 mx-1">
 				{isLoading ? (
 					<div className="d-flex h-100 justify-content-center align-items-center">
-						<p className="fs-5 fw-semibold">Cargando...</p>
+						<div
+							id="spinner"
+							className="spinner-border"
+							role="status">
+							<span className="visually-hidden">Cargando...</span>
+						</div>
+						<p className="fs-5 fw-semibold ms-2 mb-0">Cargando...</p>
 					</div>
 				) : comments.length ? (
 					comments.map((comment) => (

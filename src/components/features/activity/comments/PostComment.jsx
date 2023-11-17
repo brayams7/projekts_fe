@@ -17,24 +17,33 @@ import OnChangePlugin from "../../../wysiwyg/plugins/OnChangePlugin";
  * @param {*} param0 ID del módulo
  * @returns JSX del componente
  */
-const Comment = ({ featureId }) => {
+const PostComment = ({ featureId }) => {
 	const [comment, setComment] = useState();
-	const user = useSelector((state) => state.auth.user);
-	const [postComment] = usePostCommentMutation();
 	const [editor, setEditor] = useState();
-	const userErrorToastRef = useRef();
-	const errorToastRef = useRef();
-	const successToastRef = useRef();
-	const loadingToastRef = useRef();
-	const submitCommentButton = useRef();
 	const [errorToast, setErrorToast] = useState();
 	const [userErrorToast, setUserErrorToast] = useState();
 	const [successToast, setSuccessToast] = useState();
-	const [loadingToast, setLoadingToast] = useState();
+	const [isUploading, setIsUploading] = useState(false);
+	const [attachment, setAttachment] = useState();
+
+	const user = useSelector((state) => state.auth.user);
+
+	const [postComment] = usePostCommentMutation();
+
+	const userErrorToastRef = useRef();
+	const errorToastRef = useRef();
+	const successToastRef = useRef();
+	const submitCommentButton = useRef();
+	const attachmentInputRef = useRef();
+
+	useEffect(() => {
+		setErrorToast(new Toast(errorToastRef.current));
+		setUserErrorToast(new Toast(userErrorToastRef.current));
+		setSuccessToast(new Toast(successToastRef.current));
+	}, []);
 
 	const handleChangeContent = (editorState, editor) => {
 		setEditor(editor);
-		submitCommentButton.current.disabled = false;
 
 		editorState.read(() => {
 			const stringifiedEditorState = JSON.stringify(editorState.toJSON());
@@ -52,11 +61,10 @@ const Comment = ({ featureId }) => {
 	const handleSubmit = async (event) => {
 		event.preventDefault();
 
-		editor.setEditable(false);
-		submitCommentButton.current.disabled = true;
+		editor?.setEditable(false);
+		setIsUploading(true);
 
 		if (comment?.comment) {
-			loadingToast.show();
 			const result = await postComment(comment);
 
 			if (result?.data.code == 200) {
@@ -72,17 +80,25 @@ const Comment = ({ featureId }) => {
 			userErrorToast.show();
 		}
 
-		editor.setEditable(true);
-		submitCommentButton.current.disabled = false;
+		editor?.setEditable(true);
+		setIsUploading(false);
 	};
 
-	useEffect(() => {
-		setErrorToast(new Toast(errorToastRef.current));
-		setUserErrorToast(new Toast(userErrorToastRef.current));
-		setSuccessToast(new Toast(successToastRef.current));
-		setLoadingToast(new Toast(loadingToastRef.current));
-		submitCommentButton.current.disabled = true;
-	}, []);
+	const handleAttachmentChange = (event) => {
+		if (event.target.files) {
+			setAttachment(event.target.files[0]);
+		}
+	};
+
+	const handleAttachmentSubmit = () => {
+		if (attachmentInputRef) {
+			attachmentInputRef.current.click();
+		}
+	};
+
+	const handleAttachmentRemove = () => {
+		setAttachment();
+	};
 
 	return (
 		<>
@@ -103,35 +119,57 @@ const Comment = ({ featureId }) => {
 					<AutoFocusPlugin />
 				</div>
 
-				<div className="d-flex justify-content-end editor-topbar-comment p-3">
-					<button
-						id="submit-comment"
-						ref={submitCommentButton}
-						className="bgPurple-color px-2 py-1 white-color rounded"
-						onClick={handleSubmit}>
-						Comentar
-					</button>
+				<div className="d-flex justify-content-end editor-topbar-comment p-3 align-items-center">
+					{!isUploading ? (
+						<>
+							{attachment ? (
+								<button
+									type="button"
+									className="btn btn-outline-secondary btn-sm me-2"
+									onClick={handleAttachmentRemove}>
+									<i className="bi bi-paperclip me-1"></i>
+									{attachment.name}
+									<i className="bi bi-x-lg ms-1"></i>
+								</button>
+							) : (
+								<>
+									<input
+										type="file"
+										ref={attachmentInputRef}
+										onChange={handleAttachmentChange}
+										className="d-none"
+									/>
+									<button
+										className="btn btn-outline-secondary rounded-circle me-2 d-flex justify-content-center align-items-center btn-sm"
+										onClick={handleAttachmentSubmit}>
+										<i className="bi bi-paperclip"></i>
+									</button>
+								</>
+							)}
+
+							<button
+								ref={submitCommentButton}
+								className="bgPurple-color px-2 py-1 white-color rounded"
+								onClick={handleSubmit}>
+								Comentar
+							</button>
+						</>
+					) : (
+						<button
+							className="bgPurple-color px-2 py-1 white-color rounded opacity-75"
+							type="button"
+							disabled>
+							<span
+								className="spinner-border spinner-border-sm me-2"
+								aria-hidden="true"></span>
+							<span role="status">Subiendo...</span>
+						</button>
+					)}
 				</div>
 			</LexicalComposer>
 
 			{/* Toasts */}
 			<div className="toast-container position-fixed bottom-0 end-0 p-3">
-				<div
-					id="toast-loading"
-					ref={loadingToastRef}
-					className="toast align-items-center text-bg-secondary border-0"
-					role="alert"
-					aria-live="assertive"
-					aria-atomic="true">
-					<div className="d-flex">
-						<div className="toast-body">Se está subiendo el comentario...</div>
-						<button
-							type="button"
-							className="btn-close btn-close-white me-2 m-auto"
-							data-bs-dismiss="toast"
-							aria-label="Close"></button>
-					</div>
-				</div>
 				<div
 					id="toast-success"
 					ref={successToastRef}
@@ -156,7 +194,7 @@ const Comment = ({ featureId }) => {
 					aria-live="assertive"
 					aria-atomic="true">
 					<div className="d-flex">
-						<div className="toast-body">Debes escribir un texto subir un comentario.</div>
+						<div className="toast-body">Debes escribir un texto para subir un comentario.</div>
 						<button
 							type="button"
 							className="btn-close btn-close-white me-2 m-auto"
@@ -185,5 +223,5 @@ const Comment = ({ featureId }) => {
 	);
 };
 
-export default Comment;
+export default PostComment;
 
