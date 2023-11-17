@@ -60,7 +60,7 @@ const Login = ({ setIsSingUp,isSingUp }) => {
       <div className="card-body">
         <form onSubmit={handleSubmit(onSubmit)}>
           <p className="font_weith_600 font_title_card mb-4">
-            Iniciar sessión en Projekts
+            Iniciar sesión en Projekts
           </p>
           {
             isError && (
@@ -126,7 +126,7 @@ const Login = ({ setIsSingUp,isSingUp }) => {
 
         <hr />
 
-        <div className="mb-2">
+        {/* <div className="mb-2">
           <span
             className="lightBlue_color text-decoration-underline"
             style={{ fontSize: 12, cursor: "pointer" }}
@@ -144,7 +144,7 @@ const Login = ({ setIsSingUp,isSingUp }) => {
           >
             ¿No puedes iniciar sesión?
           </span>
-        </div>
+        </div> */}
       </div>
     </div>
   );

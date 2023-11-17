@@ -61,7 +61,7 @@ const HeaderDetailFeature = ({feature}) => {
   return (
     <section className="d-flex justify-content-start align-items-center gap-2 mb-2">
         <ul className="d-flex align-items-center gap-2 list-unstyled header-detail-feature-container">
-          <li className="dropdown">
+          <li className="dropdown me-2">
             {
                 currentStage && (
                   <a
@@ -95,7 +95,7 @@ const HeaderDetailFeature = ({feature}) => {
           {
             stageFinal && (
               <li
-                className="border rounded p-2 stage-final"
+                className="border rounded p-2 stage-final me-3"
                 role="button"
                 onClick={()=>handleChangeStage()}
               >

@@ -37,7 +37,7 @@ const SingUp = ({isSingUp,setIsSingUp}) => {
       <div className="card-body">
         <form onSubmit={handleSubmit(onSubmit)}>
           <p className="font_weith_600 font_title_card mb-4">
-            Iniciar sessión en Projekts
+            Iniciar sesión en Projekts
           </p>
 
           <div className="mb-3">

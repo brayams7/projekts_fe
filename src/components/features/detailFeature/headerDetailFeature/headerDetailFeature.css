@@ -29,11 +29,11 @@
   LIST USERS ASSIGNED
 */
 
-.list-users-assigned-feature-container .item-user-assigned-feature{
-  margin-left: -14px;
+.list-users-assigned-container .item-user-assigned{
+  margin-left: -20px;
 }
 
-.list-users-assigned-feature-container > ul{
+.list-users-assigned-container > ul{
   padding: 0 0 0 12px
 }
 

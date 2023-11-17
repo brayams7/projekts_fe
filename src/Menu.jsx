@@ -1,6 +1,6 @@
 import { PrivateActionsRoutes, PrivateRoutes } from "./routes";
 import { DEFAULT_COLORS_LAYOUT } from "./utils/contants/colorsHex";
-import { BoardIcon, DashboardIcon, ListIcon, MembersIcon, SettingsIcon, ViewsIcon, WorkspaceIcon } from "./utils/icons/iconsMenu";
+import { BoardIcon, DashboardIcon, ListIcon, MembersIcon, SettingsIcon, ViewsIcon } from "./utils/icons/iconsMenu";
 
 
 // eslint-disable-next-line react-refresh/only-export-components
@@ -36,15 +36,15 @@ const CALENDAR = "calendar"
 
 
 export const Menu = [
-  {
-    name: "Dashboard",
-    icon: (fill)=><DashboardIcon fill={fill}/>,
-    path: PrivateRoutes.DASHBOARD,
-    isShowInSidebar: true,
-    type:typesMenu.HOME,
-    permission: PrivateRoutes.DASHBOARD,
-    stylesLayout:DEFAULT_COLORS_LAYOUT
-  },
+  // {
+  //   name: "Dashboard",
+  //   icon: (fill)=><DashboardIcon fill={fill}/>,
+  //   path: PrivateRoutes.DASHBOARD,
+  //   isShowInSidebar: true,
+  //   type:typesMenu.HOME,
+  //   permission: PrivateRoutes.DASHBOARD,
+  //   stylesLayout:DEFAULT_COLORS_LAYOUT
+  // },
   {
     name: "Tableros",
     icon: (fill)=><BoardIcon fill={fill}/>,
@@ -55,36 +55,36 @@ export const Menu = [
     stylesLayout:DEFAULT_COLORS_LAYOUT
 
   },
-  {
-    name: "Workspace 1",
-    icon: (fill)=><WorkspaceIcon fill={fill}/>,
-    path: PrivateRoutes.WORKSAPCE,
-    type:typesMenu.HOME,
-    isShowInSidebar: true,
-    permission: PrivateRoutes.WORKSAPCE,
-    stylesLayout:DEFAULT_COLORS_LAYOUT,
-    subroutes: [
-      {
-        name: "Tableros",
-        path: PrivateRoutes.WORKSAPCE + "/" + PrivateActionsRoutes.WORKSAPCES.BOARD,
-        isShowInSidebar: true,
-        permission: "BOARD",
-      },
-      {
-        name: "Configuracion",
-        path: PrivateRoutes.WORKSAPCE + "/" + PrivateActionsRoutes.WORKSAPCES.SETTING,
-        isShowInSidebar: true,
-        permission: "SETTING",
-      },
-      {
-        name: "Miembros",
-        path: PrivateRoutes.WORKSAPCE + "/" + PrivateActionsRoutes.WORKSAPCES.MEMBERS,
-        isShowInSidebar: true,
-        permission: "MEMBERS",
-      },
+  // {
+  //   name: "Workspace 1",
+  //   icon: (fill)=><WorkspaceIcon fill={fill}/>,
+  //   path: PrivateRoutes.WORKSAPCE,
+  //   type:typesMenu.HOME,
+  //   isShowInSidebar: true,
+  //   permission: PrivateRoutes.WORKSAPCE,
+  //   stylesLayout:DEFAULT_COLORS_LAYOUT,
+  //   subroutes: [
+  //     {
+  //       name: "Tableros",
+  //       path: PrivateRoutes.WORKSAPCE + "/" + PrivateActionsRoutes.WORKSAPCES.BOARD,
+  //       isShowInSidebar: true,
+  //       permission: "BOARD",
+  //     },
+  //     {
+  //       name: "Configuracion",
+  //       path: PrivateRoutes.WORKSAPCE + "/" + PrivateActionsRoutes.WORKSAPCES.SETTING,
+  //       isShowInSidebar: true,
+  //       permission: "SETTING",
+  //     },
+  //     {
+  //       name: "Miembros",
+  //       path: PrivateRoutes.WORKSAPCE + "/" + PrivateActionsRoutes.WORKSAPCES.MEMBERS,
+  //       isShowInSidebar: true,
+  //       permission: "MEMBERS",
+  //     },
 
-    ],
-  },
+  //   ],
+  // },
   // ITEMS SIDERBAR WORSPACE
   {
     name: "Tableros",
@@ -106,16 +106,16 @@ export const Menu = [
     stylesLayout:DEFAULT_COLORS_LAYOUT
 
   },
-  {
-    name: "Configuración",
-    icon: (fill)=><SettingsIcon fill={fill}/>,
-    path: PrivateRoutes.SETTINGS,
-    type:typesMenu.WOKSPACE,
-    isShowInSidebar: true,
-    permission: PrivateRoutes.SETTINGS,
-    stylesLayout:DEFAULT_COLORS_LAYOUT
+  // {
+  //   name: "Configuración",
+  //   icon: (fill)=><SettingsIcon fill={fill}/>,
+  //   path: PrivateRoutes.SETTINGS,
+  //   type:typesMenu.WOKSPACE,
+  //   isShowInSidebar: true,
+  //   permission: PrivateRoutes.SETTINGS,
+  //   stylesLayout:DEFAULT_COLORS_LAYOUT
 
-  },
+  // },
   {
     name: "Modos de vista",
     icon: (fill)=><ViewsIcon fill={fill}/>,

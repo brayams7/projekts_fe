@@ -1,0 +1,8 @@
+.item-tag:hover .button-delete-tag{
+  opacity: 1;
+}
+
+.item-tag .button-delete-tag{
+  opacity: 0;
+  transition: opacity 0.2s ease-in;
+}

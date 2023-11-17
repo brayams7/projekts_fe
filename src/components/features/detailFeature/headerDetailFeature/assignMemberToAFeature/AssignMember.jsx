@@ -1,15 +1,12 @@
 import { useEffect, useMemo, useState } from "react";
 import Search from "../../../../../assets/iconsHeader/search.svg";
-import { useDispatch, useSelector } from "react-redux";
+import {  useSelector } from "react-redux";
 import { API_BASE_UI_AVATARS } from "../../../../../services/settings";
-import { useAssignFeatureToUserMutation, useDeleteUserToFeatureMutation } from "../../../../../rtkQuery/apiSliceFeature";
-import { toast } from "react-toastify";
-import { setLoading } from "../../../../../redux/slices/featureSlice";
 import { DeleteIcon } from "../../../../../utils/icons/iconsMenu";
 
 const SIZE_AVATAR = 40
 
-const ItemUser = ({ name, id, isMyUser, handleAssignUserToFeature, usersAssigned=[], handleDeleteUserToFeature }) => {
+const ItemUser = ({ name, id, isMyUser, handleAssignUser, usersAssigned=[], handleDeleteUser }) => {
 
   // const [mouseIsOver, setMouseIsOver] = useState(false)
 
@@ -24,7 +21,7 @@ const ItemUser = ({ name, id, isMyUser, handleAssignUserToFeature, usersAssigned
       role="button"
       className="item-user-assigned-to-workspace d-flex justify-content-start align-items-center rounded px-2 py-1"
       onClick={()=>{
-        if(!isMember) handleAssignUserToFeature(id, isMyUser ? 1 : 0)
+        if(!isMember) handleAssignUser({userId:id,isWatcher: isMyUser ? 1 : 0, name})
       }}
     >
       <span className="pe-2">
@@ -48,7 +45,7 @@ const ItemUser = ({ name, id, isMyUser, handleAssignUserToFeature, usersAssigned
             type="button"
             onClick={(e)=>{
               e.stopPropagation()
-              handleDeleteUserToFeature(id)
+              handleDeleteUser(id)
             }}
             className="ms-auto"
           >
@@ -62,13 +59,17 @@ const ItemUser = ({ name, id, isMyUser, handleAssignUserToFeature, usersAssigned
   );
 };
 
-const AssignMemberToFeature = ({ usersAddedToTheWorkspace = [], boardId, featureId, usersAssigned }) => {
+const AssignMember = ({
+  usersAddedToTheWorkspace = [],
+  boardId,
+  // featureId,
+  usersAssigned,
+  handleAssign,
+  handleDelete,
+}) => {
 
   const user = useSelector(stage=>stage.auth.user)
-  const dispatch = useDispatch()
 
-  const [assignFeatureToUserRequest] = useAssignFeatureToUserMutation()
-  const [deletUserToFeatureRequest] = useDeleteUserToFeatureMutation()
 
   const [listUsersToShow, setListUsersToShow] = useState(usersAddedToTheWorkspace)
 
@@ -90,66 +91,7 @@ const AssignMemberToFeature = ({ usersAddedToTheWorkspace = [], boardId, feature
     ])
   };
 
-  const handleAssignUserToFeature = async (userId, isWatcher) =>{
-    try {
 
-      const body = {
-        feature_id:featureId,
-        user_id:userId,
-        is_watcher:isWatcher,
-      }
-
-      dispatch(setLoading(true))
-      const response = await assignFeatureToUserRequest(body).unwrap()
-      if(response.code === 200){
-        toast.success("Tablero creado!",{icon:"😃"})
-
-      }else{
-        toast.error("Upss! ocurrió un error",{icon:"😕"})
-
-      }
-
-    } catch (error) {
-
-      toast.error("Upss! ocurrió un error",{icon:"😕"})
-
-      console.log(error)
-    }finally{
-
-      dispatch(setLoading(false))
-    }
-  }
-
-
-  const handleDeleteUserToFeature = async (userId)=>{
-    try {
-
-      const body = {
-        feature_id:featureId,
-        user_id:userId,
-        is_watcher:0
-      }
-
-      dispatch(setLoading(true))
-      const response = await deletUserToFeatureRequest(body).unwrap()
-      if(response.code === 200){
-        toast.success("Tablero creado!",{icon:"😃"})
-
-      }else{
-        toast.error("Upss! ocurrió un error",{icon:"😕"})
-
-      }
-
-    } catch (error) {
-
-      toast.error("Upss! ocurrió un error",{icon:"😕"})
-
-      console.log(error)
-    }finally{
-
-      dispatch(setLoading(false))
-    }
-  }
 
 
   useEffect(()=>{
@@ -184,9 +126,9 @@ const AssignMemberToFeature = ({ usersAddedToTheWorkspace = [], boardId, feature
               name={item.name}
               id={item.id}
               isMyUser={item.id === user?.id}
-              handleAssignUserToFeature={handleAssignUserToFeature}
+              handleAssignUser={handleAssign}
               usersAssigned={usersAssigned}
-              handleDeleteUserToFeature={handleDeleteUserToFeature}
+              handleDeleteUser={handleDelete}
             />
           ))}
       </ul>
@@ -194,4 +136,4 @@ const AssignMemberToFeature = ({ usersAddedToTheWorkspace = [], boardId, feature
   );
 };
 
-export default AssignMemberToFeature;
+export default AssignMember;

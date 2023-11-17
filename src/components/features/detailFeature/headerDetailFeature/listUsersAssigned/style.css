@@ -1,0 +1,8 @@
+.item-user-assigned-feature:hover .button-delete-user-assigned{
+  opacity: 1;
+}
+
+.item-user-assigned-feature .button-delete-user-assigned{
+  opacity: 0;
+  transition: opacity 0.2s ease-in;
+}

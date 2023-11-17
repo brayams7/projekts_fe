@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { API_BASE_STORAGE } from "../../services/settings";
+// import { API_BASE_STORAGE } from "../../services/settings";
 import { useStylesLayout } from "../../hooks/layout/useStylesLayout";
 import { PrivateRoutes } from "../../routes";
 
@@ -26,7 +26,7 @@ const ItemBoardHome = ({
     },
     content:{
       backgroundColor:bg_color,
-      ...(bg_img ? {backgroundImage:`url(${API_BASE_STORAGE}${bg_img})`}: {})
+      ...(bg_img ? {backgroundImage:`url(${bg_img})`}: {})
     }
   }
 

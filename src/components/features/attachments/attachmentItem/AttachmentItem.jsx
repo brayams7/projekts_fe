@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { API_BASE_STORAGE } from "../../../../services/settings";
+// import { API_BASE_STORAGE } from "../../../../services/settings";
 import { DeleteIcon, DownloadIcon, VisibilityIcon } from "../../../../utils/icons/iconsMenu";
 
 const AttachmentItem = ({
@@ -26,11 +26,11 @@ const AttachmentItem = ({
           <img
             className={isImage ? "preview-img" : "preview-no-img"}
             alt="preview image"
-            src={isImage ? `${API_BASE_STORAGE}${url}` : iconPreview}
+            src={isImage ? url: iconPreview}
           />
         </div>
         <a
-          href={`${API_BASE_STORAGE}${url}`}
+          href={url}
           className="attachment-open-toggle"
           target="_blank"
           rel="noreferrer"
@@ -38,7 +38,7 @@ const AttachmentItem = ({
           {mouseIsOver && <VisibilityIcon fill="var(--white)" />}
         </a>
       </div>
-      <div className="attachment-title-container font_size_10_12 d-flex flex-column px-2">
+      <div className="attachment-title-container font-size-10-12 d-flex flex-column px-2">
         <div className="d-flex justify-content-center">
           <span className="attachment-title" title={name}>
             {name}
