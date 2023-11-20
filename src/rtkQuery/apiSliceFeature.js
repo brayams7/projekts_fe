@@ -216,7 +216,14 @@ export const apiSliceFeature = apiSlice.injectEndpoints({
 
     // Comentarios
     getComments: builder.query({
-      query: (featureId) => `listCommentsFeature/${featureId}`,
+      query: ({featureId}) => `listCommentsFeature/${featureId}`,
+      providesTags: (featureId) => {
+        return [{ type: TYPES_FEATURE.TYPE_LIST_COMMENTS, id: featureId }];
+      },
+    }),
+    getCommentsByCursor: builder.query({
+      query: ({ featureId, cursor }) =>
+        `listCommentsFeature/${featureId}?cursor=${cursor}`,
       providesTags: (featureId) => {
         return [{ type: TYPES_FEATURE.TYPE_LIST_COMMENTS, id: featureId }];
       },
@@ -246,5 +253,6 @@ export const {
   useDeleteAttachmentOfFeatureMutation,
   useChangeVisibilityFromUserToAFeatureMutation,
   useGetCommentsQuery,
+  useLazyGetCommentsByCursorQuery,
   usePostCommentMutation
 } = apiSliceFeature

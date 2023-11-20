@@ -53,7 +53,8 @@ const PostComment = ({ featureId }) => {
 			setComment({
 				comment: editorStateTextString,
 				feature_id: featureId,
-				user_id: user.id
+				user_id: user.id,
+				file: attachment
 			});
 		});
 	};
@@ -64,16 +65,22 @@ const PostComment = ({ featureId }) => {
 		editor?.setEditable(false);
 		setIsUploading(true);
 
-		if (comment?.comment) {
-			const result = await postComment(comment);
+		if (comment?.comment || attachment) {
+			let formData = new FormData();
+			formData.append("comment", comment?.comment ?? "");
+			formData.append("feature_id", comment.feature_id);
+			formData.append("user_id", comment.user_id);
+			formData.append("file", attachment);
+
+			const result = await postComment(formData);
 
 			if (result?.data.code == 200) {
-				editor.update(() => {
+				editor?.update(() => {
 					$getRoot().clear();
 				});
+				setAttachment();
 				successToast.show();
 			} else {
-				console.log(result.error);
 				errorToast.show();
 			}
 		} else {
@@ -194,7 +201,9 @@ const PostComment = ({ featureId }) => {
 					aria-live="assertive"
 					aria-atomic="true">
 					<div className="d-flex">
-						<div className="toast-body">Debes escribir un texto para subir un comentario.</div>
+						<div className="toast-body">
+							Debes escribir un texto o adjuntar un archivo para subir un comentario.
+						</div>
 						<button
 							type="button"
 							className="btn-close btn-close-white me-2 m-auto"
