@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import PostComment from "./comments/PostComment";
 import { useGetCommentsQuery, useLazyGetCommentsByCursorQuery } from "../../../rtkQuery/apiSliceFeature";
+import PostComment from "./comments/PostComment";
 import Comment from "./comments/Comment";
-import "./activity.css";
 import InfiniteScroll from "react-infinite-scroll-component";
+import "./activity.css";
 
 /**
  * Componente que muestra la actividad de un módulo
@@ -68,9 +68,7 @@ const Activity = ({ feature }) => {
 								<p className="fs-6 ms-2 mb-0">Cargando...</p>
 							</div>
 						}
-            endMessage={
-              <p className="fs-6 text-center mt-3 mb-1">Ya no hay más comentarios</p>
-            }>
+						endMessage={<p className="fs-6 text-center mt-3 mb-1">Ya no hay más comentarios</p>}>
 						{comments.map((comment) => (
 							<div
 								key={comment.id}

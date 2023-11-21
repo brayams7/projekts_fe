@@ -22,6 +22,24 @@ button.btn.reaction-button:active {
 	max-width: 40vw;
 }
 
+#download-attachment-button {
+  color: var(--gray);
+  background-color: var(--purple);
+  border-color: var(--gray);
+}
+
+#download-attachment-button:hover {
+	background-color: var(--gray);
+	border-color: var(--purple);
+	color: var(--purple);
+}
+
+#download-attachment-button:active {
+	background-color: var(--purple);
+	border-color: var(--purple);
+	color: var(--gray);
+}
+
 /* Icono de persona */
 .person-icon {
 	color: var(--purple);
