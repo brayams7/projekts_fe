@@ -20,12 +20,13 @@ const ListWorkspaces = () => {
     setlistWorkspaces (workspaces)
 
   }
-  console.log (data)
-  useEffect (()=>{
-      if (data&&Array.isArray (data)&&data.length>0) {
-        setlistWorkspaces (data)
-      }
+
+  useEffect(() => {
+    if (data && Array.isArray(data) && data.length > 0) {
+      setlistWorkspaces(data)
+    }
   }, [data])
+
   if (isLoading && !currentData) {
     return (
       <div className="d-flex flex-column contianerListWorkspaces fw-bold">
@@ -61,7 +62,11 @@ const ListWorkspaces = () => {
           ))
         )
       }
-
+      {
+        Array.isArray(listWorkspaces) &&listWorkspaces.length===0&& (
+          <p className="text-center">No tienes espacios de trabajo</p>
+        )
+      }
     </div>
   );
 };
