@@ -1,7 +1,13 @@
 #comments {
-	height: 70vh;
+  height: calc(100vh - 255px);
 }
 
 #spinner {
   color: var(--purple);
+}
+
+@media (min-width: 1200px) {
+  #comments {
+    height: calc(100vh - 220px);
+  }
 }

@@ -15,7 +15,7 @@ const Activity = ({ feature }) => {
 	const [comments, setComments] = useState([]);
 	const [nextCursor, setNextCursor] = useState();
 	const user = useSelector((state) => state.auth.user);
-	const { isLoading, data } = useGetCommentsQuery({ featureId: feature.id });
+	const { isFetching, data } = useGetCommentsQuery({ featureId: feature.id });
 	const [getCommentsByCursor] = useLazyGetCommentsByCursorQuery();
 
 	useEffect(() => {
@@ -35,11 +35,11 @@ const Activity = ({ feature }) => {
 	};
 
 	return (
-		<div className="container vh-100 d-flex flex-column">
+		<div className="container d-flex flex-column">
 			<div
 				id="comments"
 				className="d-flex flex-column-reverse overflow-y-scroll border mt-3 mx-1">
-				{isLoading ? (
+				{isFetching ? (
 					<div className="d-flex h-100 justify-content-center align-items-center">
 						<div
 							id="spinner"

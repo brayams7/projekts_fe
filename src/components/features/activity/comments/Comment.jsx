@@ -59,8 +59,9 @@ const Comment = ({ comment }) => {
 							target="_blank"
 							rel="noopener noreferrer">
 							<button
+								id="attachment-button"
 								type="button"
-								className="btn btn-outline-secondary btn-sm me-2">
+								className="btn btn-outline-secondary btn-sm me-2 text-truncate">
 								<i className="bi bi-paperclip me-1"></i>
 								{attachment.url.split("/").pop()}
 							</button>

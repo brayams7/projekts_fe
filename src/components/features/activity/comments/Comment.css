@@ -1,28 +1,34 @@
 /* Botón de Reacción */
 button.btn.reaction-button {
-  color: var(--gray);
-  background-color: var(--purple);
-  border-color: var(--gray);
+	color: var(--gray);
+	background-color: var(--purple);
+	border-color: var(--gray);
 }
 
 button.btn.reaction-button:hover {
-  background-color: var(--gray);
-  border-color: var(--purple);
-  color: var(--purple);
+	background-color: var(--gray);
+	border-color: var(--purple);
+	color: var(--purple);
 }
 
 button.btn.reaction-button:active {
-  background-color: var(--purple);
-  border-color: var(--purple);
-  color: var(--gray);
+	background-color: var(--purple);
+	border-color: var(--purple);
+	color: var(--gray);
+}
+
+/* Botón de Adjuntos */
+#attachment-button {
+	max-width: 40vw;
 }
 
 /* Icono de persona */
 .person-icon {
-  color: var(--purple);
+	color: var(--purple);
 }
 
 /* Texto de la fecha */
 .date-text {
-  font-size: 12px;
+	font-size: 12px;
 }
+
