@@ -1,6 +1,8 @@
 import { apiSlice } from "./apiSlice";
 import { TYPES_TYPE_WORKSPACE } from "./providesTags";
 
+const defaultOption = {label: "Todos", value: "TODOS"}
+
 export const apiSliceTypeWorkspace = apiSlice.injectEndpoints(
   {
     endpoints: (builder) => (
@@ -25,11 +27,10 @@ export const apiSliceTypeWorkspace = apiSlice.injectEndpoints(
                     }
                   }
                 )
-                list = [{label: "Todos", value: "TODOS"}, ...list]
-
+                list = [...defaultOption, ...list]
 
               } catch (error) {
-
+                console.log(error)
               }
               return list
             },

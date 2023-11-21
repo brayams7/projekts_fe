@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import ReactDatePicker, { registerLocale } from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import "./customDatePicker.css";
@@ -6,11 +6,10 @@ import "./customDatePicker.css";
 import es from "date-fns/locale/es";
 registerLocale("es", es);
 
-const CustomDatePicker = ({ children, setValue }) => {
-  const defaultTime = new Date()
-  defaultTime.setHours(10,0,0)
+const CustomDatePicker = ({ children, setValue, value }) => {
 
-  const [date, setDate] = useState(defaultTime)
+
+  const [date, setDate] = useState(new Date())
   const [isOpen, setIsOpen] = useState(false)
 
 
@@ -19,9 +18,10 @@ const CustomDatePicker = ({ children, setValue }) => {
   const handleChange = (date) => {
     setIsOpen(!isOpen)
     setDate(date)
-    const dateObject = new Date(date)
+    // const dateObject = new Date(date)
+    setValue(date.getTime() / 1000) // pasando a segundos
     // const timesTamp = Math.floor(dateObject.getTime() / 1000)
-    setValue(dateObject)
+    // setValue(dateObject)
   }
 
   // const handleClick = (e) => {
@@ -33,6 +33,18 @@ const CustomDatePicker = ({ children, setValue }) => {
     setIsOpen(!isOpen)
     datePickerRef.current.setOpen(true)
   }
+
+  useEffect(() => {
+
+    if (value) {
+      const dateFromTimestamp = new Date(value * 1000) // pasando a milisegundos
+      setDate(dateFromTimestamp)
+    } else {
+      const defaultTime = new Date()
+      defaultTime.setHours(10, 0, 0)
+      setDate(defaultTime)
+    }
+  },[value])
 
   // const handleColor = (time) => {
   //   return time.getHours() > 12 ? "text-success" : "text-error";

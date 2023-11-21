@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import Logo from "../../../assets/logo2.png";
+import Logo from "../../../assets/p2.png";
 import AddIcon from "../../../assets/iconsHeader/add.svg";
 import Search from "../../../assets/iconsHeader/search.svg";
 import SearchWhite from "../../../assets/iconsHeader/search_white.svg";
@@ -33,12 +33,12 @@ const HeaderGeneral = ({openMenu,setOpenMenu,styleHeader}) => {
             </div>
 
             <Link className="w-100 header-container-logo" to={`/${PrivateRoutes.PRIVATE_HOME}/${PrivateRoutes.BOARD}`}>
-              <img
+              {/* <img
                 src={Logo}
                 alt="logo"
                 className="img-fluid"
                 // style={{ width: 45, marginRight: 10 }}
-              />{" "}
+              />{" "} */}
               <span>Projetks</span>
             </Link>
           </div>
