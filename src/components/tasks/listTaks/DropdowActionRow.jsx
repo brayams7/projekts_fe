@@ -1,7 +1,7 @@
 import { EditIcon } from "../../../utils/icons/iconsLexicalEditor";
 import { DeleteIcon, MoreIcon, MoveToIcon } from "../../../utils/icons/iconsMenu";
 
-const DropdowActionRow = ({ taskId }) => {
+const DropdowActionRow = ({ onOpen, setSelectedTask, row }) => {
   return (
     <div className="dropdown dropdown-option-task-container">
       <a
@@ -23,11 +23,19 @@ const DropdowActionRow = ({ taskId }) => {
         {/* <div className="font-size-14-16 font-weight-600 text-center">
           Enumerar acciones
         </div> */}
-        <a type="button" role="button" className="mb-2 d-flex gap-2 align-items-center">
+        <a
+          type="button"
+          role="button"
+          onClick={() => {
+            onOpen()
+            setSelectedTask(row.original)
+          }}
+          className="mb-2 d-flex gap-2 align-items-center"
+        >
             <span>
               <EditIcon height="24" width="24" fill="var(--lightDark)"/>
             </span>
-            <span>Cambiar nombre</span>
+            <span>Editar tarea</span>
         </a>
         <a type="button" role="button" className="mb-2 d-flex gap-2 align-items-center">
             <span>

@@ -15,7 +15,7 @@ const ModalWrapper = ({open, onClose, children, title})=>{
 
   return(
     <div className={`custom-modal ${open && "is-open"} `} onClick={()=>onClose()}>
-      <div className="custom-modal-container" onClick={(e)=>e.stopPropagation()}>
+      <div className="custom-modal-container shadow" onClick={(e)=>e.stopPropagation()}>
         <button type="button" className='custom-modal-closer' onClick={()=>onClose()}>X</button>
         <div className="custom-modal-body">
           <span>{title}</span>
