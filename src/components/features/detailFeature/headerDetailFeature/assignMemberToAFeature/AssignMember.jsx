@@ -6,22 +6,29 @@ import { DeleteIcon } from "../../../../../utils/icons/iconsMenu";
 
 const SIZE_AVATAR = 40
 
-const ItemUser = ({ name, id, isMyUser, handleAssignUser, usersAssigned=[], handleDeleteUser }) => {
-
+const ItemUser = ({
+  name,
+  id,
+  isMyUser,
+  handleAssignUser,
+  usersAssigned = [],
+  handleDeleteUser,
+  username,
+  email
+}) => {
   // const [mouseIsOver, setMouseIsOver] = useState(false)
 
-  const isMember = useMemo(()=>{
-
-    return usersAssigned.some(user=>user.id === id)
-
-  },[id, usersAssigned])
+  const isMember = useMemo(() => {
+    return usersAssigned.some((user) => user.id === id);
+  }, [id, usersAssigned]);
 
   return (
     <li
       role="button"
       className="item-user-assigned-to-workspace d-flex justify-content-start align-items-center rounded px-2 py-1"
-      onClick={()=>{
-        if(!isMember) handleAssignUser({userId:id,isWatcher: isMyUser ? 1 : 0, name})
+      onClick={() => {
+        if (!isMember)
+          handleAssignUser({ userId: id, isWatcher: isMyUser ? 1 : 0, name, username, email })
       }}
     >
       <span className="pe-2">
@@ -31,30 +38,19 @@ const ItemUser = ({ name, id, isMyUser, handleAssignUser, usersAssigned=[], hand
           className="rounded-circle"
         />
       </span>
-      <span className="font_size_10_12">
-        {
-          isMyUser ?
-          "Yo"
-          :
-          name
-        }
-      </span>
-      {
-        isMember && (
-          <button
-            type="button"
-            onClick={(e)=>{
-              e.stopPropagation()
-              handleDeleteUser(id)
-            }}
-            className="ms-auto"
-          >
-
-          <DeleteIcon fill="var(--purple)"/>
-
-          </button>
-        )
-      }
+      <span className="font_size_10_12">{isMyUser ? "Yo" : name}</span>
+      {isMember && (
+        <button
+          type="button"
+          onClick={(e) => {
+            e.stopPropagation()
+            handleDeleteUser(id)
+          }}
+          className="ms-auto"
+        >
+          <DeleteIcon fill="var(--purple)" />
+        </button>
+      )}
     </li>
   );
 };
@@ -124,6 +120,8 @@ const AssignMember = ({
             <ItemUser
               key={item.id}
               name={item.name}
+              username={item.username}
+              email={item.email}
               id={item.id}
               isMyUser={item.id === user?.id}
               handleAssignUser={handleAssign}

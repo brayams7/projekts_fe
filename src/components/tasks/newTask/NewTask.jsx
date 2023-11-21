@@ -102,12 +102,14 @@ const NewTask = ({ feature }) => {
   useEffect(()=>{
 
     if(dueDate){
-      setFormatDueDate(dayjs(dueDate).format("MMM. DD, HH:mm a"))
-      setTimestampDueDate(dayjs(dueDate).unix())
+      const timestampDueDate = new Date(dueDate * 1000)
+      setFormatDueDate(dayjs(timestampDueDate).format("MMM. DD, HH:mm a"))
+      setTimestampDueDate(dayjs(timestampDueDate).unix())
     }
     if(startAtTask){
-      setFormatStartAtTask(dayjs(startAtTask).format("MMM. DD, HH:mm a"))
-      setTimestampStartAtTask(dayjs(startAtTask).unix())
+      const timestampStartAt = new Date(startAtTask * 1000)
+      setFormatStartAtTask(dayjs(timestampStartAt).format("MMM. DD, HH:mm a"))
+      setTimestampStartAtTask(dayjs(timestampStartAt).unix())
     }
 
   },[dueDate,startAtTask])
@@ -135,7 +137,7 @@ const NewTask = ({ feature }) => {
             />
 
             <div className="d-flex align-items-center">
-              <CustomDatePicker setValue={setStartAtTask}>
+              <CustomDatePicker setValue={setStartAtTask} value={startAtTask}>
                 {formatStartAtTask ? (
                   <div
                     className="position-relative py-1"
@@ -184,7 +186,7 @@ const NewTask = ({ feature }) => {
             </div>
 
             <div className="d-flex align-items-center">
-              <CustomDatePicker setValue={setDueDate}>
+              <CustomDatePicker setValue={setDueDate} value={dueDate}>
                 {formatDueDate ? (
                   <div
                     className="position-relative py-1"

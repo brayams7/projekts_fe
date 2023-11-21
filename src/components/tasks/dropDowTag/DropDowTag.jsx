@@ -8,7 +8,7 @@ import {
   NewTagIcon
 } from "../../../utils/icons/iconsMenu";
 
-const DropDowTag = ({ handleClickTag }) => {
+const DropDowTag = ({ handleClickTag, Icon }) => {
 
   const { isLoading, listTags, inputText, handleChangeInput, existTag} = useListTags()
   const [colorStage, setColorStage] = useState("")
@@ -31,9 +31,16 @@ const DropDowTag = ({ handleClickTag }) => {
         aria-expanded="false"
         data-bs-auto-close="outside"
       >
-        <span className="custom-icon-border-dashed feature-add-new-tag d-flex align-items-center text-center">
-          <NewTagIcon fill="var(--gray-600)" height="25" width="25" />
-        </span>
+        {
+          Icon ? (
+            Icon
+          ): (
+            <span className="custom-icon-border-dashed feature-add-new-tag d-flex align-items-center text-center">
+              <NewTagIcon fill="var(--gray-600)" height="25" width="25" />
+            </span>
+          )
+        }
+
       </a>
       <ul
         className="dropdown-menu border-0 shadow px-3 py-2"

@@ -58,7 +58,6 @@ const FilterPopover = ({columnFilters, setColumnFilters}) => {
     })
 
   }
-
   useEffect(()=>{
     setListFilters((prev)=>{
       return prev.map((item)=>{
