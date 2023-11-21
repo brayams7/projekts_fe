@@ -20,7 +20,7 @@ export const TagItem = ({ tag, color, handleClickTag=null, id, DeleteComponent=n
         backgroundColor: color,
         cursor: "pointer",
         borderBottom: `1px solid var(--gray)`,
-        maxWidth: 100,
+        // maxWidth: 100,
         padding:0
       }}
       onClick={handleTagClick}

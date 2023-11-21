@@ -9,6 +9,8 @@ import ColumnUsersAssignedToTask from '../columUsersAssignedToTask/ColumnUsersAs
 import ColumnTagsUser from '../columnTagsUser/ColumnTagsUser';
 import dayjs from 'dayjs';
 import { getSubtasksOfTask } from '../../../services/tasksService';
+import { useModal } from '../../../hooks/modal/useSimpleModal';
+
 
 const columnHelper = createColumnHelper()
 
@@ -16,6 +18,9 @@ const columnHelper = createColumnHelper()
 
 const ListsTasks = ({feature}) => {
   const [listTasks, setListTask] = useState([])
+  const {isOpen, onOpen, onClose } = useModal()
+  const [selectedTask, setSelectedTask] = useState(null)
+
   const {
     isLoading,
     isError,
@@ -241,7 +246,12 @@ const ListsTasks = ({feature}) => {
         const original = row.original
 
         return (
-          <DropdowActionRow taskId={original.id} row={row}/>
+          <DropdowActionRow
+            taskId={original.id}
+            setSelectedTask={setSelectedTask}
+            row={row}
+            onOpen={onOpen}
+          />
         )
       }
     })
@@ -284,10 +294,11 @@ const ListsTasks = ({feature}) => {
   //   }
 
   // },[rowIdExpanded])
-
+  console.log(selectedTask)
   return (
 
     <div className='w-100'>
+
       <div className="d-flex justify-space-beetwen font-size-14-16 list-tasks-filter-member mb-2 mx-2">
         <div className='me-auto gray-color-600'>
           <span className='font-size-18-20 me-3'>Pendiente</span>
@@ -297,6 +308,9 @@ const ListsTasks = ({feature}) => {
         columns={columns}
         data={listTasks}
         feature={feature}
+        onCloseModal={onClose}
+        selectedTask={selectedTask}
+        isOpenModal={isOpen}
       />
     </div>
   );

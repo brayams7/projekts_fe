@@ -1,6 +1,5 @@
 import { API_BASE_UI_AVATARS } from "../../../services/settings";
-import { AddMemberIcon } from "../../../utils/icons/iconsMenu";
-import AssignMember from "../../features/detailFeature/headerDetailFeature/assignMemberToAFeature/AssignMember";
+import DropdownAddUserToTask from "../listTaks/DropdownAddUserToTask";
 // import { ItemUserAssigned } from "../../features/detailFeature/headerDetailFeature/listUsersAssigned/ListUsersAssignedFeature";
 
 
@@ -33,7 +32,7 @@ const ListUsersAssignedToTask = ({
   isEditable=false
 }) => {
 
-const handleSelectUser = ({userId, name, isWatcher}) => {
+  const handleSelectUser = ({userId, name, isWatcher}) => {
     if(!usersAssigned.some(user => user.id === userId)){
       setListUsersAssigned(prevState => [...prevState, {id:userId, name, is_watcher:isWatcher}])
     }
@@ -47,39 +46,13 @@ const handleSelectUser = ({userId, name, isWatcher}) => {
     <div className="list-users-assigned-container position-relative">
       <ul className="list-unstyled position-relative p-0 d-flex flex-row-reverse justify-content-end">
         {isEditable && (
-          <li className="position-relative" style={{ marginLeft: "-8" }}>
-            <div className="dropdown d-flex align-items-center">
-              <a
-                href={`#addMemberToTaskOption`}
-                type="button"
-                role="button"
-                data-bs-toggle="dropdown"
-                aria-expanded="false"
-                data-bs-auto-close="outside"
-              >
-                <span className="custom-icon-border-dashed d-flex align-items-center">
-                  <AddMemberIcon
-                    fill="var(--gray-600)"
-                    height="25"
-                    width="25"
-                  />
-                </span>
-              </a>
-              <ul
-                className="dropdown-menu border-0 shadow py-2"
-                id="addMemberToTaskOption"
-                style={{ minHeight: 350, width: 250 }}
-              >
-                <AssignMember
-                  usersAddedToTheWorkspace={usersAddedToTheWorkspace}
-                  usersAssigned={usersAssigned}
-                  boardId={taskId}
-                  handleAssign={handleSelectUser}
-                  handleDelete={handleDeleteUser}
-                />
-              </ul>
-            </div>
-          </li>
+          <DropdownAddUserToTask
+            usersAddedToTheWorkspace={usersAddedToTheWorkspace}
+            usersAssigned={usersAssigned}
+            taskId={taskId}
+            handleSelectUser={handleSelectUser}
+            handleDeleteUser={handleDeleteUser}
+          />
         )}
         {Array.isArray(usersAssigned) &&
           usersAssigned.map((user) => (

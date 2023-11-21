@@ -1,4 +1,4 @@
-.custom-modal{
+.simple-modal{
   position: fixed;
   z-index: 1100;
   top: 0;
@@ -10,11 +10,11 @@
   align-items: center;
 }
 
-.custom-modal.is-open{
+.simple-modal.is-open{
   display: flex;
 }
 
-.custom-modal-container{
+.simple-modal-container{
   position: relative;
   padding: 1rem;
   background-color: var(--white);
@@ -25,12 +25,14 @@
   -ms-border-radius: var(--radius-8);
   -o-border-radius: var(--radius-8);
   min-width: 320px;
-  max-width: 500px;
-  min-height: 100px;
+  max-width: 90%;
 }
 
-.custom-modal-closer{
-  position: absolute;
-  right: 10px;
-  top:10px
+@media (min-width: 768px) {
+  .simple-modal-container{
+    width: 60%;
+    max-width: 60%;
+  }
 }
+
+

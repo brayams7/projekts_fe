@@ -3,7 +3,8 @@ import { useState } from "react";
 import Search from '../../../assets/iconsHeader/search.svg'
 import NewTask from "../newTask/NewTask";
 import FilterPopover from "./FilterPopover";
-
+import SimpleModal from "../../utilsComponents/modal/SimpleModal";
+import EditTask from "./editTask/EditTask";
 
 // const useSkipper = () => {
 //   const shouldSkipRef = useRef(true)
@@ -44,7 +45,7 @@ import FilterPopover from "./FilterPopover";
 // }
 
 
-const TableTask = ({columns, data, feature}) => {
+const TableTask = ({columns, data, feature, isOpenModal, onCloseModal, selectedTask}) => {
 
   const [columnFilter, setColumnFilter] = useState([])
   const [expanded, setExpanded] = useState({})
@@ -73,6 +74,15 @@ const TableTask = ({columns, data, feature}) => {
 
   return (
     <div className="w-100">
+      <SimpleModal
+        isOpen={isOpenModal}
+        onClose={onCloseModal}
+        title="hola mundo"
+      >
+        <EditTask
+          task={selectedTask}
+        />
+      </SimpleModal>
       <div className="container">
         <div className="d-flex flex-wrap gap-3 mb-3 align-items-center">
           <span>{data.length} tareas</span>
