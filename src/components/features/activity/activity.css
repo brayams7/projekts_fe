@@ -1,22 +1,13 @@
-.activity-container .timeline-comments{
-  min-height: 380px;
-  background-color: var(--gray);
-  overflow: hidden;
-  display: flex;
-  flex-direction: column;
-
+#comments {
+  height: calc(100vh - 255px);
 }
 
-/* .new-comment-container{
-  height: 60px;
-} */
-
-.activity-container .new-comment-container{
-  position: relative;
-  z-index: 10;
+#spinner {
+  color: var(--purple);
 }
 
-/* .new-comment-container .comment-content-container{
-  max-height: 300px;
-  position: relative;
-} */
+@media (min-width: 1200px) {
+  #comments {
+    height: calc(100vh - 220px);
+  }
+}
