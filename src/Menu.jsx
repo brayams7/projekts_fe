@@ -55,6 +55,15 @@ export const Menu = [
     stylesLayout:DEFAULT_COLORS_LAYOUT
 
   },
+  {
+    name: "Perfil",
+    icon: (fill)=><BoardIcon fill={fill}/>,
+    path: PrivateRoutes.PROFILE,
+    type:typesMenu.HOME,
+    isShowInSidebar: false,
+    permission: PrivateRoutes.SETTINGS,
+    stylesLayout:DEFAULT_COLORS_LAYOUT
+  },
   // {
   //   name: "Workspace 1",
   //   icon: (fill)=><WorkspaceIcon fill={fill}/>,

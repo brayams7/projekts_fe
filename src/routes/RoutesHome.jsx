@@ -8,6 +8,7 @@ import Dashboard from "../pages/Dashboard/Dashboard";
 import ListWorkspacesPage from "../pages/Workpace/ListWorkspacesPage";
 // import ListsBoards from "../pages/boards/ListsBoards";
 import {  typesMenu } from "../Menu";
+import ProfileEditPage from "../pages/Profile/ProfileEditPage";
 
 const RoutesHome = () => {
 
@@ -17,6 +18,7 @@ const RoutesHome = () => {
         <Route path="/" element={<Navigate to={PrivateRoutes.DASHBOARD} />} />
         <Route path={PrivateRoutes.DASHBOARD} element={<Dashboard />} />
         <Route path={PrivateRoutes.BOARD} element={<ListWorkspacesPage />} />
+        <Route path={PrivateRoutes.PROFILE} element={<ProfileEditPage />} />
 
         {/* <Route element={<Permission permission={PrivateRoutes.WORKSAPCE} />}>
           <Route
