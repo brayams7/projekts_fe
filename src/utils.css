@@ -67,7 +67,7 @@
 }
 /*
     Font weith
-*/
+ */
 .font-weight-400{
     font-weight: 400;
 }
@@ -163,6 +163,14 @@
   -ms-border-radius: var(--radius-12);
   -o-border-radius: var(--radius-12);
   border: none;
+}
+
+.custom-text-area{
+  border-radius: var(--radius-8);
+  resize: none;
+  min-height: 70px !important;
+  outline: none;
+  overflow-y: hidden;
 }
 
 .custom-button-disabled:disabled{

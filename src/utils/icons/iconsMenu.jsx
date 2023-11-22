@@ -397,3 +397,16 @@ export function AttachIcon({ fill = FILL_COLOR, height = "24", width = "24" }) {
   );
 }
 
+export function RemoveIcon({ fill = FILL_COLOR, height = "24", width = "24" }) {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      height={height}
+      viewBox="0 -960 960 960"
+      width={width}
+    >
+      <path d="M240-460v-40h480v40H240Z" fill={fill} />
+    </svg>
+  );
+}
+

@@ -6,27 +6,10 @@ import { useEffect, useState } from "react";
 
 
 const DropDownTypesWorkpaces = ({handleChange}) => {
-  const {data,isLoading,isError}=useListTypeWorkspaceQuery ()
+  const {data,isLoading}=useListTypeWorkspaceQuery ()
   const [optionSelect,setOptionSelect] = useState ({})
-  // useEffect(()=>{
-  //   const getListTypeWorkspace = async () => {
-  //   const response = await getListTypesWorkspaceService ()
-  //   //console.log (response)
-  //   if (response.code === 200){
-  //     const data = response.data
-  //     const mapdata = data.map((item)=>{
-  //       return{
-  //         ...item,
-  //         label: item.name,
-  //         value: item.id,
-  //       }
-  //     })
-  //     //console.log(mapdata)
-  //     setList(mapdata)
-  //   }
-  //   }
-  //   getListTypeWorkspace ()
-  // },[])
+
+
   useEffect (()=> {
     if (Array.isArray(data)&&data){
       if (data.length>=1){
@@ -34,6 +17,7 @@ const DropDownTypesWorkpaces = ({handleChange}) => {
       }
     }
   },[data])
+
   if (isLoading) {
     return (
       <div>
@@ -41,7 +25,7 @@ const DropDownTypesWorkpaces = ({handleChange}) => {
       </div>
     )
   }
-  console.log (optionSelect)
+
   return (
     <div className="d-flex flex-wrap">
       <div className="form-group" style={{ minWidth: 230 }}>
