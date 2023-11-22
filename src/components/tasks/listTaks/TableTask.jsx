@@ -77,7 +77,7 @@ const TableTask = ({columns, data, feature, isOpenModal, onCloseModal, selectedT
       <SimpleModal
         isOpen={isOpenModal}
         onClose={onCloseModal}
-        title="hola mundo"
+        title="Editar Tarea"
       >
         <EditTask
           task={selectedTask}

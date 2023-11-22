@@ -9,6 +9,8 @@ import DropdownAddUserToTask from "../DropdownAddUserToTask";
 import ListUsers from "../../../user/memers/tableUsers/ListUsers";
 import CustomDatePicker from "../../../datePicker/CustomDatePicker";
 import dayjs from "dayjs";
+import { useUpdateTaskMutation } from "../../../../rtkQuery/apiSliceTasks";
+import { toast } from "react-toastify";
 
 
 const DeleteTagByTask = ({handleDeleteTag})=>{
@@ -34,22 +36,28 @@ const IconAddUser = () => {
 };
 
 const EditTask = ({task}) => {
+  const [title, setTitle] = useState("")
   const [listTagsForAddToTask, setListTagsForAddToTask] = useState([])
   const [listUsersAssigned, setListUsersAssigned] = useState([])
   const [dueDate, setDueDate] = useState(null)
   const [startAtTask, setStartAtTask] = useState(null)
   const [timestampStartAtTask, setTimestampStartAtTask] = useState(null)
   const [timestampDueDate, setTimestampDueDate] = useState(null)
+  const [calculatedTime, setCalculatedTime] = useState('')
 
   const [mouseIsOverDueDate, setMouseIsOverDueDate] = useState(false)
   const [mouseIsOverStartAtTask, setMouseIsOverStartAtTask] = useState(false)
 
+  const [updateTaskRequest, { isLoading }] = useUpdateTaskMutation()
+
 
   const {
-    handleSubmit,
+    // handleSubmit,
     setValue,
     register,
-    formState: { isValid },
+    setError,
+    clearErrors,
+    formState: { isValid, errors, isSubmitted},
   } = useForm()
   const [description, setDescription] = useState("")
 
@@ -88,13 +96,45 @@ const EditTask = ({task}) => {
   }
 
 
-  const onSubmit = (data) => {
-    console.log(data)
+  const onSubmit = async () => {
+    try {
+      if(timestampDueDate < timestampStartAtTask){
+        setError("date_task",{
+          type: "manual",
+          message: "La fecha de finalización debe ser mayor a la fecha de inicio",
+        })
+        return
+      }
+
+      if(!validateForm()) return
+
+      const body = {
+        feature_id: task.feature_id,
+        title,
+        description,
+        due_date: timestampDueDate,
+        starts_at: timestampStartAtTask,
+        tags_id: listTagsForAddToTask.map(item => item.id),
+        usersAssign: listUsersAssigned
+      }
+
+      const response = await updateTaskRequest({taskId: task.id, body}).unwrap()
+
+      if (response.code === 200) {
+
+        toast.success("Tablero creado!", { icon: "😃" })
+
+      } else {
+        toast.error("Upss! ocurrió un error", { icon: "😕" })
+      }
+    } catch (error) {
+      toast.error("Upss! ocurrió un error", { icon: "😕" })
+      console.log(error)
+    }
   }
 
   const validateForm = ()=>{
-    return (listUsersAssigned.length > 0)
-    // return (title && timestampDueDate && timestampStartAtTask && listUsersAssigned.length > 0)
+    return (timestampDueDate && timestampStartAtTask && listUsersAssigned.length > 0)
   }
 
   useEffect(()=>{
@@ -102,6 +142,7 @@ const EditTask = ({task}) => {
     if(task){
       setValue("title", task.title)
       setValue("description", task.description)
+      setTitle(task.title)
       setDescription(task.description)
       setListTagsForAddToTask([...task.tags])
       setListUsersAssigned([...task.assigned_users])
@@ -110,6 +151,7 @@ const EditTask = ({task}) => {
 
       setStartAtTask(task.starts_at)
       setTimestampStartAtTask(task.starts_at)
+      setCalculatedTime(task.calculated_time)
     }
 
   },[setValue, task])
@@ -129,114 +171,143 @@ const EditTask = ({task}) => {
     // }
   },[description])
 
+  useEffect(()=>{
+    if(isSubmitted){
+
+      if(timestampDueDate < timestampStartAtTask){
+        setError("date_task",{
+          type: "manual",
+          message: "La fecha de finalización debe ser mayor a la fecha de inicio",
+        })
+      }else{
+        clearErrors("date_task")
+      }
+    }
+  },[timestampDueDate, timestampStartAtTask, isSubmitted, clearErrors, setError])
+
   return (
     <div className="container">
-      <form className="d-flex flex-column gap-3" onSubmit={handleSubmit(onSubmit)}>
 
-        <div className="d-flex justify-content-between">
-          <div className="d-flex gap-3">
-            <div className="d-flex flex-column align-items-center">
-              <span className="font-size-12-14 gray-color-600">Fecha de inicio</span>
-              <div>
-                <CustomDatePicker setValue={handleChangeStartsAtTask} value={startAtTask}>
-                  {startAtTask ? (
-                    <div
-                      className="position-relative py-1"
-                      onMouseEnter={() => {
-                        setMouseIsOverStartAtTask(true)
-                      }}
-                      onMouseLeave={() => {
-                        setMouseIsOverStartAtTask(false)
-                      }}
-                    >
-                      <span
-                        className="text-center fw-bold font-size-8-10 title-break-all position-relative"
-                        // title={startAtTask}
+      <div className="d-flex flex-column gap-3">
+
+        <div>
+          <div className="d-flex justify-content-between align-items-center">
+            <div className="d-flex gap-3">
+              <div className="d-flex flex-column align-items-center">
+                <span className="font-size-12-14 gray-color-600">Fecha de inicio</span>
+                <div>
+                  <CustomDatePicker setValue={handleChangeStartsAtTask} value={startAtTask}>
+                    {startAtTask ? (
+                      <div
+                        className="position-relative"
+                        onMouseEnter={() => {
+                          setMouseIsOverStartAtTask(true)
+                        }}
+                        onMouseLeave={() => {
+                          setMouseIsOverStartAtTask(false)
+                        }}
                       >
-                        {dayjs.unix(timestampStartAtTask).format("YYYY MMM. DD, HH:mm a") || "Sin fecha"}
-                      </span>
-                      {mouseIsOverStartAtTask && (
                         <span
-                          style={{
-                            top: 4,
-                            fontSize: 6,
-                            right: 0,
-                            cursor: "pointer",
-                          }}
-                          className="position-absolute translate-middle badge rounded-pill bg-danger"
-                          onClick={(e) => {
-                            e.stopPropagation()
-                            setStartAtTask(null)
-                            setTimestampStartAtTask(null)
-                          }}
+                          className="text-center fw-bold font-size-8-10 title-break-all position-relative"
+                          // title={startAtTask}
                         >
-                          X
+                          {dayjs.unix(timestampStartAtTask).format("YYYY MMM. DD, HH:mm a") || "Sin fecha"}
                         </span>
-                      )}
-                    </div>
-                  ) : (
-                    <span className="custom-icon-border-dashed d-flex align-items-center text-center">
-                      <CalendarStartAtIcon
-                        fill="var(--purple)"
-                        height="25"
-                        width="25"
-                      />
-                    </span>
-                  )}
-                </CustomDatePicker>
+                        {mouseIsOverStartAtTask && (
+                          <span
+                            style={{
+                              top: 4,
+                              fontSize: 6,
+                              right: 0,
+                              cursor: "pointer",
+                            }}
+                            className="position-absolute translate-middle badge rounded-pill bg-danger"
+                            onClick={(e) => {
+                              e.stopPropagation()
+                              setStartAtTask(null)
+                              setTimestampStartAtTask(null)
+                            }}
+                          >
+                            X
+                          </span>
+                        )}
+                      </div>
+                    ) : (
+                      <span className="custom-icon-border-dashed d-flex align-items-center text-center">
+                        <CalendarStartAtIcon
+                          fill="var(--purple)"
+                          height="25"
+                          width="25"
+                        />
+                      </span>
+                    )}
+                  </CustomDatePicker>
+                </div>
+              </div>
+              <div className="d-flex flex-column align-items-center">
+                <span className="font-size-12-14 gray-color-600">Fecha de fin</span>
+                <div>
+                  <CustomDatePicker setValue={handleChangeDueDate} value={dueDate}>
+                    {dueDate ? (
+                      <div
+                        className="position-relative"
+                        onMouseEnter={() => {
+                          setMouseIsOverDueDate(true)
+                        }}
+                        onMouseLeave={() => {
+                          setMouseIsOverDueDate(false)
+                        }}
+                      >
+                        <span
+                          className="text-center fw-bold font-size-8-10 title-break-all position-relative"
+                          // title={dueDate}
+                        >
+                          {dayjs.unix(timestampDueDate).format("YYYY MMM. DD, HH:mm a") || "Sin fecha"}
+                        </span>
+                        {mouseIsOverDueDate && (
+                          <span
+                            style={{
+                              top: 4,
+                              fontSize: 6,
+                              right: 0,
+                              cursor: "pointer",
+                            }}
+                            className="position-absolute translate-middle badge rounded-pill bg-danger"
+                            onClick={(e) => {
+                              e.stopPropagation()
+                              setTimestampDueDate(null)
+                              setDueDate(null)
+                            }}
+                          >
+                            X
+                          </span>
+                        )}
+                      </div>
+                    ) : (
+                      <span className="custom-icon-border-dashed d-flex align-items-center text-center">
+                        <CalendarIcon
+                          fill="var(--purple)"
+                          height="25"
+                          width="25"
+                        />
+                      </span>
+                    )}
+                  </CustomDatePicker>
+                </div>
               </div>
             </div>
-            <div className="d-flex flex-column align-items-center">
-              <span className="font-size-12-14 gray-color-600">Fecha de fin</span>
-              <div>
-                <CustomDatePicker setValue={handleChangeDueDate} value={dueDate}>
-                  {dueDate ? (
-                    <div
-                      className="position-relative py-1"
-                      onMouseEnter={() => {
-                        setMouseIsOverDueDate(true)
-                      }}
-                      onMouseLeave={() => {
-                        setMouseIsOverDueDate(false)
-                      }}
-                    >
-                      <span
-                        className="text-center fw-bold font-size-8-10 title-break-all position-relative"
-                        // title={dueDate}
-                      >
-                        {dayjs.unix(timestampDueDate).format("YYYY MMM. DD, HH:mm a") || "Sin fecha"}
-                      </span>
-                      {mouseIsOverDueDate && (
-                        <span
-                          style={{
-                            top: 4,
-                            fontSize: 6,
-                            right: 0,
-                            cursor: "pointer",
-                          }}
-                          className="position-absolute translate-middle badge rounded-pill bg-danger"
-                          onClick={(e) => {
-                            e.stopPropagation()
-                            setTimestampDueDate(null)
-                          }}
-                        >
-                          X
-                        </span>
-                      )}
-                    </div>
-                  ) : (
-                    <span className="custom-icon-border-dashed d-flex align-items-center text-center">
-                      <CalendarIcon
-                        fill="var(--purple)"
-                        height="25"
-                        width="25"
-                      />
-                    </span>
-                  )}
-                </CustomDatePicker>
-              </div>
-            </div>
+
+            <span className="fw-bold">
+                {
+                  calculatedTime
+                }
+            </span>
           </div>
+          {
+            errors?.date_task && (
+              <span className="font-size-10-12 text-danger">* {errors.date_task.message} *</span>
+            )
+          }
         </div>
 
         <div className="form-floating">
@@ -248,7 +319,11 @@ const EditTask = ({task}) => {
             className="form-control"
             id="floatingInput"
             placeholder="title"
-            {...register("title", { required: true })}
+            value={title}
+            {...register("title", {
+              required: true,
+              onChange: (e)=>setTitle(e.target.value),
+            })}
           />
           <label htmlFor="floatingInput">Titulo</label>
         </div>
@@ -346,18 +421,19 @@ const EditTask = ({task}) => {
             Cancelar
           </button>
           <button
+            onClick={onSubmit}
               style={{
                 backgroundColor: "var(--purple)",
                 color: "var(--white)"
               }}
               className="new-task-button font-size-14-16 px-4 py-1 rounded custom-button-disabled"
               // onClick={handleCreateTask}
-              disabled={!validateForm()}
+              disabled={(!validateForm() || !isValid || isLoading)}
             >
               Guardar
             </button>
         </div>
-      </form>
+      </div>
     </div>
   );
 };
