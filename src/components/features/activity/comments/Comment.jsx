@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useSelector } from "react-redux";
 import SimpleModal from "../../../utilsComponents/modal/SimpleModal";
 import { useModal } from "../../../../hooks/modal/useSimpleModal";
-import fileDownload from "js-file-download";
+import { axiosToken } from "../../../../services/settings";
 import "./Comment.css";
 
 /**
@@ -43,23 +43,28 @@ const Comment = ({ comment }) => {
 		onOpen();
 	};
 
-	const handleDownloadAttachment = () => {
-    const proxyUrl = "https://cors-anywhere.herokuapp.com/";
-    fetch(proxyUrl + attachment.url)
-      .then((response) => response.blob())
-      .then((blob) => {
-        fileDownload(blob, attachment.url.split("/").pop());
-      })
-      .catch((error) => {
-        console.log(error);
-        let link = document.createElement("a");
-        link.href = attachment.url;
-        link.download = attachment.url.split("/").pop();
-        link.target = "_blank";
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
-      });
+	const handleDownloadAttachment = async () => {
+		let anchor = document.createElement("a");
+		anchor.download = attachment.name + attachment.attachment_type.extension;
+		document.body.appendChild(anchor);
+
+		let response = await axiosToken.get(`/downloadAttachment/${attachment.id}`, {
+			responseType: "blob"
+		});
+
+		let url = window.URL.createObjectURL(new Blob([response]));
+		anchor.href = url;
+		anchor.click();
+		document.body.removeChild(anchor);
+	};
+
+	const handlePdfAttachment = () => {
+		let anchor = document.createElement("a");
+		anchor.href = attachment.url;
+		anchor.target = "_blank";
+		document.body.appendChild(anchor);
+		anchor.click();
+		document.body.removeChild(anchor);
 	};
 
 	return (
@@ -91,7 +96,7 @@ const Comment = ({ comment }) => {
 								className="btn btn-outline-secondary btn-sm me-2 text-truncate"
 								onClick={() => handleAttachment(attachment)}>
 								<i className="bi bi-paperclip me-1"></i>
-								{attachment.url.split("/").pop()}
+								{attachment.name}
 							</button>
 						))
 					) : (
@@ -107,29 +112,38 @@ const Comment = ({ comment }) => {
 			<SimpleModal
 				isOpen={isOpen}
 				onClose={onClose}
-				title={attachment?.url.split("/").pop()}>
-				{["png", "jpg", "jpeg", "gif"].includes(attachment?.url.split(".").pop()) ? (
-					<div className="container">
-						<div className="row">
+				title={attachment?.name}>
+				<div className="container">
+					<div className="row justify-content-center">
+						{[".png", ".jpg", ".jpeg", ".gif"].includes(attachment?.attachment_type.extension) ? (
 							<img
 								src={attachment.url}
 								className="img-fluid"
-								alt={attachment.url.split("/").pop()}
+								alt={attachment.name}
 							/>
+						) : [".pdf"].includes(attachment?.attachment_type.extension) ? (
+							<button
+								id="pdf-attachment-button"
+								type="button"
+								className="btn btn-lg"
+								onClick={handlePdfAttachment}>
+								<i className="bi bi-filetype-pdf"></i>
+								Vista previa
+							</button>
+						) : (
+							<p className="text-center">No hay vista previa para este archivo</p>
+						)}
+						<div className="row pt-2 pe-2 justify-content-end">
+							<button
+								id="download-attachment-button"
+								type="button"
+								className="btn"
+								onClick={() => handleDownloadAttachment()}>
+								<i className="bi bi-download me-2"></i>
+								Descargar
+							</button>
 						</div>
 					</div>
-				) : (
-					<p className="text-center">No hay vista previa para este archivo</p>
-				)}
-				<div className="row d-grid pt-2 pe-2 justify-content-end">
-					<button
-						id="download-attachment-button"
-						type="button"
-						className="btn"
-						onClick={() => handleDownloadAttachment()}>
-						<i className="bi bi-download me-2"></i>
-						Descargar
-					</button>
 				</div>
 			</SimpleModal>
 		</>

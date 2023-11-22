@@ -23,6 +23,7 @@ button.btn.reaction-button:active {
 }
 
 #download-attachment-button {
+  width: fit-content;
   color: var(--gray);
   background-color: var(--purple);
   border-color: var(--gray);
@@ -35,6 +36,25 @@ button.btn.reaction-button:active {
 }
 
 #download-attachment-button:active {
+	background-color: var(--purple);
+	border-color: var(--purple);
+	color: var(--gray);
+}
+
+#pdf-attachment-button {
+  width: fit-content;
+  color: var(--gray);
+  background-color: var(--purple);
+  border-color: var(--gray);
+}
+
+#pdf-attachment-button:hover {
+	background-color: var(--gray);
+	border-color: var(--purple);
+	color: var(--purple);
+}
+
+#pdf-attachment-button:active {
 	background-color: var(--purple);
 	border-color: var(--purple);
 	color: var(--gray);
