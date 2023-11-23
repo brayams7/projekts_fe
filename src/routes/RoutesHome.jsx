@@ -7,28 +7,42 @@ import Dashboard from "../pages/Dashboard/Dashboard";
 // import Permission from "../Permission";
 import ListWorkspacesPage from "../pages/Workpace/ListWorkspacesPage";
 // import ListsBoards from "../pages/boards/ListsBoards";
-import {  typesMenu } from "../Menu";
+import { typesMenu } from "../Menu";
+import MyProfile from "../pages/Profile/MyProfile";
 
 const RoutesHome = () => {
+	return (
+		<LayoutGeneral typeMenu={typesMenu.HOME}>
+			<RoutesWithNotFound>
+				<Route
+					path="/"
+					element={<Navigate to={PrivateRoutes.DASHBOARD} />}
+				/>
+				<Route
+					path={PrivateRoutes.DASHBOARD}
+					element={<Dashboard />}
+				/>
+				<Route
+					path={PrivateRoutes.BOARD}
+					element={<ListWorkspacesPage />}
+				/>
+				<Route
+					path={PrivateRoutes.MY_PROFILE}
+					element={<MyProfile />}
+				/>
 
-  return (
-    <LayoutGeneral typeMenu={typesMenu.HOME}>
-      <RoutesWithNotFound>
-        <Route path="/" element={<Navigate to={PrivateRoutes.DASHBOARD} />} />
-        <Route path={PrivateRoutes.DASHBOARD} element={<Dashboard />} />
-        <Route path={PrivateRoutes.BOARD} element={<ListWorkspacesPage />} />
-
-        {/* <Route element={<Permission permission={PrivateRoutes.WORKSAPCE} />}>
+				{/* <Route element={<Permission permission={PrivateRoutes.WORKSAPCE} />}>
           <Route
             path={`/${PrivateRoutes.WORKSAPCE}/*`}
             element={<RoutesWorkspace />}
           />
         </Route> */}
 
-        {/* <Route path={PrivateRoutes.WORKSAPCE} element={<Permission component={Workspace} permission={PrivateRoutes.WORKSAPCE}/>}/> */}
-      </RoutesWithNotFound>
-    </LayoutGeneral>
-  );
+				{/* <Route path={PrivateRoutes.WORKSAPCE} element={<Permission component={Workspace} permission={PrivateRoutes.WORKSAPCE}/>}/> */}
+			</RoutesWithNotFound>
+		</LayoutGeneral>
+	);
 };
 
 export default RoutesHome;
+
