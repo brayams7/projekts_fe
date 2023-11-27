@@ -1,6 +1,14 @@
 import { PrivateActionsRoutes, PrivateRoutes } from "./routes";
 import { DEFAULT_COLORS_LAYOUT } from "./utils/contants/colorsHex";
-import { BoardIcon, DashboardIcon, ListIcon, MembersIcon, SettingsIcon, ViewsIcon } from "./utils/icons/iconsMenu";
+import {
+	BoardIcon,
+	DashboardIcon,
+	ListIcon,
+	MembersIcon,
+	Person,
+	SettingsIcon,
+	ViewsIcon
+} from "./utils/icons/iconsMenu";
 
 // eslint-disable-next-line react-refresh/only-export-components
 export const typesMenu = {
@@ -54,7 +62,7 @@ export const Menu = [
 	},
 	{
 		name: "Perfil",
-		icon: (fill) => <BoardIcon fill={fill} />,
+		icon: (fill) => <Person fill={fill} />,
 		path: PrivateRoutes.MY_PROFILE,
 		type: typesMenu.HOME,
 		isShowInSidebar: true,

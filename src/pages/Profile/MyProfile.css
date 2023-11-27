@@ -25,26 +25,21 @@
 }
 
 /* Foto de perfil */
-#profile-picture {
-	width: 50%;
-	filter: invert(44%) sepia(81%) saturate(737%) hue-rotate(211deg) brightness(98%) contrast(92%);
+#text-avatar {
+	cursor: pointer;
 }
 
-@media (min-width: 768px) {
-	#profile-picture {
-		width: 100%;
-	}
+#add-profile-picture {
+	cursor: pointer;
+	font-size: x-large;
+	top: 15%;
+	left: 85%;
 }
 
-@media (min-width: 1024px) {
-	#profile-picture {
-		width: 80%;
-	}
-}
-
-@media (min-width: 1440px) {
-	#profile-picture {
-		width: 60%;
-	}
+#delete-profile-picture {
+	cursor: pointer;
+	font-size: x-large;
+	top: 15%;
+	left: 85%;
 }
 
