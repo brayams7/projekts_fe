@@ -13,7 +13,8 @@ export const PrivateRoutes = {
   TASKS: "tasks",
   SETTINGS:"settings",
   MEMBERS:"members",
-  VIEWS:"views"
+  VIEWS:"views",
+  PROFILE: "profile"
 };
 
 export const ChildActionsRoutes = {

@@ -213,9 +213,33 @@ export const apiSliceFeature = apiSlice.injectEndpoints({
       }
       //invalidatesTags:(result, error,{featureId}) => [{type:TYPES_FEATURE.TYPE_LIST_ATTACHMENTS, id:featureId}]
     }),
-  })
-})
 
+    // Comentarios
+    getComments: builder.query({
+      query: ({featureId}) => `listCommentsFeature/${featureId}`,
+      providesTags: (featureId) => {
+        return [{ type: TYPES_FEATURE.TYPE_LIST_COMMENTS, id: featureId }];
+      },
+    }),
+    getCommentsByCursor: builder.query({
+      query: ({ featureId, cursor }) =>
+        `listCommentsFeature/${featureId}?cursor=${cursor}`,
+      providesTags: (featureId) => {
+        return [{ type: TYPES_FEATURE.TYPE_LIST_COMMENTS, id: featureId }];
+      },
+    }),
+    postComment: builder.mutation({
+      query: (body) => ({
+        url: "createCommentFeature",
+        method: "POST",
+        body: body,
+      }),
+      invalidatesTags: (body) => [
+        { type: TYPES_FEATURE.TYPE_LIST_COMMENTS, id: body.feature_id },
+      ],
+    }),
+  }),
+});
 
 export const {
   useCreateFeatureMutation,
@@ -227,5 +251,8 @@ export const {
   useListAttachmentsOfFeatureQuery,
   useUploadAttachmentOfFeatureMutation,
   useDeleteAttachmentOfFeatureMutation,
-  useChangeVisibilityFromUserToAFeatureMutation
+  useChangeVisibilityFromUserToAFeatureMutation,
+  useGetCommentsQuery,
+  useLazyGetCommentsByCursorQuery,
+  usePostCommentMutation
 } = apiSliceFeature
