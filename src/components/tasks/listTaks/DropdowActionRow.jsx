@@ -1,7 +1,7 @@
 import { EditIcon } from "../../../utils/icons/iconsLexicalEditor";
-import { DeleteIcon, MoreIcon, MoveToIcon } from "../../../utils/icons/iconsMenu";
+import { AddIcon, DeleteIcon, MoreIcon, MoveToIcon } from "../../../utils/icons/iconsMenu";
 
-const DropdowActionRow = ({ onOpen, setSelectedTask, row }) => {
+const DropdowActionRow = ({ onOpen, setSelectedTask, row, setSelectedParent }) => {
   return (
     <div className="dropdown dropdown-option-task-container">
       <a
@@ -33,10 +33,28 @@ const DropdowActionRow = ({ onOpen, setSelectedTask, row }) => {
           className="mb-2 d-flex gap-2 align-items-center"
         >
             <span>
-              <EditIcon height="24" width="24" fill="var(--lightDark)"/>
+              <EditIcon height="20" width="20" fill="var(--lightDark)"/>
             </span>
             <span>Editar tarea</span>
         </a>
+        {
+          row.depth === 0 && (
+            <a
+              type="button"
+              role="button"
+              onClick={() => {
+                onOpen()
+                setSelectedParent(row)
+              }}
+              className="mb-2 d-flex gap-2 align-items-center"
+            >
+              <span>
+                <AddIcon height="24" width="24" fill="var(--lightDark)"/>
+              </span>
+              <span>Agregar subtarea</span>
+            </a>
+          )
+        }
         <a type="button" role="button" className="mb-2 d-flex gap-2 align-items-center">
             <span>
               <MoveToIcon height="24" width="24" fill="var(--lightDark)"/>

@@ -1,29 +1,29 @@
 import { TagItem } from "../../tags/listTags/ListTags";
 
-const DeleteTagByTask = ({handleDeleteTag, id})=>{
-  return (
-    <button
-      type="button"
-      onClick={(e) => {
-        e.stopPropagation()
-        handleDeleteTag(id)
-      }}
-      className="button-delete-tag"
-    >
-      x
-    </button>
-  )
-}
+// const DeleteTagByTask = ({handleDeleteTag, id})=>{
+//   return (
+//     <button
+//       type="button"
+//       onClick={(e) => {
+//         e.stopPropagation()
+//         handleDeleteTag(id)
+//       }}
+//       className="button-delete-tag"
+//     >
+//       x
+//     </button>
+//   )
+// }
 
 const ColumnTagsUser = ({tags=[]}) => {
 
-  const handleClickTag = (tag) =>{
-    console.log(tag)
-  }
+  // const handleClickTag = (tag) =>{
+  //   console.log(tag)
+  // }
 
-  const handleDeleteTag = (id) =>{
-    console.log(id)
-  }
+  // const handleDeleteTag = (id) =>{
+  //   console.log(id)
+  // }
 
 
   return (
@@ -34,14 +34,14 @@ const ColumnTagsUser = ({tags=[]}) => {
             key={item.id}
             tag={item.tag}
             color={item.color}
-            handleClickTag={handleClickTag}
+            // handleClickTag={handleClickTag}
             id={item.id}
-            DeleteComponent={
-              <DeleteTagByTask
-                handleDeleteTag={handleDeleteTag}
-                id={item.id}
-              />
-            }
+            // DeleteComponent={
+            //   <DeleteTagByTask
+            //     handleDeleteTag={handleDeleteTag}
+            //     id={item.id}
+            //   />
+            // }
           />
         ))}
     </ul>

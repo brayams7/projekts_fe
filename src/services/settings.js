@@ -2,7 +2,7 @@ import axios from "axios"
 // import { getToken, getUserData, removeToken, removeUserData } from "../helpers/authLocalStorage"
 import { removeTokenCookie, removeUserDataCookie, getTokenCookie, getUserDataCookie} from "../helpers/authCookies"
 
-// export const API_BASE = 'http://54.221.128.13/api/'
+// export const API_BASE = 'http://127.0.0.1:8000/api/'
 export const API_BASE = 'http://54.221.128.13/api/'
 //export const API_BASE_STORAGE = 'http://127.0.0.1:8000/storage/'
 

@@ -129,7 +129,7 @@ const MyCustomPluginInitStage = ({featureId, content, currentId})=>{
 // }
 
 
-const Wysiwyg = ({featureId, editorState, handleUpdateFeature, currentId}) => {
+const Wysiwyg = ({featureId, feature, editorState, handleUpdateFeature, currentId}) => {
   // const editorStateRef = useRef();
   // console.log({feature, editorState})
   // const focus = useEditorFocus()
@@ -139,7 +139,13 @@ const Wysiwyg = ({featureId, editorState, handleUpdateFeature, currentId}) => {
       const stringifiedEditorState = JSON.stringify(editorState.toJSON());
       // setEditorState(stringifiedEditorState);
       // editorState.current = stringifiedEditorState
-      handleUpdateFeature("", stringifiedEditorState)
+      const body = {
+        title:feature.title,
+        description:stringifiedEditorState,
+        is_watcher:false,
+        due_date:feature.due_date
+      }
+      handleUpdateFeature(body, 3000)
       // console.log(stringifiedEditorState)
       localStorage.setItem("editorStage", stringifiedEditorState)
    });

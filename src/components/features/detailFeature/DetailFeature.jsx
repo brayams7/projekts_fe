@@ -22,20 +22,14 @@ const DetailFeature = ({feature, isFetching}) => {
   const editorStateRef = useRef();
   const debounceRef = useRef()
 
-  const handleUpdateFeature = async (titleFeature, description) =>{
+  const handleUpdateFeature = async (body, timer=1000) =>{
     try {
 
       // const description = localStorage.getItem("editorStage")
       if(debounceRef.current)
         clearTimeout(debounceRef.current)
 
-      const body = {
-        title:titleFeature,
-        description,
-        is_watcher:false,
-      }
-
-      const timer = titleFeature ? 400 : description ? 3000 : 1000
+      // const timer = titleFeature ? 400 : description ? 3000 : 1000
       debounceRef.current = setTimeout(()=>{
         updateFeatureRequest({featureId:feature.id,body}).unwrap()
       },timer)
@@ -139,6 +133,7 @@ const DetailFeature = ({feature, isFetching}) => {
           <section className="section-description-feature mb-2">
             <Wysiwyg
               editorState={feature.description}
+              feature={feature}
               // setEditorState={setEditorState}
               currentId={currentId}
               handleUpdateFeature={handleUpdateFeature}

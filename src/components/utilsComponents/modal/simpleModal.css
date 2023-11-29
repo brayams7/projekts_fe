@@ -26,6 +26,20 @@
   -o-border-radius: var(--radius-8);
   min-width: 320px;
   max-width: 90%;
+  /* height: 80vh; */
+}
+
+.simple-modal-body{
+  /* position: relative; */
+  height: 75vh;
+  overflow-y: auto;
+  /* overflow-y: auto; */
+  /* max-height: 90vh; */
+}
+
+.simple-modal-body::-webkit-scrollbar-thumb{
+  background-color: var(--gray);
+  border-radius: var(--radius-12);
 }
 
 @media (min-width: 768px) {

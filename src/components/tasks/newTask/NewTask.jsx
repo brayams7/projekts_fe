@@ -4,7 +4,7 @@ import {
   CalendarStartAtIcon,
 } from "../../../utils/icons/iconsMenu";
 import "./newTask.css";
-import { useCreateTaskMutation } from "../../../rtkQuery/apiSliceTasks";
+// import { TYPE_TASK, useCreateTaskMutation } from "../../../rtkQuery/apiSliceTasks";
 import { toast } from "react-toastify";
 import { TagItem } from "../../tags/listTags/ListTags";
 import { removeDuplicates } from "../../../utilsFunctions/auth";
@@ -12,6 +12,9 @@ import CustomDatePicker from "../../datePicker/CustomDatePicker";
 import ListUsersAssignedToTask from "../listUsersAsignedToTask/ListUsersAssignedToTask";
 import dayjs from "dayjs";
 import DropDowTag from "../dropDowTag/DropDowTag";
+import { createTaskService } from "../../../services/tasksService";
+import { useDispatch } from "react-redux";
+import { addTask } from "../../../redux/slices/tasksSlice";
 
 const DeleteTagByTask = ({handleDeleteTag})=>{
   return (
@@ -22,6 +25,8 @@ const DeleteTagByTask = ({handleDeleteTag})=>{
 }
 
 const NewTask = ({ feature }) => {
+
+  // const listTasks = useSelector(state => state.task.listTasks)
   const [isFocusText, setIsFocusText] = useState("")
 
   const [listTagsForAddToTask, setListTagsForAddToTask] = useState([])
@@ -41,8 +46,10 @@ const NewTask = ({ feature }) => {
   const [mouseIsOverStartAtTask, setMouseIsOverStartAtTask] = useState(false)
 
   const [listUsersAssigned, setListUsersAssigned] = useState([])
+  const [isLoading, setIsLoading] = useState(false)
+  const dispatch = useDispatch()
 
-  const [createTaskRequest, { isLoading }] = useCreateTaskMutation()
+  // const [createTaskRequest, { isLoading }] = useCreateTaskMutation()
 
   const handleCreateTask = async () => {
     try {
@@ -57,9 +64,14 @@ const NewTask = ({ feature }) => {
         usersAssign: listUsersAssigned
       }
 
-      const response = await createTaskRequest(body).unwrap()
+      // const response = await createTaskRequest({body,type:TYPE_TASK.PARENT}).unwrap()
+      setIsLoading(true)
+      const response = await createTaskService(body)
       if (response.code === 200) {
-
+        const data = response.data
+        console.log({data})
+        // const newListTasks = [...listTasks, data]
+        dispatch(addTask({...data, sub_tasks: []}))
         resetData()
         toast.success("Tablero creado!", { icon: "😃" })
 
@@ -69,6 +81,8 @@ const NewTask = ({ feature }) => {
     } catch (error) {
       toast.error("Upss! ocurrió un error", { icon: "😕" })
       console.log(error)
+    }finally{
+      setIsLoading(false)
     }
   }
 
