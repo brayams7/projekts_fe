@@ -51,7 +51,15 @@ const TitleDetailFeature = ({handleUpdateFeature, feature}) => {
                 style={{height:"auto"}}
                 onBlur={()=>{
                   setEditModeTitle(false)
-                  if(feature.title !== titleFeature) handleUpdateFeature(titleFeature)
+                  if(feature.title !== titleFeature) {
+                    const body = {
+                      title:titleFeature,
+                      description:feature.description,
+                      is_watcher:false,
+                      due_date:feature.due_date
+                    }
+                    handleUpdateFeature(body, 400)
+                  }
                 }}
                 onChange={(e) => setTitleFeature(e.target.value)}
                 onKeyDown={(e) => {
