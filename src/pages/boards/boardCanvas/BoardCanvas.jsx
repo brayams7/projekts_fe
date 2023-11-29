@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import "./boardCanvas.css";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 import {useGetBoardsAndStagesQuery, useUpdateBoardMutation} from '../../../rtkQuery/apiSliceBoard'
 import { useParams } from "react-router-dom";
@@ -10,6 +10,7 @@ import HeaderBoard from "../../../components/boards/header/HeaderBoard";
 import { toast } from "react-toastify";
 import BoardTypeBoard from "../../../components/boards/views/BoardTypeBoard";
 import { PrivateActionsRoutes } from "../../../routes";
+import { setDetailBoard } from "../../../redux/slices/boardSlice";
 
 const initStage = {"root":{"children":[{"children":[{"detail":0,"format":0,"mode":"normal","style":"","text":"","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1}],"direction":"ltr","format":"","indent":0,"type":"root","version":1}}
 
@@ -20,6 +21,7 @@ const initStage = {"root":{"children":[{"children":[{"detail":0,"format":0,"mode
 
 const BoardCanvas = () => {
   const {board:stylesBoard, content:styleContent} = useSelector(state=>state.layout.stylesLayout)
+  const dispatch = useDispatch()
   const {
     boardId
   } = useParams()
@@ -36,9 +38,9 @@ const BoardCanvas = () => {
     updateBoardRequest
   ] = useUpdateBoardMutation()
 
-  const {typeViewSelect} = useSelector(state=>state.board.boardCanvas)
+  const {typeViewSelect, detailBoard} = useSelector(state=>state.board.boardCanvas)
 
-  const [detailBoard, setDetailBoard] = useState(null)
+  // const [detailBoard, setDetailBoard] = useState(null)
   const [listStages, setListStages] = useState([])
   const [listFeatures, setListFeatures] = useState([])
 
@@ -50,13 +52,14 @@ const BoardCanvas = () => {
 
     if(data !== undefined && Object.entries(data)?.length > 0){
       const {stages, ...detailBoad} =  data
-      setDetailBoard(detailBoad)
+      // setDetailBoard(detailBoad)
       setListStages(stages)
       setListFeatures(mapFeatures(stages))
+      dispatch(setDetailBoard(detailBoad))
 
       localStorage.setItem("initStage", JSON.stringify(initStage))
     }
-  },[data])
+  },[data, dispatch])
 
   const handleUpdateBoard = async (name, description, color, bgImage)=>{
     if(detailBoard.name === name ||!name.trim()) return

@@ -14,7 +14,8 @@ const ItemUser = ({
   usersAssigned = [],
   handleDeleteUser,
   username,
-  email
+  email,
+  pictureUrl
 }) => {
   // const [mouseIsOver, setMouseIsOver] = useState(false)
 
@@ -28,7 +29,7 @@ const ItemUser = ({
       className="item-user-assigned-to-workspace d-flex justify-content-start align-items-center rounded px-2 py-1"
       onClick={() => {
         if (!isMember)
-          handleAssignUser({ userId: id, isWatcher: isMyUser ? 1 : 0, name, username, email })
+          handleAssignUser({ userId: id, isWatcher: isMyUser ? 1 : 0, name, username, email, pictureUrl })
       }}
     >
       <span className="pe-2">
@@ -94,7 +95,9 @@ const AssignMember = ({
 
 
 
-    setListUsersToShow(usersAddedToTheWorkspace)
+    if(usersAddedToTheWorkspace.length > 0){
+      setListUsersToShow(usersAddedToTheWorkspace)
+    }
 
 
   },[boardId, usersAddedToTheWorkspace])
@@ -122,6 +125,7 @@ const AssignMember = ({
               name={item.name}
               username={item.username}
               email={item.email}
+              pictureUrl={item.picture_url}
               id={item.id}
               isMyUser={item.id === user?.id}
               handleAssignUser={handleAssign}

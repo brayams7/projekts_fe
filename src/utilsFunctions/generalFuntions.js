@@ -63,3 +63,36 @@ export function debounceFuntion(fn, delay){
     }, delay)
   }
 }
+
+export function formatTime(seconds){
+
+ try{
+    const secondsToNumber = Number(seconds)
+
+    const days = Math.floor(secondsToNumber / (24 * 3600))
+
+    const hours = Math.floor((secondsToNumber % (24 * 3600)) / 3600)
+
+    const minutes = Math.floor((secondsToNumber % 3600) / 60)
+
+    const remainingSeconds = secondsToNumber % 60
+
+    let formattedTime = ''
+
+    if (days > 0) formattedTime += `${days}d `
+
+    if (hours > 0) formattedTime += `${hours}h `
+
+    if (minutes > 0) formattedTime += `${minutes}m `
+
+
+    formattedTime += `${remainingSeconds}s`
+
+    return formattedTime.trim()
+
+ }catch(err){
+
+   return ''
+
+ }
+}

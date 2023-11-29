@@ -2,86 +2,44 @@ import { createColumnHelper } from '@tanstack/react-table';
 import TableTask from './TableTask';
 import DropdowActionRow from './DropdowActionRow';
 import './style.css'
-import { useListTasksOfFeatureQuery } from '../../../rtkQuery/apiSliceTasks';
+// import { useListTasksOfFeatureQuery } from '../../../rtkQuery/apiSliceTasks';
 import { TaskListLoader } from '../../utilsComponents/MySkeleton';
-import { useEffect, useState } from 'react';
+// import { useEffect, useState } from 'react';
 import ColumnUsersAssignedToTask from '../columUsersAssignedToTask/ColumnUsersAssignedToTask';
 import ColumnTagsUser from '../columnTagsUser/ColumnTagsUser';
 import dayjs from 'dayjs';
-import { getSubtasksOfTask } from '../../../services/tasksService';
+// import { getSubtasksOfTask } from '../../../services/tasksService';
 import { useModal } from '../../../hooks/modal/useSimpleModal';
+import { useListTasks } from '../../../hooks/tasks/useListTasks';
 
 
 const columnHelper = createColumnHelper()
 
-
-
 const ListsTasks = ({feature}) => {
-  const [listTasks, setListTask] = useState([])
   const {isOpen, onOpen, onClose } = useModal()
-  const [selectedTask, setSelectedTask] = useState(null)
-
-  const {
-    isLoading,
-    isError,
-    data,
-    currentData
-  } = useListTasksOfFeatureQuery(feature?.id)
-  const [isRowLoading, setIsRowLoading] = useState({})
-  // const refRow = useRef(null)
+    const {
+      listTasks,
+      selectedTask,
+      // setListTask,
+      setSelectedTask,
+      setSelectedParent,
+      selectedTaskParent,
+      isLoading,
+      isError,
+      // currentData,
+      isRowLoading,
+      handleClickRow
+    } = useListTasks({feature})
   // const [rowIdExpanded, setRowIdExpanded] = useState(null)
 
-  const insertListUsersAddedToTheWorkspace = (tasks = [], listUsersAddedToTheWorkspace)=>{
-
-    return [...tasks].map((task)=>{
-      if(Array.isArray(task.sub_tasks)){
-        task.sub_tasks = insertListUsersAddedToTheWorkspace(task.sub_tasks, listUsersAddedToTheWorkspace)
-      }
-
-      return {
-        ...task,
-        list_of_users_added_to_the_workspace:listUsersAddedToTheWorkspace
-      }
-    })
+  const handleCloseModal = ()=>{
+    onClose()
+    setSelectedTask(null)
+    setSelectedParent(null)
   }
 
-  const handleClickRow = async ({id, row})=>{
-    setIsRowLoading({[id]:true})
-
-    const {
-      data
-    } = await getSubtasksOfTask(id)
-
-    if(Array.isArray(data)){
-
-      setListTask(listParents =>{
-        const newList = listParents.map((parent)=>{
-          if(parent.id === id){
-            const listUsersAddedToTheWorkspace = row.original?.list_of_users_added_to_the_workspace ?? []
-            const mapDataTasks = insertListUsersAddedToTheWorkspace(data, listUsersAddedToTheWorkspace)
-            row.originalSubRows = mapDataTasks
-            row.subRows = mapDataTasks
-
-            // refRow.current = row
-            return {
-              ...parent,
-              sub_tasks:[...mapDataTasks]
-            }
-          }
-          return parent
-        })
-
-        return newList
-      })
-      // setRowIdExpanded(id)
-    }
-
-    setIsRowLoading({[id]:false})
-  }
 
   const columns = [
-
-
     columnHelper.accessor("select",{
       header:({table})=>{
         return (
@@ -154,7 +112,7 @@ const ListsTasks = ({feature}) => {
                 id={id}
               />
             </div>{" "}
-            {original.count_children > 0 ? (
+            {original.count_children >0 ? (
               <button
                 {...{
                   onClick: handleClick,
@@ -164,7 +122,7 @@ const ListsTasks = ({feature}) => {
                 {row.getIsExpanded() ? "👇" : "👉"}
               </button>
             ) : (
-              "🔵"
+              " "
             )}
           </div>
         );
@@ -249,6 +207,7 @@ const ListsTasks = ({feature}) => {
           <DropdowActionRow
             taskId={original.id}
             setSelectedTask={setSelectedTask}
+            setSelectedParent={setSelectedParent}
             row={row}
             onOpen={onOpen}
           />
@@ -259,7 +218,7 @@ const ListsTasks = ({feature}) => {
 
 
 
-  if(isLoading && !currentData){
+  if(isLoading){
     <div className='w-100'>
       <TaskListLoader
 
@@ -272,29 +231,6 @@ const ListsTasks = ({feature}) => {
   }
 
 
-  useEffect(()=>{
-    if(Array.isArray(data)){
-
-      const mapDataTask = data.map(task=>({
-        ...task,
-        list_of_users_added_to_the_workspace:feature.list_of_users_added_to_the_workspace
-      }))
-
-      setListTask(mapDataTask)
-
-    }
-  },[data, feature])
-
-  // useEffect(()=>{
-
-  //   if(refRow.current && rowIdExpanded){
-  //     console.log(refRow.current)
-  //     refRow.current.getToggleExpandedHandler()(!refRow.current.getIsExpanded())
-  //     setRowIdExpanded(null)
-  //   }
-
-  // },[rowIdExpanded])
-  console.log(selectedTask)
   return (
 
     <div className='w-100'>
@@ -307,9 +243,11 @@ const ListsTasks = ({feature}) => {
       <TableTask
         columns={columns}
         data={listTasks}
+        // setListTasks={setListTask}
         feature={feature}
-        onCloseModal={onClose}
+        onCloseModal={handleCloseModal}
         selectedTask={selectedTask}
+        selectedTaskParent={selectedTaskParent}
         isOpenModal={isOpen}
       />
     </div>

@@ -1,10 +1,13 @@
 import { flexRender, getCoreRowModel, getExpandedRowModel, getFilteredRowModel, useReactTable } from "@tanstack/react-table";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Search from '../../../assets/iconsHeader/search.svg'
 import NewTask from "../newTask/NewTask";
 import FilterPopover from "./FilterPopover";
 import SimpleModal from "../../utilsComponents/modal/SimpleModal";
 import EditTask from "./editTask/EditTask";
+import AddNewTaskChildren from "../taskChildren/addNewTaskChildren/AddNewTaskChildren";
+import { useDispatch } from "react-redux";
+import { setListTasks } from "../../../redux/slices/tasksSlice";
 
 // const useSkipper = () => {
 //   const shouldSkipRef = useRef(true)
@@ -45,10 +48,22 @@ import EditTask from "./editTask/EditTask";
 // }
 
 
-const TableTask = ({columns, data, feature, isOpenModal, onCloseModal, selectedTask}) => {
+const TableTask = (
+  {
+    columns,
+    data,
+    feature,
+    isOpenModal,
+    onCloseModal,
+    selectedTask,
+    selectedTaskParent,
+    // setListTasks
+  }
+) => {
 
   const [columnFilter, setColumnFilter] = useState([])
   const [expanded, setExpanded] = useState({})
+  const dispatch = useDispatch()
   // const [autoResetPageIndex, skipAutoResetPageIndex] = useSkipper()
 
   const table = useReactTable({
@@ -59,6 +74,7 @@ const TableTask = ({columns, data, feature, isOpenModal, onCloseModal, selectedT
     // manualExpanding:true,
     // autoResetExpanded:false,
     // getExpandedDepth:()=>-1,
+
     getCoreRowModel:getCoreRowModel(),
     getFilteredRowModel:getFilteredRowModel(),
     getExpandedRowModel:getExpandedRowModel(),
@@ -68,21 +84,94 @@ const TableTask = ({columns, data, feature, isOpenModal, onCloseModal, selectedT
     state :{
       columnFilters:columnFilter,
       expanded,
+    },
+    meta:{
+      updateData:(rowIndex, columnId, value)=> {
+        const list = data.map((row, index)=>{
+          if(index === rowIndex){
+            return {
+              ...row,
+              [columnId]:value
+            }
+          }
+          return row
+        })
+        dispatch(setListTasks(list))
+        // setListTasks(
+        //   prev=> prev.map(
+        //     (row, index)=>{
+        //       if(index === rowIndex){
+        //         return {
+        //           ...prev[rowIndex],
+        //           [columnId]:value
+        //         }
+        //       }
+        //       return row
+        //     }
+        //   )
+        // )
+      },
+      addSubtasks:(rowIndex, subTasks, parent)=> {
+        const list = data.map((row, index)=>{
+          if(index === rowIndex){
+            console.log(data[rowIndex])
+            return {
+              ...data[rowIndex],
+              count_children:parent.count_children,
+              sub_tasks: subTasks
+            }
+          }
+          return row
+        })
+        dispatch(setListTasks(list))
+        // setListTasks(
+        //   prev=> prev.map(
+        //     (row, index)=>{
+        //       if(index === rowIndex){
+        //         console.log(prev[rowIndex])
+        //         return {
+        //           ...prev[rowIndex],
+        //           sub_tasks: subTasks
+        //         }
+        //       }
+        //       return row
+        //     }
+        //   )
+        // )
+      }
     }
   })
-
+  useEffect(()=>{
+    return ()=>{
+      table.resetExpanded(true)
+    }
+  },[feature.id])
 
   return (
     <div className="w-100">
       <SimpleModal
         isOpen={isOpenModal}
         onClose={onCloseModal}
-        title="hola mundo"
+        title="Editar Tarea"
       >
-        <EditTask
-          task={selectedTask}
-        />
+        {
+          selectedTask && (
+            <EditTask
+              task={selectedTask}
+            />
+          )
+        }
+
+        {
+          !selectedTask && (
+            <AddNewTaskChildren
+              rowParent={selectedTaskParent}
+              table={table}
+            />
+          )
+        }
       </SimpleModal>
+
       <div className="container">
         <div className="d-flex flex-wrap gap-3 mb-3 align-items-center">
           <span>{data.length} tareas</span>
