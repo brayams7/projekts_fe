@@ -1,21 +1,18 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState } from "react"
+import { removeDuplicates } from "../../../../utilsFunctions/auth"
+import { AddMemberIcon, CalendarIcon, CalendarStartAtIcon, NewTagIcon } from "../../../../utils/icons/iconsMenu";
+import dayjs from "dayjs";
+import CustomDatePicker from "../../../datePicker/CustomDatePicker";
 import { useForm } from "react-hook-form";
-import './editTask.css'
 import DropDowTag from "../../dropDowTag/DropDowTag";
 import { TagItem } from "../../../tags/listTags/ListTags";
-import { removeDuplicates } from "../../../../utilsFunctions/auth";
-import { AddMemberIcon, CalendarIcon, CalendarStartAtIcon, NewTagIcon } from "../../../../utils/icons/iconsMenu";
-import DropdownAddUserToTask from "../DropdownAddUserToTask";
+import DropdownAddUserToTask from "../../listTaks/DropdownAddUserToTask";
 import ListUsers from "../../../user/memers/tableUsers/ListUsers";
-import CustomDatePicker from "../../../datePicker/CustomDatePicker";
-import dayjs from "dayjs";
-// import { useUpdateTaskMutation } from "../../../../rtkQuery/apiSliceTasks";
-import { toast } from "react-toastify";
 import { formatTime } from "../../../../utilsFunctions/generalFuntions";
-import { updateTaskService } from "../../../../services/tasksService";
-import { useDispatch, useSelector } from "react-redux";
-import { updateTask } from "../../../../redux/slices/tasksSlice";
-
+// import { TYPE_TASK, useAddChildTaskMutation, useCreateTaskMutation } from "../../../../rtkQuery/apiSliceTasks";
+import { toast } from "react-toastify";
+import { addChildTaskService, createTaskService } from "../../../../services/tasksService";
+import { useSelector } from "react-redux";
 
 const DeleteTagByTask = ({handleDeleteTag})=>{
   return (
@@ -39,7 +36,8 @@ const IconAddUser = () => {
   );
 };
 
-const EditTask = ({task}) => {
+const AddNewTaskChildren = ({rowParent, table}) => {
+  const taskParent = rowParent ? rowParent.original : null
   const userAssignedToTheWorkspace = useSelector(state => state.board.detailBoard.members || [])
   const [title, setTitle] = useState("")
   const [listTagsForAddToTask, setListTagsForAddToTask] = useState([])
@@ -52,11 +50,14 @@ const EditTask = ({task}) => {
 
   const [mouseIsOverDueDate, setMouseIsOverDueDate] = useState(false)
   const [mouseIsOverStartAtTask, setMouseIsOverStartAtTask] = useState(false)
-  const [isLoading, setIsLoading] = useState(false)
-  const dispatch = useDispatch()
+  const [description, setDescription] = useState("")
 
-  // const [updateTaskRequest, { isLoading }] = useUpdateTaskMutation()
+  // const [createTaskRequest, { isLoading: isLoadingCreate }] = useCreateTaskMutation()
+  // const [addTaskChildRequest, { isLoading: isLoadingAddTaskChild }] = useAddChildTaskMutation()
 
+
+  // const isLoadingGeneral = isLoadingCreate || isLoadingAddTaskChild
+  const isLoadingGeneral = false
 
   const {
     // handleSubmit,
@@ -66,8 +67,20 @@ const EditTask = ({task}) => {
     clearErrors,
     formState: { isValid, errors, isSubmitted},
   } = useForm()
-  const [description, setDescription] = useState("")
 
+  // const insertListUsersAddedToTheWorkspace = (tasks = [], listUsersAddedToTheWorkspace)=>{
+
+  //   return [...tasks].map((task)=>{
+  //     if(Array.isArray(task.sub_tasks)){
+  //       task.sub_tasks = insertListUsersAddedToTheWorkspace(task.sub_tasks, listUsersAddedToTheWorkspace)
+  //     }
+
+  //     return {
+  //       ...task,
+  //       list_of_users_added_to_the_workspace:listUsersAddedToTheWorkspace
+  //     }
+  //   })
+  // }
 
   const handleDeleteTag = (id) =>{
 
@@ -86,6 +99,7 @@ const EditTask = ({task}) => {
     }
   }
 
+
   const handleDeleteUser = (userId) => {
     setListUsersAssigned(prevState => prevState.filter(user=>user.id !== userId))
   }
@@ -101,16 +115,22 @@ const EditTask = ({task}) => {
     const timeStamp = new Date(date * 1000) // pasando a milisegundos
     setTimestampDueDate(dayjs(timeStamp).unix())
   }
+  const validateForm = ()=>{
+    return (timestampDueDate && timestampStartAtTask && listUsersAssigned.length > 0)
+  }
 
-  const mapUsersAssigned = (listUsers=[]) => {
-    return [...listUsers].map(user => ({
-      id: user.id,
-      name: user.name,
-      is_watcher: user.is_watcher,
-      username: user.username,
-      picture_url: user.picture_url,
-      email: user.email
-    }))
+  const resetData = () => {
+    setTitle("")
+    setDescription("")
+    setListUsersAssigned([])
+    setListTagsForAddToTask([])
+    setTimestampStartAtTask(null)
+    setTimestampDueDate(null)
+    setDueDate(null)
+    setStartAtTask(null)
+    setValue("title", "")
+    setValue("description", "")
+    setCalculatedTime("")
   }
 
   const onSubmit = async () => {
@@ -123,10 +143,10 @@ const EditTask = ({task}) => {
         return
       }
 
-      if(!validateForm()) return
+      if(!validateForm() || !taskParent) return
 
       const body = {
-        feature_id: task.feature_id,
+        feature_id: taskParent.feature_id,
         title,
         description,
         due_date: timestampDueDate,
@@ -135,66 +155,56 @@ const EditTask = ({task}) => {
         usersAssign: listUsersAssigned
       }
 
-      // const response = await updateTaskRequest({taskId: task.id, body}).unwrap()
-      setIsLoading(true)
-      const response = await updateTaskService(body,task.id)
 
-      if (response.code === 200) {
+      // const responseTask = await createTaskRequest({body,type:TYPE_TASK.CHILDREN}).unwrap()
+      const responseTask = await createTaskService(body)
+      if(responseTask.code === 200){
+        const bodyTaskToAdd = {
+          task_parent_id: taskParent.id,
+          // child_id: responseTask.data.id
+        }
 
-        dispatch(updateTask({id: task.id, task: response.data}))
-        toast.success("Tablero creado!", { icon: "😃" })
+        // const responseAddChild = await addTaskChildRequest(
+        //   {
+        //     body:bodyTaskToAdd,
+        //     taskId: responseTask.response.id,
+        //     featureId: taskParent.feature_id
+        //   }
+        // ).unwrap()
 
-      } else {
+        const responseAddChild = await addChildTaskService(bodyTaskToAdd, responseTask.data.id)
+
+        if(responseAddChild.code === 200){
+          const parent = responseAddChild.data.parent
+          // if(rowParent.getIsExpanded()){
+
+
+          // }
+          const subRows = [
+            ...taskParent.sub_tasks,
+            {
+              ...responseTask.data,
+              sub_tasks:[],
+              // list_of_users_added_to_the_workspace:taskParent.list_of_users_added_to_the_workspace
+            }
+          ]
+          table.options.meta?.addSubtasks(rowParent.index, subRows, parent)
+          // console.log({subRows})
+
+          resetData()
+          toast.success("Tarea creada correctamente!", { icon: "😃" })
+        }else{
+          toast.error("Upss! ocurrió un error", { icon: "😕" })
+        }
+
+      }else{
         toast.error("Upss! ocurrió un error", { icon: "😕" })
       }
+
     } catch (error) {
-      toast.error("Upss! ocurrió un error", { icon: "😕" })
       console.log(error)
-    }finally{
-      setIsLoading(false)
     }
   }
-
-  const validateForm = ()=>{
-    return (timestampDueDate && timestampStartAtTask && listUsersAssigned.length > 0)
-  }
-
-  useEffect(()=>{
-
-    if(task){
-      setValue("title", task.title)
-      setValue("description", task.description)
-      setTitle(task.title)
-      setDescription(task.description)
-      setListTagsForAddToTask([...task.tags])
-
-      const usersAssigned = mapUsersAssigned(task.assigned_users)
-      setListUsersAssigned(usersAssigned)
-      setDueDate(task.due_date)
-      setTimestampDueDate(task.due_date)
-
-      setStartAtTask(task.starts_at)
-      setTimestampStartAtTask(task.starts_at)
-      const calculateTime = task?.calculated_time ? formatTime(task.calculated_time) : ''
-      setCalculatedTime(calculateTime)
-    }
-
-  },[setValue, task])
-
-  useEffect(()=>{
-    const textArea = document.getElementById("floatingDescription")
-    if(textArea){
-      // textArea.style.height = 'auto';
-      textArea.style.height = textArea.scrollHeight + 'px';
-    }
-    // return ()=>{
-
-    //   const textArea = document.getElementById("floatingDescription")
-    //   if(textArea){
-    //     textArea.style.height = 'auto';
-    //   }
-    // }
-  },[description])
 
   useEffect(()=>{
     if(isSubmitted){
@@ -208,13 +218,22 @@ const EditTask = ({task}) => {
         clearErrors("date_task")
       }
     }
-
     if(timestampDueDate && timestampStartAtTask){
 
       const calculatedTime = timestampDueDate - timestampStartAtTask
       setCalculatedTime(formatTime(calculatedTime))
+
     }
   },[timestampDueDate, timestampStartAtTask, isSubmitted, clearErrors, setError])
+
+  useEffect(()=>{
+    const textArea = document.getElementById("floatingDescription")
+    if(textArea){
+      // textArea.style.height = 'auto';
+      textArea.style.height = textArea.scrollHeight + 'px';
+    }
+
+  },[description])
 
   return (
     <div className="container">
@@ -422,13 +441,13 @@ const EditTask = ({task}) => {
           <div className="d-flex flex-grap justify-content-between mb-3">
             <span className="font-size-12-14 gray-color-600">Listado de usuarios asignados</span>
               {
-                task && (
+                taskParent && (
                   <ul className="lis-unstyled">
                     <DropdownAddUserToTask
                       Icon={<IconAddUser/>}
                       usersAddedToTheWorkspace={userAssignedToTheWorkspace}
                       usersAssigned={listUsersAssigned}
-                      taskId={task.id}
+                      taskId={taskParent.id}
                       handleDeleteUser={handleDeleteUser}
                       handleSelectUser={addUserToList}
                     />
@@ -459,14 +478,14 @@ const EditTask = ({task}) => {
               }}
               className="new-task-button font-size-14-16 px-4 py-1 rounded custom-button-disabled"
               // onClick={handleCreateTask}
-              disabled={(!validateForm() || !isValid || isLoading)}
+              disabled={(!validateForm() || !isValid || isLoadingGeneral)}
             >
               Guardar
             </button>
         </div>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default EditTask;
+export default AddNewTaskChildren;

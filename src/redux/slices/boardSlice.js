@@ -27,6 +27,7 @@ const initialState = {
   boardCanvas: {
     typeViewSelect:typesViewBoards[0].id,
   },
+  detailBoard: null,
 };
 
 export const boardSlice = createSlice({
@@ -53,6 +54,10 @@ export const boardSlice = createSlice({
     setTypeViewSelect: (state, action) => {
       state.boardCanvas.typeViewSelect = action.payload;
     },
+
+    setDetailBoard: (state, action) => {
+      state.detailBoard = action.payload
+    }
   },
 });
 
@@ -63,6 +68,7 @@ export const {
   setNameGradientColorSelect,
   setIdTopicSelect,
   setTypeViewSelect,
+  setDetailBoard
 } = boardSlice.actions;
 
 export default boardSlice.reducer;

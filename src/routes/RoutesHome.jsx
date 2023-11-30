@@ -32,6 +32,15 @@ const RoutesHome = () => {
 				/>
 
 				{/* <Route element={<Permission permission={PrivateRoutes.WORKSAPCE} />}>
+  return (
+    <LayoutGeneral typeMenu={typesMenu.HOME}>
+      <RoutesWithNotFound>
+        <Route path="/" element={<Navigate to={PrivateRoutes.DASHBOARD} />} />
+        <Route path={PrivateRoutes.DASHBOARD} element={<Dashboard />} />
+        <Route path={PrivateRoutes.BOARD} element={<ListWorkspacesPage />} />
+        <Route path={PrivateRoutes.PROFILE} element={<ProfileEditPage />} />
+
+        {/* <Route element={<Permission permission={PrivateRoutes.WORKSAPCE} />}>
           <Route
             path={`/${PrivateRoutes.WORKSAPCE}/*`}
             element={<RoutesWorkspace />}

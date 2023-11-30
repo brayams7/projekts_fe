@@ -1,3 +1,4 @@
+import { CloseIcon } from '../../../utils/icons/iconsMenu';
 import './simpleModal.css'
 
 const SimpleModal = ({isOpen, onClose, title, children}) => {
@@ -8,7 +9,11 @@ const SimpleModal = ({isOpen, onClose, title, children}) => {
       <div className="simple-modal-container shadow-lg" onClick={(e)=>e.stopPropagation()}>
         <div className="d-flex justify-content-between">
           <span className='simple-modal-title fs-6 fw-bold'>{title}</span>
-          <button type="button" className="fw-bold" onClick={()=>onClose()}>X</button>
+          <button type="button" className="fw-bold" onClick={()=>onClose()}>
+            <span>
+              <CloseIcon fill='var(--gray-600)'/>
+            </span>
+          </button>
         </div>
         <hr />
 

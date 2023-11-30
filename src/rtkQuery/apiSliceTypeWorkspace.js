@@ -27,7 +27,7 @@ export const apiSliceTypeWorkspace = apiSlice.injectEndpoints(
                     }
                   }
                 )
-                list = [...defaultOption, ...list]
+                list = [defaultOption, ...list]
 
               } catch (error) {
                 console.log(error)
