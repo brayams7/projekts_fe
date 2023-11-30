@@ -1,20 +1,22 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import Avatar from "react-avatar";
 import {
-	Badge,
-	Button,
-	Col,
-	Container,
-	Form,
-	InputGroup,
-	OverlayTrigger,
-	Popover,
-	Row,
-	Spinner,
-	Toast,
-	ToastContainer
+  Badge,
+  Button,
+  Col,
+  Container,
+  Form,
+  InputGroup,
+  OverlayTrigger,
+  Popover,
+  Row,
+  Spinner,
+  Toast,
+  ToastContainer
 } from "react-bootstrap";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { setUserDataCookie } from "../../helpers/authCookies";
+import { setUser as setUserRedux } from "../../redux/slices/authSlice";
 import { useUpdateProfileMutation } from "../../rtkQuery/apiSliceMyProfile";
 import "./MyProfile.css";
 
@@ -39,11 +41,17 @@ const MyProfile = () => {
 		{ name: "Púrpura", value: "#5f55ee" }
 	];
 
-	const userId = useSelector((state) => state.auth.user.id);
+	const userRedux = useSelector((state) => state.auth.user);
+	const dispatch = useDispatch();
 
 	const [color, setColor] = useState(colors[0].value);
-	const [user, setUser] = useState();
-	const [imageSource, setImageSource] = useState();
+	const [user, setUser] = useState({
+		username: userRedux.username,
+		name: userRedux.name,
+		email: userRedux.email,
+		picture_url: userRedux.picture_url
+	});
+	const [imageSource, setImageSource] = useState(userRedux.picture_url);
 	const [imageFile, setImageFile] = useState(null);
 	const [isUploading, setIsUploading] = useState(false);
 	const [showSuccessToast, setShowSuccessToast] = useState(false);
@@ -59,14 +67,52 @@ const MyProfile = () => {
 		});
 	};
 
-	useEffect(() => {
-		updateProfile({ userId: userId }).then((result) => {
-			if (result.data.code == 200) {
-				setUser(result.data.response);
-				setImageSource(result.data.response.picture_url);
-			}
-		});
-	}, [updateProfile, userId]);
+	const handleSave = async () => {
+		if (user.username === "" || user.name === "" || user.email === "") {
+			setShowUserErrorToast(true);
+			return;
+		}
+
+		setIsUploading(true);
+		let formData = new FormData();
+		formData.append("username", user.username);
+		formData.append("name", user.name);
+		formData.append("email", user.email);
+		formData.append("picture_url", imageFile);
+
+		let result = await updateProfile({ userId: userRedux.id, body: formData });
+		if (result.data.code == 200) {
+			dispatch(setUserRedux(result.data.response));
+			setUserDataCookie(result.data.response);
+			setShowSuccessToast(true);
+		}
+		setIsUploading(false);
+	};
+
+	const selectColorProfile = (color) => {
+		setColor(color.value);
+		setImageSource("");
+		setImageFile(null);
+	};
+
+	const selectImageProfile = (event) => {
+		const file = event.target.files[0];
+		setImageFile(file);
+
+		const reader = new FileReader();
+		reader.onloadend = () => {
+			setImageSource(reader.result);
+		};
+		reader.readAsDataURL(file);
+	};
+
+	const addProfilePicture = () => {
+		document.getElementById("image-input").click();
+	};
+
+	const deleteProfilePicture = () => {
+		setImageSource("");
+	};
 
 	if (!user) {
 		return (
@@ -100,9 +146,7 @@ const MyProfile = () => {
 										id="delete-profile-picture"
 										className="position-absolute translate-middle rounded-circle p-2 border border-light border-3"
 										bg="danger"
-										onClick={() => {
-											setImageSource("");
-										}}>
+										onClick={deleteProfilePicture}>
 										<i className="bi bi-x-lg"></i>
 									</Badge>
 								</div>
@@ -118,11 +162,7 @@ const MyProfile = () => {
 														<Button
 															key={color.name}
 															variant="light"
-															onClick={() => {
-																setColor(color.value);
-																setImageSource("");
-																setImageFile(null);
-															}}>
+															onClick={selectColorProfile}>
 															<i
 																className="bi bi-circle-fill"
 																style={{ color: color.value }}></i>
@@ -142,24 +182,13 @@ const MyProfile = () => {
 									<input
 										id="image-input"
 										type="file"
-										onChange={(event) => {
-											const file = event.target.files[0];
-											setImageFile(file);
-
-											const reader = new FileReader();
-											reader.onloadend = () => {
-												setImageSource(reader.result);
-											};
-											reader.readAsDataURL(file);
-										}}
+										onChange={selectImageProfile}
 										className="d-none"
 									/>
 									<Badge
 										id="add-profile-picture"
 										className="position-absolute translate-middle rounded-circle p-2 border border-light border-3"
-										onClick={() => {
-											document.getElementById("image-input").click();
-										}}>
+										onClick={addProfilePicture}>
 										<i className="bi bi-plus-lg"></i>
 									</Badge>
 								</div>
@@ -215,25 +244,7 @@ const MyProfile = () => {
 						<Button
 							id="save-button"
 							disabled={isUploading}
-							onClick={async () => {
-								if (user.username === "" || user.name === "" || user.email === "") {
-									setShowUserErrorToast(true);
-									return;
-								}
-
-								setIsUploading(true);
-								let formData = new FormData();
-								formData.append("username", user.username);
-								formData.append("name", user.name);
-								formData.append("email", user.email);
-								formData.append("picture_url", imageFile);
-
-								let result = await updateProfile({ userId: userId, body: formData });
-								if (result.data.code == 200) {
-									setShowSuccessToast(true);
-								}
-								setIsUploading(false);
-							}}>
+							onClick={handleSave}>
 							{!isUploading ? (
 								"Guardar"
 							) : (

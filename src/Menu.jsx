@@ -60,7 +60,7 @@ export const Menu = [
 		permission: PrivateRoutes.BOARD,
 		stylesLayout: DEFAULT_COLORS_LAYOUT
 	},
-/* 	{
+	{
 		name: "Perfil",
 		icon: (fill) => <Person fill={fill} />,
 		path: PrivateRoutes.MY_PROFILE,
@@ -68,7 +68,7 @@ export const Menu = [
 		isShowInSidebar: true,
 		permission: PrivateRoutes.SETTINGS,
 		stylesLayout: DEFAULT_COLORS_LAYOUT
-	}, */
+	},
 	// {
 	//   name: "Workspace 1",
 	//   icon: (fill)=><WorkspaceIcon fill={fill}/>,
