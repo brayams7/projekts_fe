@@ -61,7 +61,6 @@ const MyProfile = () => {
 
 	useEffect(() => {
 		updateProfile({ userId: userId }).then((result) => {
-      console.log(result);
 			if (result.data.code == 200) {
 				setUser(result.data.response);
 				setImageSource(result.data.response.picture_url);
