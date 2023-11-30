@@ -255,3 +255,18 @@
       font-size: var(--size-8);
     }
 }
+
+.input-Field input {
+width: 200px;
+height: 40px;
+border-radius: 10px;
+font-size: 18px;
+padding: 0 15px;
+border: 2px solid #d4c5c5;
+background: transparent;
+color: #080808;
+outline: none;
+position: relative;
+}
+
+
