@@ -1,18 +1,18 @@
 import { useState } from "react";
 import Avatar from "react-avatar";
 import {
-  Badge,
-  Button,
-  Col,
-  Container,
-  Form,
-  InputGroup,
-  OverlayTrigger,
-  Popover,
-  Row,
-  Spinner,
-  Toast,
-  ToastContainer
+	Badge,
+	Button,
+	Col,
+	Container,
+	Form,
+	InputGroup,
+	OverlayTrigger,
+	Popover,
+	Row,
+	Spinner,
+	Toast,
+	ToastContainer
 } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { setUserDataCookie } from "../../helpers/authCookies";
@@ -44,13 +44,14 @@ const MyProfile = () => {
 	const userRedux = useSelector((state) => state.auth.user);
 	const dispatch = useDispatch();
 
-	const [color, setColor] = useState(colors[0].value);
 	const [user, setUser] = useState({
 		username: userRedux.username,
 		name: userRedux.name,
 		email: userRedux.email,
-		picture_url: userRedux.picture_url
+		picture_url: userRedux.picture_url,
+		color: userRedux.color
 	});
+	const [color, setColor] = useState(userRedux.color ?? colors[0].value);
 	const [imageSource, setImageSource] = useState(userRedux.picture_url);
 	const [imageFile, setImageFile] = useState(null);
 	const [isUploading, setIsUploading] = useState(false);
@@ -78,7 +79,8 @@ const MyProfile = () => {
 		formData.append("username", user.username);
 		formData.append("name", user.name);
 		formData.append("email", user.email);
-		formData.append("picture_url", imageFile);
+		if (color) formData.append("color", color);
+		if (imageFile) formData.append("picture_url", imageFile);
 
 		let result = await updateProfile({ userId: userRedux.id, body: formData });
 		if (result.data.code == 200) {
@@ -98,6 +100,7 @@ const MyProfile = () => {
 	const selectImageProfile = (event) => {
 		const file = event.target.files[0];
 		setImageFile(file);
+		setColor(null);
 
 		const reader = new FileReader();
 		reader.onloadend = () => {
@@ -162,7 +165,7 @@ const MyProfile = () => {
 														<Button
 															key={color.name}
 															variant="light"
-															onClick={selectColorProfile}>
+															onClick={() => selectColorProfile(color)}>
 															<i
 																className="bi bi-circle-fill"
 																style={{ color: color.value }}></i>
