@@ -1,0 +1,45 @@
+/* Arroba */
+#at-sign {
+	background-color: var(--purple);
+	color: var(--white);
+}
+
+/* Botón de Guardar */
+#save-button {
+	width: fit-content;
+	color: var(--gray);
+	background-color: var(--purple);
+	border-color: var(--gray);
+}
+
+#save-button:hover {
+	background-color: var(--gray);
+	border-color: var(--purple);
+	color: var(--purple);
+}
+
+#save-button:active {
+	background-color: var(--purple);
+	border-color: var(--purple);
+	color: var(--gray);
+}
+
+/* Foto de perfil */
+#text-avatar {
+	cursor: pointer;
+}
+
+#add-profile-picture {
+	cursor: pointer;
+	font-size: x-large;
+	top: 15%;
+	left: 85%;
+}
+
+#delete-profile-picture {
+	cursor: pointer;
+	font-size: x-large;
+	top: 15%;
+	left: 85%;
+}
+

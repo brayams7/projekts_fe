@@ -3,6 +3,7 @@ import { useSelector } from "react-redux";
 import SimpleModal from "../../../utilsComponents/modal/SimpleModal";
 import { useModal } from "../../../../hooks/modal/useSimpleModal";
 import { axiosToken } from "../../../../services/settings";
+import fileDownload from "js-file-download";
 import "./Comment.css";
 
 /**
@@ -44,18 +45,13 @@ const Comment = ({ comment }) => {
 	};
 
 	const handleDownloadAttachment = async () => {
-		let anchor = document.createElement("a");
-		anchor.download = attachment.name + attachment.attachment_type.extension;
-		document.body.appendChild(anchor);
+    let response = await axiosToken.get(`/downloadAttachment/${attachment.id}`, {
+      responseType: "blob"
+    });
 
-		let response = await axiosToken.get(`/downloadAttachment/${attachment.id}`, {
-			responseType: "blob"
-		});
-
-		let url = window.URL.createObjectURL(new Blob([response]));
-		anchor.href = url;
-		anchor.click();
-		document.body.removeChild(anchor);
+    let data = new Blob([response]);
+    let filename = attachment.name + attachment.attachment_type.extension;
+    fileDownload(data, filename);
 	};
 
 	const handlePdfAttachment = () => {
