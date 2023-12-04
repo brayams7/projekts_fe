@@ -29,7 +29,7 @@ function App() {
   const versionRepo = () =>{
     const fecha = dayjs("2023-11-29 15:20").format("MMM. DD YYYY, HH:mm a")
     const nemeProject = "PROJEKTS"
-    const version = "1.0.9"
+    const version = "1.1.0"
     const message = `Version ${version} - ${nemeProject} - ${fecha}`
     console.log(message)
   }
