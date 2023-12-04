@@ -11,6 +11,8 @@ import dayjs from 'dayjs';
 // import { getSubtasksOfTask } from '../../../services/tasksService';
 import { useModal } from '../../../hooks/modal/useSimpleModal';
 import { useListTasks } from '../../../hooks/tasks/useListTasks';
+// import ArrowDown from '../../../assets/iconsHeader/expand_more.svg'
+import { ArrowDownIcon } from '../../../utils/icons/iconsMenu';
 
 
 const columnHelper = createColumnHelper()
@@ -119,7 +121,7 @@ const ListsTasks = ({feature}) => {
                   style: { cursor: "pointer" },
                 }}
               >
-                {row.getIsExpanded() ? "👇" : "👉"}
+                {row.getIsExpanded() ? <span><ArrowDownIcon fill='var(--gray-600)'/></span>  : <ArrowDownIcon fill='var(--gray-600)' className='arrow-down-icon'/> }
               </button>
             ) : (
               " "
@@ -159,6 +161,10 @@ const ListsTasks = ({feature}) => {
       header:"title",
       enableColumnFilter:true,
       filterFn:"includesString"
+      // filterFn:(row, columnId, value)=>{
+      //   const title = row.getValue(columnId)
+      //   return title.toLowerCase().includes(value.toLowerCase())
+      // }
     }),
 
     columnHelper.accessor("starts_at",{

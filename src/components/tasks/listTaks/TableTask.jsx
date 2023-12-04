@@ -147,6 +147,7 @@ const TableTask = (
     }
   },[feature.id])
 
+
   return (
     <div className="w-100">
       <SimpleModal

@@ -410,3 +410,20 @@ export function RemoveIcon({ fill = FILL_COLOR, height = "24", width = "24" }) {
   );
 }
 
+export function ArrowDownIcon({fill=FILL_COLOR, height="24", width="24", ...props}) {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      height={height}
+      viewBox="0 -960 960 960"
+      width={width}
+      {...props}
+    >
+      <path
+        fill={fill}
+        d="M480-345 240-585l56-56 184 184 184-184 56 56-240 240Z"
+      />
+    </svg>
+  );
+}
+

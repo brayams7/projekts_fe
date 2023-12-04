@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 
 import './headerBoard.css'
-import { FilterIcon} from "../../../utils/icons/iconsMenu";
+// import { FilterIcon} from "../../../utils/icons/iconsMenu";
 import { typesViewBoards } from "../../../Menu";
 import { useDispatch } from "react-redux";
 import { setTypeViewSelect } from "../../../redux/slices/boardSlice";
@@ -31,7 +31,6 @@ const HeaderBoard = ({
     if (name) setNameBoard(name);
   }, [name])
 
-
   return (
     <div
       className="d-flex flex-wrap px-4 align-items-center white-color gap-3"
@@ -41,7 +40,7 @@ const HeaderBoard = ({
       }}
     >
       <div
-        className="font-weight-700 header-board-container-title"
+        className="font-weight-700 "
         role="button"
         onClick={() => setIsEditNameBoard(true)}
       >
@@ -50,8 +49,8 @@ const HeaderBoard = ({
             data-bs-toggle="tooltip"
             data-bs-placement="top"
             data-bs-title={nameBoard}
-            className="d-inline-block"
-            style={{ fontSize: "var(--size-20)", display: "block" }}
+            className="header-board-container-title"
+            style={{ fontSize: "var(--size-20)" }}
             // title={nameBoard}
           >
             {nameBoard}
