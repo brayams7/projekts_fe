@@ -13,7 +13,7 @@
 
 #colorPreview {
   width: 100px;
-  height: 100px;
+  height: 50px;
   border-radius: 3px;
 }
 
@@ -29,3 +29,6 @@
   padding: 10px;
 }
 
+.previewName {
+  width: 125px;
+}
