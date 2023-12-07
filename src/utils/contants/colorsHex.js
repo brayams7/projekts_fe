@@ -1,5 +1,21 @@
 export const PATH_BG_COLOR = '/src/assets/bgImages/'
 
+export const COLORS = [
+  { name: "Gris", value: "#656f7d" },
+  { name: "Café", value: "#aa8d80" },
+  { name: "Violeta", value: "#b660e0" },
+  { name: "Rosa", value: "#ee5e99" },
+  { name: "Rojo", value: "#d33d44" },
+  { name: "Naranja", value: "#e16b16" },
+  { name: "Amarillo", value: "#f8ae00" },
+  { name: "Verde", value: "#008844" },
+  { name: "Menta", value: "#64c6a2" },
+  { name: "Aguamarina", value: "#0f9d9f" },
+  { name: "Celeste", value: "#1090e0" },
+  { name: "Azul", value: "#4466ff" },
+  { name: "Púrpura", value: "#5f55ee" }
+];
+
 export const LIST_COLORS_HEX = {
   skyBlueColor:"#228cd5",
   blueColor:"#0b50af",

@@ -1,0 +1,13 @@
+#colorButton {
+	background-color: white;
+	border-color: lightgray;
+}
+
+#colorButton:hover {
+	background-color: lightgray;
+}
+
+#colorButton:active {
+	background-color: white;
+}
+

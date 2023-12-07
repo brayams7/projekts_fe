@@ -1,0 +1,17 @@
+#button {
+	width: fit-content;
+	color: var(--gray);
+	background-color: var(--purple);
+	border-color: var(--purple);
+}
+
+#button:hover {
+	background-color: var(--gray);
+	color: var(--purple);
+}
+
+#button:active {
+	background-color: var(--purple);
+	color: var(--gray);
+}
+

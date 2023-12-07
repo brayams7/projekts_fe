@@ -1,0 +1,22 @@
+#addWorkspaceTitle {
+	color: gray;
+	cursor: pointer;
+}
+
+#addWorkspaceIcon {
+	height: 32px;
+	width: 32px;
+	border-radius: 3px;
+	background-color: transparent;
+	border: 1px dashed gray;
+	color: gray;
+}
+
+#addWorkspaceBoard {
+	border-radius: 3px;
+	background-color: transparent;
+	border: 1px dashed gray;
+	color: gray;
+	cursor: pointer;
+}
+

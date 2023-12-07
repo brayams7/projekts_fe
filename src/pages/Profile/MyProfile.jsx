@@ -18,6 +18,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { setUserDataCookie } from "../../helpers/authCookies";
 import { setUser as setUserRedux } from "../../redux/slices/authSlice";
 import { useUpdateProfileMutation } from "../../rtkQuery/apiSliceMyProfile";
+import { COLORS } from "../../utils/contants/colorsHex";
 import "./MyProfile.css";
 
 /**
@@ -25,22 +26,6 @@ import "./MyProfile.css";
  * @returns Página JSX de Mi Perfil
  */
 const MyProfile = () => {
-	const colors = [
-		{ name: "Gris", value: "#656f7d" },
-		{ name: "Café", value: "#aa8d80" },
-		{ name: "Violeta", value: "#b660e0" },
-		{ name: "Rosa", value: "#ee5e99" },
-		{ name: "Rojo", value: "#d33d44" },
-		{ name: "Naranja", value: "#e16b16" },
-		{ name: "Amarillo", value: "#f8ae00" },
-		{ name: "Verde", value: "#008844" },
-		{ name: "Menta", value: "#64c6a2" },
-		{ name: "Aguamarina", value: "#0f9d9f" },
-		{ name: "Celeste", value: "#1090e0" },
-		{ name: "Azul", value: "#4466ff" },
-		{ name: "Púrpura", value: "#5f55ee" }
-	];
-
 	const userRedux = useSelector((state) => state.auth.user);
 	const dispatch = useDispatch();
 
@@ -51,7 +36,7 @@ const MyProfile = () => {
 		picture_url: userRedux.picture_url,
 		color: userRedux.color
 	});
-	const [color, setColor] = useState(userRedux.color ?? colors[0].value);
+	const [color, setColor] = useState(userRedux.color ?? COLORS[0].value);
 	const [imageSource, setImageSource] = useState(userRedux.picture_url);
 	const [imageFile, setImageFile] = useState(null);
 	const [isUploading, setIsUploading] = useState(false);
@@ -138,7 +123,7 @@ const MyProfile = () => {
 						md={4}
 						className="d-flex justify-content-center align-items-start">
 						<div className="d-flex justify-content-center position-relative mt-3">
-							{imageSource ? (
+							{imageSource ?
 								<div id="image-avatar">
 									<Avatar
 										size="175"
@@ -153,15 +138,14 @@ const MyProfile = () => {
 										<i className="bi bi-x-lg"></i>
 									</Badge>
 								</div>
-							) : (
-								<div id="text-avatar">
+							:	<div id="text-avatar">
 									<OverlayTrigger
 										trigger="click"
 										placement="bottom"
 										overlay={
 											<Popover>
 												<Popover.Body className="d-flex flex-wrap justify-content-center">
-													{colors.map((color) => (
+													{COLORS.map((color) => (
 														<Button
 															key={color.name}
 															variant="light"
@@ -195,7 +179,7 @@ const MyProfile = () => {
 										<i className="bi bi-plus-lg"></i>
 									</Badge>
 								</div>
-							)}
+							}
 						</div>
 					</Col>
 					<Col md={8}>
@@ -248,10 +232,9 @@ const MyProfile = () => {
 							id="save-button"
 							disabled={isUploading}
 							onClick={handleSave}>
-							{!isUploading ? (
+							{!isUploading ?
 								"Guardar"
-							) : (
-								<>
+							:	<>
 									<Spinner
 										animation="border"
 										size="sm"
@@ -260,7 +243,7 @@ const MyProfile = () => {
 									</Spinner>
 									<span>Guardando...</span>
 								</>
-							)}
+							}
 						</Button>
 					</Col>
 				</Row>

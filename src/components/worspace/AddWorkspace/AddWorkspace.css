@@ -1,0 +1,31 @@
+#modalBody {
+	height: 50vh;
+}
+
+#swiper {
+	--swiper-pagination-color: var(--purple);
+}
+
+#descriptionTextArea {
+	resize: none;
+  height: 100px;
+}
+
+#colorPreview {
+  width: 100px;
+  height: 100px;
+  border-radius: 3px;
+}
+
+.swiperButton {
+	width: 100px !important;
+}
+
+.swiperSlider {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 10px;
+}
+
