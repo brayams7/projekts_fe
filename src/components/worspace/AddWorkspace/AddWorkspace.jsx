@@ -11,34 +11,71 @@ import "./AddWorkspace.css";
 const AddWorkspace = (properties) => {
 	const [swiper, setSwiper] = useState();
 	const [page, setPage] = useState(0);
-	const [name, setName] = useState();
-	const [initials, setInitials] = useState();
-	const [color, setColor] = useState();
+	const [name, setName] = useState("");
+	const [initials, setInitials] = useState("");
+	const [description, setDescription] = useState("");
+	const [color, setColor] = useState("#000000");
+	const [invalidName, setInvalidName] = useState(true);
+	const [invalidDescription, setInvalidDescription] = useState(true);
+	const [invalidColor, setInvalidColor] = useState(true);
 
-	const handleHideNewWorkspaceModal = () => {
+	const handleHideModal = () => {
 		properties.setShow(false);
 		setPage(0);
 		setName("");
 		setInitials("");
-		setColor("");
+		setDescription("");
+		setColor("#000000");
 	};
 
 	const handlePreviousPage = () => {
 		swiper.slidePrev();
 	};
 
-	const handleNextPage = () => {
-		swiper.slideNext();
+	const handleNextPageOrCreate = () => {
+		switch (page) {
+			case 0:
+				if (invalidName) {
+					return;
+				} else {
+					swiper.slideNext();
+				}
+				break;
+			case 1:
+				if (invalidDescription) {
+					return;
+				} else {
+          swiper.slideNext();
+        }
+				break;
+			case 2:
+				if (invalidColor) {
+					return;
+				} else {
+          swiper.slideNext();
+        }
+				break;
+			case 3:
+				handleCreateWorkspace();
+				return;
+			default:
+				break;
+		}
 	};
 
-	const handleChangeNewWorkspaceName = (event) => {
-		let value = event.target.value;
-		setName(value);
+	const handleCreateWorkspace = () => {
+		console.log("Crear espacio de trabajo");
+	};
 
+	const handleChangeName = (value) => {
 		if (value.length === 0) {
+			setInvalidName(true);
+			setName("");
 			setInitials("");
 			return;
 		}
+
+		setName(value);
 
 		let names = value.trim().split(" ");
 		let initials;
@@ -56,17 +93,39 @@ const AddWorkspace = (properties) => {
 		}
 
 		setInitials(initials);
+		setInvalidName(false);
+	};
+
+	const handleChangeDescription = (value) => {
+		if (value.length === 0) {
+			setInvalidDescription(true);
+			setDescription("");
+			return;
+		}
+
+		setDescription(value);
+		setInvalidDescription(false);
+	};
+
+	const handleChangeColor = (value) => {
+		if (COLORS.includes(value)) {
+			setInvalidColor(true);
+			setColor("#000000");
+			return;
+		}
+
+		setColor(value);
+		setInvalidColor(false);
 	};
 
 	return (
 		<Modal
 			show={properties.show}
 			onShow={() => setPage(0)}
-			onHide={handleHideNewWorkspaceModal}
+			onHide={handleHideModal}
 			centered
 			backdrop="static"
-			dialogClassName="my-modal"
-			size="lg">
+			dialogClassName="my-modal">
 			<Modal.Header closeButton>Agregar Espacio de Trabajo</Modal.Header>
 			<Modal.Body>
 				<div id="modalBody">
@@ -87,9 +146,14 @@ const AddWorkspace = (properties) => {
 									type="text"
 									placeholder="Espacio de Trabajo"
 									tabIndex={-1}
-									onChange={(event) => handleChangeNewWorkspaceName(event)}
+									onChange={(event) => handleChangeName(event.target.value)}
 									value={name}
+									required
+									isInvalid={invalidName}
+									isValid={!invalidName}
 								/>
+								<Form.Control.Feedback>El nombre es válido</Form.Control.Feedback>
+								<Form.Control.Feedback type="invalid">El nombre es requerido</Form.Control.Feedback>
 							</Form.Group>
 							<Form.Group className="w-100 mb-3">
 								<Form.Label>Iniciales</Form.Label>
@@ -109,7 +173,16 @@ const AddWorkspace = (properties) => {
 									as="textarea"
 									placeholder="Descripción del espacio de trabajo"
 									tabIndex={-1}
+									value={description}
+									onChange={(event) => handleChangeDescription(event.target.value)}
+									required
+									isInvalid={invalidDescription}
+									isValid={!invalidDescription}
 								/>
+								<Form.Control.Feedback>La descripción es válida</Form.Control.Feedback>
+								<Form.Control.Feedback type="invalid">
+									La descripción es requerida
+								</Form.Control.Feedback>
 							</Form.Group>
 						</SwiperSlide>
 						<SwiperSlide className="swiperSlider">
@@ -120,6 +193,9 @@ const AddWorkspace = (properties) => {
 									type="color"
 									disabled
 									value={color}
+									required
+									isInvalid={invalidColor}
+									isValid={!invalidColor}
 								/>
 							</Form.Group>
 							<div>
@@ -129,48 +205,46 @@ const AddWorkspace = (properties) => {
 											className="m-1"
 											key={index}
 											color={color.value}
-											onClick={() => setColor(color.value)}
-                      tabIndex={-1}
+											onClick={() => handleChangeColor(color.value)}
+											tabIndex={-1}
 										/>
 									);
 								})}
 							</div>
 						</SwiperSlide>
 						<SwiperSlide className="swiperSlider">
-							<div>
-								<h4>Resumen</h4>
-								<InputGroup className="mb-3">
-									<InputGroup.Text>Nombre</InputGroup.Text>
-									<Form.Control
-										value={name}
-										disabled
-									/>
-								</InputGroup>
-								<InputGroup className="mb-3">
-									<InputGroup.Text>Iniciales</InputGroup.Text>
-									<Form.Control
-										value={initials}
-										disabled
-									/>
-								</InputGroup>
-								<InputGroup className="mb-3">
-									<InputGroup.Text>Color</InputGroup.Text>
-									<Form.Control
-										type="color"
-										value={color}
-										disabled
-									/>
-								</InputGroup>
-								<InputGroup className="mb-3">
-									<InputGroup.Text>Descripción</InputGroup.Text>
-									<Form.Control
-										as="textarea"
-										placeholder="Descripción del espacio de trabajo"
-										disabled
-										style={{ resize: "none" }}
-									/>
-								</InputGroup>
-							</div>
+							<InputGroup className="mb-3">
+								<InputGroup.Text>Nombre</InputGroup.Text>
+								<Form.Control
+									value={name}
+									disabled
+								/>
+							</InputGroup>
+							<InputGroup className="mb-3">
+								<InputGroup.Text>Iniciales</InputGroup.Text>
+								<Form.Control
+									value={initials}
+									disabled
+								/>
+							</InputGroup>
+							<InputGroup className="mb-3">
+								<InputGroup.Text>Color</InputGroup.Text>
+								<Form.Control
+									type="color"
+									value={color}
+									disabled
+								/>
+							</InputGroup>
+							<InputGroup className="mb-3">
+								<InputGroup.Text>Descripción</InputGroup.Text>
+								<Form.Control
+									as="textarea"
+									placeholder="Descripción del espacio de trabajo"
+									value={description}
+									disabled
+									style={{ resize: "none" }}
+								/>
+							</InputGroup>
 						</SwiperSlide>
 					</Swiper>
 				</div>
@@ -183,13 +257,11 @@ const AddWorkspace = (properties) => {
 						Anterior
 					</ButtonReactBootstrap>
 				)}
-				{page !== 3 ?
-					<Button
-						className="swiperButton"
-						onClick={handleNextPage}>
-						Siguiente
-					</Button>
-				:	<Button className="swiperButton">Crear</Button>}
+				<Button
+					className="swiperButton"
+					onClick={handleNextPageOrCreate}>
+					{page < 3 ? "Siguiente" : "Crear"}
+				</Button>
 			</Modal.Footer>
 		</Modal>
 	);
