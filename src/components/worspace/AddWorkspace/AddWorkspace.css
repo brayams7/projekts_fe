@@ -1,3 +1,19 @@
+.swiperButton {
+	width: 100px !important;
+}
+
+.swiperSlider {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	padding: 10px;
+}
+
+.previewName {
+	width: 125px;
+}
+
 #modalBody {
 	height: 30vh;
 }
@@ -8,27 +24,25 @@
 
 #descriptionTextArea {
 	resize: none;
-  height: 100px;
+	height: 100px;
 }
 
 #colorPreview {
-  width: 100px;
-  height: 50px;
-  border-radius: 3px;
+	width: 100px;
+	height: 50px;
+	border-radius: 3px;
 }
 
-.swiperButton {
-	width: 100px !important;
+#spinner {
+	color: var(--purple);
 }
 
-.swiperSlider {
+#swiperSliderPreview {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   padding: 10px;
-}
-
-.previewName {
-  width: 125px;
+  padding-top: 75px;
+  overflow-y: scroll;
 }

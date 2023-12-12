@@ -74,15 +74,16 @@ export const apiSliceWorkspace = apiSlice.injectEndpoints({
 			keepUnusedDataFor: 120
 		}),
 
-    createWorkspace: builder.mutation({
-      query: ({ body }) => {
-        return {
-          url: `/workpaces`,
-          method: "POST",
-          body
-        };
-      }
-    }),
+		createWorkspace: builder.mutation({
+			query: (body) => ({
+				url: "/workpaces",
+				method: "POST",
+				body: body
+			}),
+			invalidatesTags: (result, error, body) => {
+				return [{ type: TYPES_WORKSPACE.TYPE_LIST_WORKSPACES_USER, id: body.user_id }];
+			}
+		}),
 
 		updateWorkspace: builder.mutation({
 			query: ({ body, workspaceId }) => {
@@ -123,7 +124,7 @@ export const {
 	useGetAllWorkspacesQuery,
 	useGetAllWorkspacesUserQuery,
 	useGetWorkspaceByIDQuery,
-  useCreateWorkspaceMutation,
+	useCreateWorkspaceMutation,
 	useUpdateWorkspaceMutation,
 	useInviteMemberToWorkspaceMutation,
 	useAcceptInvitationOfTheWorkspaceMutation

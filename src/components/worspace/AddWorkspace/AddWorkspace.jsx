@@ -1,25 +1,33 @@
 import { useState } from "react";
-import { Button as ButtonReactBootstrap, InputGroup, Modal, Toast, ToastContainer } from "react-bootstrap";
+import { Button as ButtonReactBootstrap, InputGroup, Modal, Spinner, Toast, ToastContainer } from "react-bootstrap";
 import Form from "react-bootstrap/Form";
+import { useSelector } from "react-redux";
 import { Navigation, Pagination } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
+import { useListTypeWorkspaceQuery } from "../../../rtkQuery/apiSliceTypeWorkspace";
 import { useCreateWorkspaceMutation } from "../../../rtkQuery/apiSliceWorkspace";
 import { COLORS } from "../../../utils/contants/colorsHex";
 import Button from "../../utilsComponents/button/Button";
 import ColorButton from "../../utilsComponents/colorButton/ColorButton";
 import "./AddWorkspace.css";
+import { getInitials } from "../../../utilsFunctions/generalFuntions";
 
 const AddWorkspace = (properties) => {
+	const user = useSelector((state) => state.auth.user);
 	const [createWorkspace] = useCreateWorkspaceMutation();
-	const [swiper, setSwiper] = useState();
+	const { data: workspaceTypes, isFetching: isFetchingWorkspaceTypes } = useListTypeWorkspaceQuery();
+
+	const [swiper, setSwiper] = useState(null);
 	const [page, setPage] = useState(0);
 	const [name, setName] = useState("");
 	const [initials, setInitials] = useState("");
 	const [description, setDescription] = useState("");
 	const [color, setColor] = useState("#000000");
-	const [invalidName, setInvalidName] = useState(true);
-	const [invalidDescription, setInvalidDescription] = useState(true);
-	const [invalidColor, setInvalidColor] = useState(true);
+	const [type, setType] = useState("");
+	const [invalidName, setInvalidName] = useState("initial");
+	const [invalidDescription, setInvalidDescription] = useState("initial");
+	const [invalidColor, setInvalidColor] = useState("initial");
+	const [invalidType, setInvalidType] = useState("initial");
 	const [showSuccessToast, setShowSuccessToast] = useState(false);
 	const [showErrorToast, setShowErrorToast] = useState(false);
 
@@ -29,9 +37,11 @@ const AddWorkspace = (properties) => {
 		setInitials("");
 		setDescription("");
 		setColor("#000000");
-		setInvalidName(true);
-		setInvalidDescription(true);
-		setInvalidColor(true);
+		setType("");
+		setInvalidName("initial");
+		setInvalidDescription("initial");
+		setInvalidColor("initial");
+		setInvalidType("initial");
 		properties.setShow(false);
 	};
 
@@ -42,108 +52,126 @@ const AddWorkspace = (properties) => {
 	const handleNextPage = () => {
 		switch (page) {
 			case 0:
-				if (invalidName) {
-					return;
-				} else {
+				if (invalidName === "initial") {
+					setInvalidName("true");
+				} else if (invalidName === "false") {
 					swiper.slideNext();
 				}
 				break;
 			case 1:
-				if (invalidDescription) {
-					return;
-				} else {
+				if (invalidDescription === "initial") {
+					setInvalidDescription("true");
+				} else if (invalidDescription === "false") {
 					swiper.slideNext();
 				}
 				break;
 			case 2:
-				if (invalidColor) {
-					return;
-				} else {
+				if (invalidColor === "initial") {
+					setInvalidColor("true");
+				} else if (invalidColor === "false") {
 					swiper.slideNext();
 				}
 				break;
 			case 3:
-				handleCreateWorkspace();
-				return;
+				if (invalidType === "initial") {
+					setInvalidType("true");
+				} else if (invalidType === "false") {
+					swiper.slideNext();
+				}
+				break;
 			default:
 				break;
 		}
 	};
 
-	const handleCreateWorkspace = () => {
-		let workspace = {
-			name: name,
-			initials: initials,
-			description: description,
-			color: color
-		};
+	const handleCreateWorkspace = async () => {
+		let formData = new FormData();
+		formData.append("name", name);
+		formData.append("initials", initials);
+		formData.append("description", description);
+		formData.append("color", color);
+		formData.append("workspace_type_id", type);
+		formData.append("user_id", user.id);
 
-		createWorkspace(workspace)
-			.then((result) => {
-				if (result.data.code === 200) {
-					handleHideModal();
-					setShowSuccessToast(true);
-				} else {
-					setShowErrorToast(true);
-					console.error(result.data);
-				}
-			})
-			.catch((error) => {
-				setShowErrorToast(true);
-				console.error(error);
-			});
+		const result = await createWorkspace(formData);
+
+		if (result?.data) {
+			setShowSuccessToast(true);
+			handleHideModal();
+		} else if (result?.error) {
+			setShowErrorToast(true);
+			console.error(result.error);
+		}
 	};
 
 	const handleChangeName = (value) => {
 		if (value.length === 0) {
-			setInvalidName(true);
+			setInvalidName("true");
 			setName("");
 			setInitials("");
 			return;
 		}
 
 		setName(value);
-
-		let names = value.trim().split(" ");
-		let initials;
-
-		if (names.length === 1 && names[0].length === 1) {
-			initials = (names[0].substring(0, 1) + names[0].substring(0, 1)).toUpperCase();
-		}
-
-		if (names.length === 1 && names[0].length > 1) {
-			initials = names[0].substring(0, 2).toUpperCase();
-		}
-
-		if (names.length > 1) {
-			initials = (names[0].substring(0, 1) + names[names.length - 1].substring(0, 1)).toUpperCase();
-		}
-
-		setInitials(initials);
-		setInvalidName(false);
+		setInitials(getInitials(value));
+		setInvalidName("false");
 	};
 
 	const handleChangeDescription = (value) => {
 		if (value.length === 0) {
-			setInvalidDescription(true);
+			setInvalidDescription("true");
 			setDescription("");
 			return;
 		}
 
 		setDescription(value);
-		setInvalidDescription(false);
+		setInvalidDescription("false");
 	};
 
 	const handleChangeColor = (value) => {
 		if (COLORS.includes(value)) {
-			setInvalidColor(true);
+			setInvalidColor("true");
 			setColor("#000000");
 			return;
 		}
 
 		setColor(value);
-		setInvalidColor(false);
+		setInvalidColor("false");
 	};
+
+	const handleChangeType = (value) => {
+		if (value.length === 0) {
+			setInvalidType("true");
+			setType("");
+			return;
+		}
+
+		setType(value);
+		setInvalidType("false");
+	};
+
+	if (isFetchingWorkspaceTypes) {
+		return (
+			<Modal
+				show={properties.show}
+				onHide={handleHideModal}
+				centered
+				backdrop="static"
+				dialogClassName="my-modal">
+				<Modal.Header closeButton>Agregar Espacio de Trabajo</Modal.Header>
+				<Modal.Body>
+					<div className="d-flex justify-content-center align-items-center">
+						<Spinner
+							id="spinner"
+							animation="border"
+							className="me-2"
+						/>
+						Cargando...
+					</div>
+				</Modal.Body>
+			</Modal>
+		);
+	}
 
 	return (
 		<>
@@ -167,6 +195,8 @@ const AddWorkspace = (properties) => {
 							allowTouchMove={false}
 							onSlideChange={(swiper) => setPage(swiper.activeIndex)}
 							onSwiper={(swiper) => setSwiper(swiper)}>
+							{/* Form */}
+
 							<SwiperSlide className="swiperSlider">
 								<Form.Group className="w-100 mb-3">
 									<Form.Label>Nombre</Form.Label>
@@ -177,8 +207,8 @@ const AddWorkspace = (properties) => {
 										onChange={(event) => handleChangeName(event.target.value)}
 										value={name}
 										required
-										isInvalid={invalidName}
-										isValid={!invalidName}
+										isInvalid={invalidName === "true" || invalidName === "repeated"}
+										isValid={invalidName === "false"}
 									/>
 									<Form.Control.Feedback>El nombre es válido</Form.Control.Feedback>
 									<Form.Control.Feedback type="invalid">El nombre es requerido</Form.Control.Feedback>
@@ -204,8 +234,8 @@ const AddWorkspace = (properties) => {
 										value={description}
 										onChange={(event) => handleChangeDescription(event.target.value)}
 										required
-										isInvalid={invalidDescription}
-										isValid={!invalidDescription}
+										isInvalid={invalidDescription === "true"}
+										isValid={invalidDescription === "false"}
 									/>
 									<Form.Control.Feedback>La descripción es válida</Form.Control.Feedback>
 									<Form.Control.Feedback type="invalid">
@@ -222,8 +252,8 @@ const AddWorkspace = (properties) => {
 										disabled
 										value={color}
 										required
-										isInvalid={invalidColor}
-										isValid={!invalidColor}
+										isInvalid={invalidColor === "true"}
+										isValid={invalidColor === "false"}
 									/>
 									<Form.Control.Feedback>El color es válido</Form.Control.Feedback>
 									<Form.Control.Feedback type="invalid">El color es requerido</Form.Control.Feedback>
@@ -243,6 +273,36 @@ const AddWorkspace = (properties) => {
 								</div>
 							</SwiperSlide>
 							<SwiperSlide className="swiperSlider">
+								<Form.Group className="w-100 mb-3">
+									<Form.Label>Tipo</Form.Label>
+									<Form.Control
+										as="select"
+										placeholder="Tipo de espacio de trabajo"
+										tabIndex={-1}
+										onChange={(event) => handleChangeType(event.target.value)}
+										value={type}
+										required
+										isInvalid={invalidType === "true"}
+										isValid={invalidType === "false"}>
+										<option value="">Tipo de espacio de trabajo</option>
+										{workspaceTypes.map((typeWorkspace, index) => {
+											if (index === 0) return;
+											return (
+												<option
+													key={typeWorkspace.id}
+													value={typeWorkspace.id}>
+													{typeWorkspace.name}
+												</option>
+											);
+										})}
+									</Form.Control>
+									<Form.Control.Feedback>El tipo es válido</Form.Control.Feedback>
+									<Form.Control.Feedback type="invalid">El tipo es requerido</Form.Control.Feedback>
+								</Form.Group>
+							</SwiperSlide>
+
+							{/* Preview */}
+							<SwiperSlide id="swiperSliderPreview">
 								<InputGroup className="mb-3">
 									<InputGroup.Text className="previewName">Nombre</InputGroup.Text>
 									<Form.Control
@@ -275,6 +335,24 @@ const AddWorkspace = (properties) => {
 										style={{ resize: "none" }}
 									/>
 								</InputGroup>
+								<InputGroup className="mb-3">
+									<InputGroup.Text className="previewName">Tipo</InputGroup.Text>
+									<Form.Control
+										as="select"
+										value={type}
+										disabled>
+										<option value="">Tipo de espacio de trabajo</option>
+										{workspaceTypes.map((typeWorkspace) => {
+											return (
+												<option
+													key={typeWorkspace.id}
+													value={typeWorkspace.id}>
+													{typeWorkspace.name}
+												</option>
+											);
+										})}
+									</Form.Control>
+								</InputGroup>
 							</SwiperSlide>
 						</Swiper>
 					</div>
@@ -287,7 +365,7 @@ const AddWorkspace = (properties) => {
 							Anterior
 						</ButtonReactBootstrap>
 					)}
-					{page < 3 ?
+					{page < 4 ?
 						<Button onClick={handleNextPage}>Siguiente</Button>
 					:	<Button onClick={handleCreateWorkspace}>Crear</Button>}
 				</Modal.Footer>
@@ -316,9 +394,7 @@ const AddWorkspace = (properties) => {
 					autohide
 					bg="danger"
 					onClose={() => setShowErrorToast(false)}>
-					<Toast.Body className="text-white">
-						Ocurrió un error inesperado al crear el Espacio de Trabajo.
-					</Toast.Body>
+					<Toast.Body className="text-white">Ocurrió un error al crear el Espacio de Trabajo.</Toast.Body>
 				</Toast>
 			</ToastContainer>
 		</>

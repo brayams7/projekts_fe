@@ -96,3 +96,26 @@ export function formatTime(seconds){
 
  }
 }
+
+export function getInitials(names) {
+  names = names.trim().split(" ");
+  let initials;
+
+  if (names.length === 1 && names[0].length === 1) {
+    initials = (names[0].substring(0, 1) + names[0].substring(0, 1)).toUpperCase();
+  }
+
+  if (names.length === 1 && names[0].length > 1) {
+    initials = names[0].substring(0, 2).toUpperCase();
+  }
+
+  if (names.length === 2) {
+    initials = (names[0].substring(0, 1) + names[1].substring(0, 1)).toUpperCase();
+  }
+
+  if (names.length >= 3) {
+    initials = (names[0].substring(0, 1) + names[1].substring(0, 1) + names[2].substring(0, 1)).toUpperCase();
+  }
+
+  return initials;
+}

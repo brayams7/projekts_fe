@@ -80,6 +80,7 @@ const ListWorkspaces = () => {
 				<AddWorkspacePreview onClick={handleShowNewWorkspaceModal} />
 			</div>
 			<AddWorkspace
+				workspaces={data}
 				show={showAddWorkspace}
 				setShow={setShowAddWorkspace}
 			/>

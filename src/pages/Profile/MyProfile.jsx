@@ -20,6 +20,7 @@ import { setUser as setUserRedux } from "../../redux/slices/authSlice";
 import { useUpdateProfileMutation } from "../../rtkQuery/apiSliceMyProfile";
 import { COLORS } from "../../utils/contants/colorsHex";
 import "./MyProfile.css";
+import { getInitials } from "../../utilsFunctions/generalFuntions";
 
 /**
  * Página de Mi Perfil
@@ -80,6 +81,10 @@ const MyProfile = () => {
 		setColor(color.value);
 		setImageSource("");
 		setImageFile(null);
+	};
+
+	const handleInitials = (value) => {
+		return getInitials(value);
 	};
 
 	const selectImageProfile = (event) => {
@@ -164,6 +169,7 @@ const MyProfile = () => {
 											size="175"
 											textSizeRatio={2}
 											round={true}
+											initials={(value) => handleInitials(value)}
 										/>
 									</OverlayTrigger>
 									<input
