@@ -1,0 +1,99 @@
+/* Tarjeta de Registro */
+#registerCard
+{
+  width: 90%;
+}
+
+#registerCard .swiperSlide
+{
+  margin: 10px 1px;
+  height: 400px;
+}
+
+#loginBodyCard
+{
+  height: 450px;
+}
+
+/* Correo electrónico */
+
+#emailSlider
+{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Datos personales */
+
+#dataSlider
+{
+  overflow-y: scroll;
+}
+
+/* Foto de perfil */
+#pictureSlide
+{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+#picture
+{
+  width: 175px;
+}
+
+#text-avatar
+{
+  cursor: pointer;
+}
+
+#add-profile-picture
+{
+  cursor: pointer;
+  font-size: x-large;
+  top: 15%;
+  left: 90%;
+}
+
+#delete-profile-picture
+{
+  cursor: pointer;
+  font-size: x-large;
+  top: 15%;
+  left: 90%;
+}
+
+@media screen and (min-width: 768px)
+{
+  #registerCard
+  {
+    width: 600px;
+  }
+
+  #registerCard .swiperSlide
+  {
+    margin: 10px 20px;
+  }
+}
+
+/* Código de Verificación */
+#verificationCodeSlide
+{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Registro exitoso */
+#confirmationSlide
+{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}

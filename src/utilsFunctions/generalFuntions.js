@@ -119,3 +119,8 @@ export function getInitials(names) {
 
   return initials;
 }
+
+export function validateEmail(email) {
+  let regExp = /\S+@\S+\.\S+/;
+  return regExp.test(email);
+}

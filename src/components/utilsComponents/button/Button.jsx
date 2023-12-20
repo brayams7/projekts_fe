@@ -3,14 +3,17 @@ import "./Button.css";
 
 /**
  * Botón de multiple propósito para el proyecto
- * @param {*} Propiedades
+ * @param properties Propiedades del botón
  */
-const Button = (properties) => {
-  return (
-    <ButtonReactBootstrap id="button" {...properties}>
-      {properties.children}
-    </ButtonReactBootstrap>
-  )
+function Button(properties) {
+	return (
+		<ButtonReactBootstrap
+			id="button"
+			{...properties}
+		>
+			{properties.children}
+		</ButtonReactBootstrap>
+	);
 }
 
 export default Button;
