@@ -1,0 +1,29 @@
+.swiperButton
+{
+  width: 100px !important;
+}
+
+
+#swiper
+{
+  --swiper-pagination-color: var(--purple);
+}
+
+#descriptionTextArea
+{
+  resize: none;
+  height: 100px;
+}
+
+#colorPreview
+{
+  width: 100px;
+  height: 50px;
+  border-radius: 3px;
+}
+
+#spinner
+{
+  color: var(--purple);
+}
+
