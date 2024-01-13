@@ -96,3 +96,34 @@ export function formatTime(seconds){
 
  }
 }
+
+export const  formatTimeTracking =  (totalMinutes) =>{
+  if (typeof totalMinutes !== 'number' || totalMinutes < 0) {
+    throw new Error('El total de minutos debe ser un número positivo.')
+  }
+
+  // const days = Math.floor(totalMinutes / (24 * 60))
+  // const remainingHours = totalMinutes % (24 * 60)
+  const hours = Math.floor(totalMinutes / 60)
+  const minutes = totalMinutes % 60
+
+  return {
+    // days,
+    hours,
+    minutes,
+  }
+}
+
+export const getFormatTime = (time) =>{
+  let formtattedTime = ''
+
+  if(time.hours > 0){
+    formtattedTime += `${time.hours}h `
+  }
+
+  if(time.minutes > 0){
+    formtattedTime += `${time.minutes}m `
+  }
+
+  return formtattedTime
+}

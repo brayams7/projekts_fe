@@ -15,6 +15,7 @@ import DropDowTag from "../dropDowTag/DropDowTag";
 import { createTaskService } from "../../../services/tasksService";
 import { useDispatch } from "react-redux";
 import { addTask } from "../../../redux/slices/tasksSlice";
+import { formatTime } from "../../../utilsFunctions/generalFuntions";
 
 const DeleteTagByTask = ({handleDeleteTag})=>{
   return (
@@ -44,6 +45,7 @@ const NewTask = ({ feature }) => {
 
   const [mouseIsOverDueDate, setMouseIsOverDueDate] = useState(false)
   const [mouseIsOverStartAtTask, setMouseIsOverStartAtTask] = useState(false)
+  const [calculatedTime, setCalculatedTime] = useState('')
 
   const [listUsersAssigned, setListUsersAssigned] = useState([])
   const [isLoading, setIsLoading] = useState(false)
@@ -108,12 +110,16 @@ const NewTask = ({ feature }) => {
     setListTagsForAddToTask([])
     setTimestampStartAtTask(null)
     setTimestampDueDate(null)
+    setDueDate(null)
+    setStartAtTask(null)
     setFormatDueDate("")
     setFormatStartAtTask("")
+    setCalculatedTime("")
   }
 
 
   useEffect(()=>{
+
 
     if(dueDate){
       const timestampDueDate = new Date(dueDate * 1000)
@@ -128,9 +134,23 @@ const NewTask = ({ feature }) => {
 
   },[dueDate,startAtTask])
 
+  useEffect(()=>{
+    if(timestampDueDate && timestampStartAtTask){
+
+      const calculatedTime = timestampDueDate - timestampStartAtTask
+      setCalculatedTime(formatTime(calculatedTime))
+
+    }
+  },[timestampDueDate, timestampStartAtTask])
+
 
   return (
     <div className="d-flex flex-column gap-2">
+      <span className="fw-bold font-size-12-14 align-self-end">
+                {
+                  calculatedTime
+                }
+            </span>
       <div className="d-flex gap-3 new-task-container mb-2">
         <input
           type="text"

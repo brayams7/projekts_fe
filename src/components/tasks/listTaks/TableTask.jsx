@@ -114,7 +114,6 @@ const TableTask = (
       addSubtasks:(rowIndex, subTasks, parent)=> {
         const list = data.map((row, index)=>{
           if(index === rowIndex){
-            console.log(data[rowIndex])
             return {
               ...data[rowIndex],
               count_children:parent.count_children,
@@ -146,6 +145,7 @@ const TableTask = (
       table.resetExpanded(true)
     }
   },[feature.id])
+
 
   return (
     <div className="w-100">

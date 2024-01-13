@@ -72,35 +72,35 @@ export const useListTasks = ({
     if(Array.isArray(response.data)){
       const listChildren = response.data
 
-      const newList = listTasks.map((parent)=>{
-        if(parent.id === id){
+      const newList = listTasks.map((item)=>{
+        if(item.id === id){
           row.originalSubRows = listChildren
           row.subRows = listChildren
 
           return {
-            ...parent,
+            ...item,
             sub_tasks:[...listChildren]
           }
         }
-        return parent
+        return item
       })
       // console.log(row)
       // console.log(newList)
       dispatch(setListTasks(newList))
       // setListTask(listParents =>{
-      //   const newList = listParents.map((parent)=>{
-      //     if(parent.id === id){
+      //   const newList = listParents.map((item)=>{
+      //     if(item.id === id){
       //       const listUsersAddedToTheWorkspace = row.original?.list_of_users_added_to_the_workspace ?? []
       //       const mapDataTasks = insertListUsersAddedToTheWorkspace(data, listUsersAddedToTheWorkspace)
       //       row.originalSubRows = data
       //       row.subRows = data
 
       //       return {
-      //         ...parent,
+      //         ...item,
       //         sub_tasks:[...data]
       //       }
       //     }
-      //     return parent
+      //     return item
       //   })
 
       //   return newList
@@ -111,6 +111,17 @@ export const useListTasks = ({
     }
 
     setIsRowLoading({[id]:false})
+  }
+
+  const updateRowInListTasks = (task)=>{
+
+    const newList = listTasks.map((item)=>{
+      if(item.id === task.id){
+        return task
+      }
+      return item
+    })
+    dispatch(setListTasks(newList))
   }
 
   const getListTasks = useCallback(async()=>{
@@ -173,7 +184,8 @@ export const useListTasks = ({
     isError,
     // currentData,
     isRowLoading,
-    handleClickRow
+    handleClickRow,
+    updateRowInListTasks
   }
 
 }

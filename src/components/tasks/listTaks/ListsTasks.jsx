@@ -11,6 +11,9 @@ import dayjs from 'dayjs';
 // import { getSubtasksOfTask } from '../../../services/tasksService';
 import { useModal } from '../../../hooks/modal/useSimpleModal';
 import { useListTasks } from '../../../hooks/tasks/useListTasks';
+// import ArrowDown from '../../../assets/iconsHeader/expand_more.svg'
+import { ArrowDownIcon } from '../../../utils/icons/iconsMenu';
+import DropdownTracking from '../tracking/DropdownTracking';
 
 
 const columnHelper = createColumnHelper()
@@ -28,7 +31,8 @@ const ListsTasks = ({feature}) => {
       isError,
       // currentData,
       isRowLoading,
-      handleClickRow
+      handleClickRow,
+      updateRowInListTasks
     } = useListTasks({feature})
   // const [rowIdExpanded, setRowIdExpanded] = useState(null)
 
@@ -119,7 +123,7 @@ const ListsTasks = ({feature}) => {
                   style: { cursor: "pointer" },
                 }}
               >
-                {row.getIsExpanded() ? "👇" : "👉"}
+                {row.getIsExpanded() ? <span><ArrowDownIcon fill='var(--gray-600)'/></span>  : <ArrowDownIcon fill='var(--gray-600)' className='arrow-down-icon'/> }
               </button>
             ) : (
               " "
@@ -159,6 +163,10 @@ const ListsTasks = ({feature}) => {
       header:"title",
       enableColumnFilter:true,
       filterFn:"includesString"
+      // filterFn:(row, columnId, value)=>{
+      //   const title = row.getValue(columnId)
+      //   return title.toLowerCase().includes(value.toLowerCase())
+      // }
     }),
 
     columnHelper.accessor("starts_at",{
@@ -193,6 +201,22 @@ const ListsTasks = ({feature}) => {
         return (
           <ColumnTagsUser
             tags={original.tags}
+          />
+        )
+      }
+    }),
+
+    columnHelper.accessor("time_tracking",{
+      id:"time_tracking",
+      cell:({row})=>{
+        const original = row.original
+        return (
+          <DropdownTracking
+            // setSelectedTask={setSelectedTask}
+            idRow={row.id}
+            task={original}
+            updateRowInListTasks={updateRowInListTasks}
+            // onOpen={onOpen}
           />
         )
       }

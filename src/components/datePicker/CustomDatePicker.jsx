@@ -46,6 +46,12 @@ const CustomDatePicker = ({ children, setValue, value }) => {
     }
   },[value])
 
+  const filterWeekday = (date) => {
+    // Filtrar solo los días hábiles (lunes a viernes)
+    const day = date.getDay()
+    return day !== 0 && day !== 6 // 0 es domingo, 6 es sábado
+  }
+
   // const handleColor = (time) => {
   //   return time.getHours() > 12 ? "text-success" : "text-error";
   // }
@@ -62,6 +68,7 @@ const CustomDatePicker = ({ children, setValue, value }) => {
         onChange={handleChange}
         minTime={new Date().setHours(8, 0, 0)} // Establece 8:00 AM como el tiempo mínimo
         maxTime={new Date().setHours(23, 0, 0)} // Establece 11:00 PM como el tiempo máximo
+        filterDate={filterWeekday}
         // timeClassName={handleColor}
         dateFormat="MMMM d, yyyy h:mm aa"
         showPopperArrow={false}
