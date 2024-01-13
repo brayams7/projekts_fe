@@ -1,0 +1,117 @@
+/*
+  DROPDOWN TRACKING
+*/
+.tracking-content{
+  background-color: rgba(127,119,241,1);
+}
+
+.tracking-content .nav-pills .nav-link.active{
+  background-color: transparent !important;
+  color: rgba(255, 255, 255, 1);
+}
+
+.tracking-content .nav-link{
+  font-weight: bold;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.tracking-content .nav-pills .nav-link:hover{
+  color: rgba(255, 255, 255, 1);
+}
+
+/*
+  MANUAL TRACKING CONTAINER
+*/
+
+.manual-tracking-container{
+  background: rgba(255,255,255,.1);
+  min-height: 36px;
+  border-radius: var(--radius-8);
+  -webkit-border-radius: var(--radius-8);
+  -moz-border-radius: var(--radius-8);
+  -ms-border-radius: var(--radius-8);
+  -o-border-radius: var(--radius-8);
+}
+
+.manual-tracking-container input, .manual-tracking-container input::placeholder{
+  /* background-color: rgba(127,119,241,.8) !important; */
+  background: transparent !important;
+  border: 1px solid transparent;
+  text-overflow: ellipsis;
+}
+
+.manual-tracking-container input{
+  color: rgba(255, 255, 255, 1) !important;
+}
+
+.manual-tracking-container input::placeholder{
+  color: rgba(255, 255, 255, 0.6) !important;
+}
+
+.container-description-tracking{
+  background: rgba(255,255,255,.1);
+  border-radius: var(--radius-8);
+  -webkit-border-radius: var(--radius-8);
+  -moz-border-radius: var(--radius-8);
+  -ms-border-radius: var(--radius-8);
+  -o-border-radius: var(--radius-8);
+}
+
+.container-description-tracking textarea{
+  color: rgba(255, 255, 255, 1) !important;
+  border: 1px solid transparent;
+  background: transparent !important;
+}
+
+.container-description-tracking textarea::placeholder{
+  color: rgba(255, 255, 255, 0.6) !important;
+  font-size: 12px;
+}
+
+.tracking-buttons{
+  background-color: #5c52ed;
+}
+.tracking-buttons button{
+
+  color: rgba(255, 255, 255, 0.6);
+  transition: color .20s ease-in-out;
+}
+
+.tracking-buttons button:hover{
+  color: rgba(255, 255, 255, 1);
+}
+
+.tracking-buttons button:nth-child(2):disabled{
+  cursor: no-drop;
+}
+
+
+/*
+  LIST USERS ADDED TO TRACKING
+*/
+
+.item-user-added-to-tracking-time{
+  background-color: transparent;
+  transition: background-color, color 0.2s ease-in;
+  -webkit-transition: background-color, color 0.2s ease-in;
+  -moz-transition: background-color, color 0.2s ease-in;
+  -ms-transition: background-color, color 0.2s ease-in;
+  -o-transition: background-color, color 0.2s ease-in;
+}
+
+.item-user-added-to-tracking-time span{
+  color: var(--black);
+}
+
+.item-user-added-to-tracking-time:hover{
+  background-color: var(--grayDarkHover);
+}
+
+.item-user-added-to-tracking-time.selected{
+  background-color: var(--purple);
+}
+
+.item-user-added-to-tracking-time.selected span{
+  color: var(--white);
+}
+

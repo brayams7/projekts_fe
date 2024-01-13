@@ -13,6 +13,7 @@ import { useModal } from '../../../hooks/modal/useSimpleModal';
 import { useListTasks } from '../../../hooks/tasks/useListTasks';
 // import ArrowDown from '../../../assets/iconsHeader/expand_more.svg'
 import { ArrowDownIcon } from '../../../utils/icons/iconsMenu';
+import DropdownTracking from '../tracking/DropdownTracking';
 
 
 const columnHelper = createColumnHelper()
@@ -30,7 +31,8 @@ const ListsTasks = ({feature}) => {
       isError,
       // currentData,
       isRowLoading,
-      handleClickRow
+      handleClickRow,
+      updateRowInListTasks
     } = useListTasks({feature})
   // const [rowIdExpanded, setRowIdExpanded] = useState(null)
 
@@ -199,6 +201,22 @@ const ListsTasks = ({feature}) => {
         return (
           <ColumnTagsUser
             tags={original.tags}
+          />
+        )
+      }
+    }),
+
+    columnHelper.accessor("time_tracking",{
+      id:"time_tracking",
+      cell:({row})=>{
+        const original = row.original
+        return (
+          <DropdownTracking
+            // setSelectedTask={setSelectedTask}
+            idRow={row.id}
+            task={original}
+            updateRowInListTasks={updateRowInListTasks}
+            // onOpen={onOpen}
           />
         )
       }
