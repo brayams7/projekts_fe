@@ -41,7 +41,8 @@ export const useListTags = () => {
         const listStr = Object.values(item).filter((item)=> typeof item === "string").join(" ")
 
         //let name = item.name ? item.name.toLowerCase() : ""
-        return listStr.includes(text)
+
+        return listStr.toLocaleLowerCase().includes(text.toLocaleLowerCase())
       })
     ]
   }

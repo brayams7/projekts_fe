@@ -38,7 +38,8 @@ const BoardCanvas = () => {
     updateBoardRequest
   ] = useUpdateBoardMutation()
 
-  const {typeViewSelect, detailBoard} = useSelector(state=>state.board.boardCanvas)
+  const {typeViewSelect} = useSelector(state=>state.board.boardCanvas)
+  const {detailBoard} = useSelector(state=>state.board)
 
   // const [detailBoard, setDetailBoard] = useState(null)
   const [listStages, setListStages] = useState([])
@@ -52,6 +53,7 @@ const BoardCanvas = () => {
 
     if(data !== undefined && Object.entries(data)?.length > 0){
       const {stages, ...detailBoad} =  data
+
       // setDetailBoard(detailBoad)
       setListStages(stages)
       setListFeatures(mapFeatures(stages))
