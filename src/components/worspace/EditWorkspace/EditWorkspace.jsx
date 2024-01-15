@@ -1,6 +1,14 @@
 import { useState } from "react";
 import {
-  Button as ButtonReactBootstrap, Col, Container, InputGroup, Modal, Row, Spinner, Toast, ToastContainer
+  Button as ButtonReactBootstrap,
+  Col,
+  Container,
+  InputGroup,
+  Modal,
+  Row,
+  Spinner,
+  Toast,
+  ToastContainer
 } from "react-bootstrap";
 import Form from "react-bootstrap/Form";
 import { useSelector } from "react-redux";
@@ -295,7 +303,8 @@ const EditWorkspace = (properties) =>
     <>
       <Modal
         show={properties.show}
-        onShow={() => {
+        onShow={() =>
+        {
           setPage(0);
           setName(properties.name);
           setInitials(properties.initials);

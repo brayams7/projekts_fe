@@ -39,6 +39,7 @@ const BoardCanvas = () => {
   ] = useUpdateBoardMutation()
 
   const {typeViewSelect, detailBoard} = useSelector(state=>state.board.boardCanvas)
+  const detailBoard2 = useSelector(state=>state.board.detailBoard)
 
   // const [detailBoard, setDetailBoard] = useState(null)
   const [listStages, setListStages] = useState([])
@@ -132,13 +133,14 @@ const BoardCanvas = () => {
       <HeaderBoard
         handleUpdateBoard={handleUpdateBoard}
         stylesBoard={stylesBoard}
-        name={detailBoard?.name}
+        name={detailBoard2?.name}
         description={detailBoard?.description}
         color={detailBoard?.bg_color}
         bgImage={detailBoard?.bg_color}
-        workspaceId={detailBoard?.workspace_id}
+        workspaceId={detailBoard2?.workspace_id}
         userId={detailBoard?.user_id}
         typeViewSelect={typeViewSelect}
+        boardId={boardId}
       />
       <div className="pt-2 board-canvas-body" style={styleContent}>
 

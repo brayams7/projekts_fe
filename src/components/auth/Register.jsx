@@ -1,7 +1,6 @@
 import Avatar from "react-avatar";
-import { Badge, Button as ButtonReactBootstrap, Card, Form, FormLabel, InputGroup } from "react-bootstrap";
+import { Badge, Button, Card, Form, FormLabel } from "react-bootstrap";
 import { COLORS } from "../../utils/contants/colorsHex.js";
-import Button from "../utilsComponents/button/Button.jsx";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -17,6 +16,7 @@ const Register = () =>
   // Modal
   const [page, setPage] = useState(0);
   const [swiper, setSwiper] = useState(null);
+  const [height, setHeight] = useState("300px");
 
   // Datos del usuario
   const [email, setEmail] = useState("");
@@ -28,6 +28,18 @@ const Register = () =>
   const [pictureSource, setPictureSource] = useState("");
   const [pictureColor, setPictureColor] = useState(null);
   const [showPassword, setShowPassword] = useState(false);
+  const [passwordLength, setPasswordLength] = useState(false);
+  const [passwordLowercase, setPasswordLowercase] = useState(false);
+  const [passwordUppercase, setPasswordUppercase] = useState(false);
+  const [passwordNumbers, setPasswordNumbers] = useState(false);
+  const [passwordSpecialCharacters, setPasswordSpecialCharacters] = useState(false);
+  const [verificationCode, setVerificationCode] = useState("");
+  const [verificationCode1, setVerificationCode1] = useState("");
+  const [verificationCode2, setVerificationCode2] = useState("");
+  const [verificationCode3, setVerificationCode3] = useState("");
+  const [verificationCode4, setVerificationCode4] = useState("");
+  const [verificationCode5, setVerificationCode5] = useState("");
+  const [verificationCode6, setVerificationCode6] = useState("");
 
   // Validaciones
   const [isValidEmail, setIsValidEmail] = useState("initial");
@@ -35,7 +47,12 @@ const Register = () =>
   const [isValidUsername, setIsValidUsername] = useState("initial");
   const [isValidPassword, setIsValidPassword] = useState("initial");
   const [isValidPicture, setIsValidPicture] = useState("initial");
-  const [isValidVerificationCode, setIsValidVerificationCode] = useState("initial");
+  const [isValidVerificationCode1, setIsValidVerificationCode1] = useState("initial");
+  const [isValidVerificationCode2, setIsValidVerificationCode2] = useState("initial");
+  const [isValidVerificationCode3, setIsValidVerificationCode3] = useState("initial");
+  const [isValidVerificationCode4, setIsValidVerificationCode4] = useState("initial");
+  const [isValidVerificationCode5, setIsValidVerificationCode5] = useState("initial");
+  const [isValidVerificationCode6, setIsValidVerificationCode6] = useState("initial");
 
   function handleNextPage()
   {
@@ -48,9 +65,14 @@ const Register = () =>
         }
         else
         {
-          if (isValidEmail === "valid") swiper.slideNext();
+          if (isValidEmail === "valid")
+          {
+            swiper.slideNext();
+          }
         }
+
         break;
+
       case 1:
         if (isValidName === "initial") setIsValidName("invalid");
         if (isValidUsername === "initial") setIsValidUsername("invalid");
@@ -58,17 +80,19 @@ const Register = () =>
         if (isValidPassword === "initial") setIsValidPassword("invalid");
 
         if (isValidName ===
-            "valid" &&
-            isValidUsername ===
-            "valid" &&
-            isValidEmail ===
-            "valid" &&
-            isValidPassword ===
-            "valid")
+          "valid" &&
+          isValidUsername ===
+          "valid" &&
+          isValidEmail ===
+          "valid" &&
+          isValidPassword ===
+          "valid")
         {
           swiper.slideNext();
         }
+
         break;
+
       case 2:
         if (isValidPicture === "initial")
         {
@@ -80,17 +104,57 @@ const Register = () =>
         }
         break;
       case 3:
-        if (isValidVerificationCode === "initial")
+        console.log(verificationCode);
+
+        if (isValidVerificationCode1 === "initial")
         {
-          setIsValidVerificationCode("invalid");
+
+          setIsValidVerificationCode1("invalid");
         }
-        else
+
+        if (isValidVerificationCode2 === "initial")
         {
-          if (isValidVerificationCode === "valid") swiper.slideNext();
+          setIsValidVerificationCode2("invalid");
         }
+
+        if (isValidVerificationCode3 === "initial")
+        {
+          setIsValidVerificationCode3("invalid");
+        }
+
+        if (isValidVerificationCode4 === "initial")
+        {
+          setIsValidVerificationCode4("invalid");
+        }
+
+        if (isValidVerificationCode5 === "initial")
+        {
+          setIsValidVerificationCode5("invalid");
+        }
+
+        if (isValidVerificationCode6 === "initial")
+        {
+          setIsValidVerificationCode6("invalid");
+        }
+
+        if (isValidVerificationCode1 ===
+          "valid" &&
+          isValidVerificationCode2 ===
+          "valid" &&
+          isValidVerificationCode3 ===
+          "valid" &&
+          isValidVerificationCode4 ===
+          "valid" &&
+          isValidVerificationCode5 ===
+          "valid" &&
+          isValidVerificationCode6 ===
+          "valid")
+        {
+          if (verificationCode === "123456") swiper.slideNext();
+        }
+
         break;
       case 4:
-
         break;
       default:
         break;
@@ -141,7 +205,30 @@ const Register = () =>
   function handleOnChangePassword(value)
   {
     setPassword(value);
-    if (value.length > 0)
+
+    if (value.length > 8) setPasswordLength(true); else setPasswordLength(false);
+
+    if (value.match(/[a-z]/)) setPasswordLowercase(true); else setPasswordLowercase(false);
+
+    if (value.match(/[A-Z]/)) setPasswordUppercase(true); else setPasswordUppercase(false);
+
+    if (value.match(/[0-9]/)) setPasswordNumbers(true); else setPasswordNumbers(false);
+
+    if (value.match(/[!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?]/))
+    {
+      setPasswordSpecialCharacters(true);
+    }
+    else
+    {
+      setPasswordSpecialCharacters(false);
+    }
+
+    if (value.length >
+      8 &&
+      value.match(/[a-z]/) &&
+      value.match(/[A-Z]/) &&
+      value.match(/[0-9]/) &&
+      value.match(/[!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?]/))
     {
       setIsValidPassword("valid");
     }
@@ -173,18 +260,6 @@ const Register = () =>
     setIsValidPicture("valid");
   };
 
-  const handleOnChangeVerificationCode = (value) =>
-  {
-    if (value.length > 0)
-    {
-      setIsValidVerificationCode("valid");
-    }
-    else
-    {
-      setIsValidVerificationCode("invalid");
-    }
-  };
-
   const addProfilePicture = () =>
   {
     document.getElementById("image-input").click();
@@ -199,7 +274,7 @@ const Register = () =>
   // noinspection JSValidateTypes
   return (
     <Card id={"registerCard"}>
-      <Card.Header className={"d-flex justify-content-between align-items-center h3"}>
+      <Card.Header className={"d-flex justify-content-between align-items-center h3 border-bottom-0 pt-4"}>
         {page > 0 ? <i
           className={"bi bi-arrow-left"}
           style={{ width: "32px" }}
@@ -213,45 +288,92 @@ const Register = () =>
           id={"swiper"}
           modules={[Pagination]}
           allowTouchMove={false}
-          onSlideChange={(swiper) => setPage(swiper.activeIndex)}
+          onSlideChange={(swiper) =>
+          {
+            setPage(swiper.activeIndex);
+            switch (swiper.activeIndex)
+            {
+              case 0:
+                setHeight("300px");
+                break;
+              case 1:
+                setHeight("600px");
+                break;
+              case 2:
+                setHeight("400px");
+                break;
+              case 3:
+                setHeight("300px");
+                break;
+              case 4:
+                setHeight("300px");
+                break;
+              default:
+                break;
+            }
+          }}
           onSwiper={(swiper) => setSwiper(swiper)}
         >
           {/* Slider de Correo Electrónico */}
           <SwiperSlide>
             <div
               id={"emailSlider"}
+              style={{ height: height }}
               className={"swiperSlide"}
             >
-              <FormLabel className={"mb-2"}>Ingrese su correo electrónico</FormLabel>
-              <InputGroup className={"mb-4"}>
-                <InputGroup.Text>
-                  <i className={"bi bi-envelope-at"}></i>
-                </InputGroup.Text>
-                <Form.Control
-                  required={true}
-                  className={"formControlText"}
-                  size={"lg"}
-                  type={"text"}
-                  placeholder={"Correo electrónico"}
-                  value={email}
-                  isInvalid={isValidEmail === "invalid"}
-                  isValid={isValidEmail === "valid"}
-                  onChange={(changeEvent) => handleOnChangeEmail(changeEvent.target.value)}
-                />
-                <Feedback type={"invalid"}>Ingrese un correo electrónico válido</Feedback>
-                <Feedback type={"valid"}>Correo electrónico válido</Feedback>
-              </InputGroup>
-              <Button
-                className={"mb-4 w-100"}
-                onClick={handleNextPage}
-                size={"lg"}
-                type={"submit"}
+              <Form
+                className={"w-100"}
+                onSubmit={(event) =>
+                {
+                  event.preventDefault();
+                  handleNextPage();
+                }}
+                noValidate={true}
               >
-                Registrarse
-              </Button>
+                <Form.Group className={"mb-3"}>
+                  <Form.Label className={"w-100 text-center"}>
+                    Ingrese su correo electrónico
+                  </Form.Label>
+                  <div>
+                    <i className={"bi bi-envelope inputIcon"}></i>
+                    <Form.Control
+                      id={"emailInput"}
+                      className={"input"}
+                      required={true}
+                      size={"lg"}
+                      type={"email"}
+                      placeholder={"Correo electrónico"}
+                      value={email}
+                      isInvalid={isValidEmail === "invalid"}
+                      isValid={isValidEmail === "valid"}
+                      onChange={(changeEvent) => handleOnChangeEmail(changeEvent.target.value)}
+                    />
+                    <Feedback type={"invalid"}>Ingrese un correo electrónico válido</Feedback>
+                    <Feedback type={"valid"}>Correo electrónico válido</Feedback>
+                  </div>
+                </Form.Group>
+                <Button
+                  className={"mb-4 w-100 button"}
+                  size={"lg"}
+                  type={"submit"}
+                >
+                  Registrarse
+                </Button>
+              </Form>
+
+              <hr className={"w-75"} />
+
               <Link
                 to={"/login"}
                 className={"btn btn-link"}
+                onKeyDown={(event) =>
+                {
+                  if (event.key === "Tab")
+                  {
+                    event.preventDefault();
+                    document.getElementById("emailInput").focus();
+                  }
+                }}
               >
                 ¿Ya tiene cuenta? Inicie sesión
               </Link>
@@ -262,122 +384,194 @@ const Register = () =>
           <SwiperSlide>
             <div
               id={"dataSlider"}
+              style={{ height: height }}
               className={"swiperSlide"}
             >
-              <FormLabel className={"mb-2"}>Ingrese su nombre</FormLabel>
-              <InputGroup className={"mb-4"}>
-                <InputGroup.Text>
-                  <i className={"bi bi-person"}></i>
-                </InputGroup.Text>
-                <Form.Control
-                  tabIndex={-1}
-                  required={true}
-                  className={"formControlText"}
-                  size={"lg"}
-                  type={"text"}
-                  placeholder={"Nombre"}
-                  value={name}
-                  isInvalid={isValidName === "invalid"}
-                  isValid={isValidName === "valid"}
-                  onChange={(changeEvent) => handleOnChangeName(changeEvent.target.value)}
-                />
-                <Feedback type={"invalid"}>Ingrese un nombre válido</Feedback>
-                <Feedback type={"valid"}>Nombre válido</Feedback>
-              </InputGroup>
-              <FormLabel className={"mb-2"}>Iniciales</FormLabel>
-              <InputGroup className={"mb-4"}>
-                <InputGroup.Text>
-                  <i className={"bi bi-alphabet-uppercase"}></i>
-                </InputGroup.Text>
-                <Form.Control
-                  disabled={true}
-                  tabIndex={-1}
-                  required={true}
-                  className={"formControlText"}
-                  size={"lg"}
-                  type={"text"}
-                  placeholder={"Iniciales"}
-                  value={initials}
-                  onChange={(changeEvent) => handleOnChangeName(changeEvent.target.value)}
-                />
-              </InputGroup>
-              <FormLabel className={"mb-2"}>Ingrese su nombre de usuario</FormLabel>
-              <InputGroup className={"mb-4"}>
-                <InputGroup.Text>
-                  <i className={"bi bi-person"}></i>
-                </InputGroup.Text>
-                <Form.Control
-                  tabIndex={-1}
-                  required={true}
-                  className={"formControlText"}
-                  size={"lg"}
-                  type={"text"}
-                  placeholder={"Nombre de usuario"}
-                  value={username}
-                  isInvalid={isValidUsername === "invalid"}
-                  isValid={isValidUsername === "valid"}
-                  onChange={(changeEvent) => handleOnChangeUsername(changeEvent.target.value)}
-                />
-                <Feedback type={"invalid"}>Ingrese un nombre de usuario válido</Feedback>
-                <Feedback type={"valid"}>Nombre de usuario válido</Feedback>
-              </InputGroup>
-              <FormLabel className={"mb-2"}>Ingrese su correo electrónico</FormLabel>
-              <InputGroup className={"mb-4"}>
-                <InputGroup.Text>
-                  <i className={"bi bi-envelope-at"}></i>
-                </InputGroup.Text>
-                <Form.Control
-                  tabIndex={-1}
-                  required={true}
-                  className={"formControlText"}
-                  size={"lg"}
-                  type={"text"}
-                  placeholder={"Correo electrónico"}
-                  value={email}
-                  isInvalid={isValidEmail === "invalid"}
-                  isValid={isValidEmail === "valid"}
-                  onChange={(changeEvent) => handleOnChangeEmail(changeEvent.target.value)}
-                />
-                <Feedback type={"invalid"}>Ingrese un correo electrónico válido</Feedback>
-                <Feedback type={"valid"}>Correo electrónico válido</Feedback>
-              </InputGroup>
-              <FormLabel className={"mb-2"}>Ingrese su contraseña</FormLabel>
-              <InputGroup className={"mb-4"}>
-                <InputGroup.Text>
-                  <i className={"bi bi-key"}></i>
-                </InputGroup.Text>
-                <Form.Control
-                  tabIndex={-1}
-                  required={true}
-                  className={"formControlText"}
-                  size={"lg"}
-                  type={showPassword ? "text" : "password"}
-                  placeholder={"Contraseña"}
-                  value={password}
-                  isInvalid={isValidPassword === "invalid"}
-                  isValid={isValidPassword === "valid"}
-                  onChange={(changeEvent) => handleOnChangePassword(changeEvent.target.value)}
+              <Form
+                onSubmit={(event) =>
+                {
+                  event.preventDefault();
+                  handleNextPage();
+                }}
+                noValidate={true}
+              >
+                <Form.Group className={"mb-3"}>
+                  <Form.Label>Ingrese su nombre</Form.Label>
+                  <div>
+                    <i className={"bi bi-person inputIcon"}></i>
+                    <Form.Control
+                      id={"nameInput"}
+                      required={true}
+                      className={"input"}
+                      size={"lg"}
+                      type={"text"}
+                      placeholder={"Nombre"}
+                      value={name}
+                      isInvalid={isValidName === "invalid"}
+                      isValid={isValidName === "valid"}
+                      onChange={(changeEvent) => handleOnChangeName(changeEvent.target.value)}
+                    />
+                    <Feedback type={"invalid"}>Ingrese un nombre válido</Feedback>
+                    <Feedback type={"valid"}>Nombre válido</Feedback>
+                  </div>
+                </Form.Group>
 
-                />
-                <InputGroup.Text
-                  className={"cursor-pointer"}
-                  onClick={() => setShowPassword(!showPassword)}
-                >
-                  <i className={showPassword ? "bi bi-eye-slash" : "bi bi-eye"}></i>
-                </InputGroup.Text>
-                <Feedback type={"invalid"}>Ingrese una contraseña válida</Feedback>
-                <Feedback type={"valid"}>Contraseña válida</Feedback>
-              </InputGroup>
-              <div className={"d-flex justify-content-center"}>
-                <Button
-                  className={"mb-4"}
-                  onClick={handleNextPage}
-                  size={"lg"}
-                  type={"submit"}
-                >
-                  Continuar
-                </Button>
-              </div>
+                <Form.Group className={"mb-3"}>
+                  <FormLabel>Iniciales</FormLabel>
+                  <div>
+                    <i className={"bi bi-alphabet-uppercase inputIcon"}></i>
+                    <Form.Control
+                      className={"input"}
+                      disabled={true}
+                      required={true}
+                      size={"lg"}
+                      type={"text"}
+                      placeholder={"Iniciales"}
+                      value={initials}
+                      onChange={(changeEvent) => handleOnChangeName(changeEvent.target.value)}
+                    />
+                  </div>
+                </Form.Group>
+
+                <Form.Group className={"mb-3"}>
+                  <FormLabel>Ingrese su nombre de usuario</FormLabel>
+                  <div>
+                    <i className={"bi bi-at inputIcon"}></i>
+                    <Form.Control
+                      className={"input"}
+                      required={true}
+                      size={"lg"}
+                      type={"text"}
+                      placeholder={"Nombre de usuario"}
+                      value={username}
+                      isInvalid={isValidUsername === "invalid"}
+                      isValid={isValidUsername === "valid"}
+                      onChange={(changeEvent) => handleOnChangeUsername(changeEvent.target.value)}
+                    />
+                    <Feedback type={"invalid"}>Ingrese un nombre de usuario válido</Feedback>
+                    <Feedback type={"valid"}>Nombre de usuario válido</Feedback>
+                  </div>
+                </Form.Group>
+
+                <Form.Group className={"mb-3"}>
+                  <FormLabel>Ingrese su correo electrónico</FormLabel>
+                  <div>
+                    <i className={"bi bi-envelope inputIcon"}></i>
+                    <Form.Control
+                      className={"input"}
+                      required={true}
+                      size={"lg"}
+                      type={"text"}
+                      placeholder={"Correo electrónico"}
+                      value={email}
+                      isInvalid={isValidEmail === "invalid"}
+                      isValid={isValidEmail === "valid"}
+                      onChange={(changeEvent) => handleOnChangeEmail(changeEvent.target.value)}
+                    />
+                    <Feedback type={"invalid"}>Ingrese un correo electrónico válido</Feedback>
+                    <Feedback type={"valid"}>Correo electrónico válido</Feedback>
+                  </div>
+                </Form.Group>
+
+                <Form.Group className={"mb-3"}>
+                  <FormLabel className={"mb-2"}>Ingrese su contraseña</FormLabel>
+                  <div>
+                    <i className={"bi bi-key inputIcon"}></i>
+                    <i
+                      id={"showPassword"}
+                      className={showPassword ? "bi bi-eye-slash" : "bi bi-eye"}
+                      onClick={() => setShowPassword(!showPassword)}
+                    ></i>
+                    <Form.Control
+                      id={"passwordInput"}
+                      className={"input"}
+                      required={true}
+                      size={"lg"}
+                      type={showPassword ? "text" : "password"}
+                      placeholder={"Contraseña"}
+                      value={password}
+                      isInvalid={isValidPassword === "invalid"}
+                      isValid={isValidPassword === "valid"}
+                      onChange={(changeEvent) => handleOnChangePassword(changeEvent.target.value)}
+                    />
+                    <Feedback type={"invalid"}>Ingrese una contraseña válida</Feedback>
+                    <Feedback type={"valid"}>Contraseña válida</Feedback>
+                  </div>
+                  {passwordLength ? <Badge
+                    className={"badge"}
+                    bg={"success"}
+                  >
+                    <i className={"bi bi-check-circle-fill"}></i> 8 caractéres
+                  </Badge> : <Badge
+                    className={"badge"}
+                    bg={"danger"}
+                  >
+                    <i className={"bi bi-x-circle-fill"}></i> 8 caractéres
+                  </Badge>}{" "}
+                  {passwordLowercase ? <Badge
+                    className={"badge"}
+                    bg={"success"}
+                  >
+                    <i className={"bi bi-check-circle-fill"}></i> Minúsculas
+                  </Badge> : <Badge
+                    className={"badge"}
+                    bg={"danger"}
+                  >
+                    <i className={"bi bi-x-circle-fill"}></i> Minúsculas
+                  </Badge>}{" "}
+                  {passwordUppercase ? <Badge
+                    className={"badge"}
+                    bg={"success"}
+                  >
+                    <i className={"bi bi-check-circle-fill"}></i> Mayúsculas
+                  </Badge> : <Badge
+                    className={"badge"}
+                    bg={"danger"}
+                  >
+                    <i className={"bi bi-x-circle-fill"}></i> Mayúsculas
+                  </Badge>}{" "}
+                  {passwordNumbers ? <Badge
+                    className={"badge"}
+                    bg={"success"}
+                  >
+                    <i className={"bi bi-check-circle-fill"}></i> Números
+                  </Badge> : <Badge
+                    className={"badge"}
+                    bg={"danger"}
+                  >
+                    <i className={"bi bi-x-circle-fill"}></i> Números
+                  </Badge>}{" "}
+                  {passwordSpecialCharacters ? <Badge
+                    className={"badge"}
+                    bg={"success"}
+                  >
+                    <i className={"bi bi-check-circle-fill"}></i> Caractéres especiales
+                  </Badge> : <Badge
+                    className={"badge"}
+                    bg={"danger"}
+                  >
+                    <i className={"bi bi-x-circle-fill"}></i> Caractéres especiales
+                  </Badge>}
+                </Form.Group>
+
+                <div className={"d-flex justify-content-center"}>
+                  <Button
+                    className={"button"}
+                    size={"lg"}
+                    type={"submit"}
+                    onKeyDown={(event) =>
+                    {
+                      if (event.key === "Tab")
+                      {
+                        event.preventDefault();
+                        document.getElementById("nameInput").focus();
+                      }
+                    }}
+                  >
+                    Continuar
+                  </Button>
+                </div>
+              </Form>
             </div>
           </SwiperSlide>
 
@@ -385,6 +579,7 @@ const Register = () =>
           <SwiperSlide>
             <div
               id={"pictureSlide"}
+              style={{ height: height }}
               className={"swiperSlide"}
             >
               <div
@@ -406,33 +601,34 @@ const Register = () =>
                     <i className={"bi bi-x-lg"}></i>
                   </Badge>
                 </div> : <div>
-                   <Avatar
-                     name={name}
-                     color={pictureColor ?? "#000000"}
-                     size={175}
-                     textSizeRatio={2}
-                     round={true}
-                     initials={(value) => getInitials(value)}
-                   />
+                  <Avatar
+                    name={name}
+                    color={pictureColor ?? "#000000"}
+                    size={175}
+                    textSizeRatio={2}
+                    round={true}
+                    initials={(value) => getInitials(value)}
+                  />
 
-                   <input
-                     id={"image-input"}
-                     type={"file"}
-                     onChange={handleOnChangePicture}
-                     className={"d-none"}
-                   />
-                   <Badge
-                     id={"add-profile-picture"}
-                     className={"position-absolute translate-middle rounded-circle p-2 border border-light border-3"}
-                     onClick={addProfilePicture}
-                   >
-                     <i className={"bi bi-plus-lg"}></i>
-                   </Badge>
-                 </div>}
+                  <input
+                    id={"image-input"}
+                    type={"file"}
+                    onChange={handleOnChangePicture}
+                    className={"d-none"}
+                  />
+                  <Badge
+                    id={"add-profile-picture"}
+                    className={"position-absolute translate-middle rounded-circle p-2 border border-light border-3"}
+                    onClick={addProfilePicture}
+                  >
+                    <i className={"bi bi-plus-lg"}></i>
+                  </Badge>
+                </div>}
               </div>
               <div className={"d-flex flex-wrap justify-content-center w-75 mb-3"}>
                 {COLORS.map((color) => (
-                  <ButtonReactBootstrap
+                  <Button
+                    className={"imageColorButton"}
                     key={color.name}
                     variant={"light"}
                     onClick={() => handleOnChangeColor(color)}
@@ -441,7 +637,7 @@ const Register = () =>
                       className={"bi bi-circle-fill"}
                       style={{ color: color.value }}
                     ></i>
-                  </ButtonReactBootstrap>
+                  </Button>
                 ))}
               </div>
               <Form.Control
@@ -467,9 +663,17 @@ const Register = () =>
               </Feedback>
 
               <Button
-                className={"w-100"}
+                className={"button w-100"}
                 onClick={handleNextPage}
                 size={"lg"}
+                onKeyDown={(event) =>
+                {
+                  if (event.key === "Tab")
+                  {
+                    event.preventDefault();
+                    document.getElementsByClassName("imageColorButton")[0].focus();
+                  }
+                }}
               >
                 Continuar
               </Button>
@@ -480,35 +684,319 @@ const Register = () =>
           <SwiperSlide>
             <div
               id={"verificationCodeSlide"}
+              style={{ height: height }}
               className={"swiperSlide"}
             >
-              <FormLabel className={"mb-2"}>
-                Ingrese el código de verificación enviado a su correo electrónico
-              </FormLabel>
-              <InputGroup className={"mb-4"}>
-                <InputGroup.Text>
-                  <i className={"bi bi-key"}></i>
-                </InputGroup.Text>
-                <Form.Control
-                  required={true}
-                  className={"formControlText"}
-                  size={"lg"}
-                  type={"text"}
-                  placeholder={"Código de verificación"}
-                  isInvalid={isValidVerificationCode === "invalid"}
-                  isValid={isValidVerificationCode === "valid"}
-                  onChange={(changeEvent) => handleOnChangeVerificationCode(changeEvent.target.value)}
-                />
-                <Feedback type={"invalid"}>Ingrese un código de verificación válido</Feedback>
-                <Feedback type={"valid"}>Código de verificación válido</Feedback>
-              </InputGroup>
-              <Button
+              <Form
                 className={"w-100"}
-                onClick={handleNextPage}
-                size={"lg"}
+                onSubmit={(event) =>
+                {
+                  event.preventDefault();
+                  handleNextPage();
+                }}
+                noValidate={true}
               >
-                Continuar
-              </Button>
+                <Form.Group className={"mb-3"}>
+                  <Form.Label className={"w-100 text-center"}>
+                    Ingrese el código de verificación enviado a su correo electrónico
+                  </Form.Label>
+                  <div className={"d-flex justify-content-center"}>
+                    <Form.Control
+                      id={"firstCodeInput"}
+                      className={"codeInput"}
+                      maxLength={1}
+                      onChange={(event) =>
+                      {
+                        if (!event.target.value.match(/[0-9]/))
+                        {
+                          event.target.value = "";
+                        }
+
+                        if (event.target.value.length === 1)
+                        {
+                          setIsValidVerificationCode1("valid");
+                        }
+                        else
+                        {
+                          setIsValidVerificationCode1("invalid");
+                        }
+                      }}
+                      onKeyDown={(event) =>
+                      {
+                        if (!(
+                          event.key.match(/[0-9]/) || event.key === "Backspace" || event.key === "Tab"
+                        ))
+                        {
+                          event.preventDefault();
+                        }
+
+                        if (event.key.match(/[0-9]/))
+                        {
+                          event.preventDefault();
+                          document.getElementById("firstCodeInput").value = event.key;
+                          setVerificationCode1(event.key);
+                          setVerificationCode(event.key +
+                            verificationCode2 +
+                            verificationCode3 +
+                            verificationCode4 +
+                            verificationCode5 +
+                            verificationCode6);
+                          setIsValidVerificationCode1("valid");
+                          document.getElementById("secondCodeInput").focus();
+                        }
+                      }}
+                      isValid={isValidVerificationCode1 === "valid"}
+                      isInvalid={isValidVerificationCode1 === "invalid"}
+                    />
+                    <Form.Control
+                      id={"secondCodeInput"}
+                      className={"codeInput"}
+                      maxLength={1}
+                      onChange={(event) =>
+                      {
+                        if (!event.target.value.match(/[0-9]/))
+                        {
+                          event.target.value = "";
+                        }
+
+                        if (event.target.value.length === 1)
+                        {
+                          setIsValidVerificationCode2("valid");
+                        }
+                        else
+                        {
+                          setIsValidVerificationCode2("invalid");
+                        }
+                      }}
+                      onKeyDown={(event) =>
+                      {
+                        if (!(
+                          event.key.match(/[0-9]/) || event.key === "Backspace" || event.key === "Tab"
+                        ))
+                        {
+                          event.preventDefault();
+                        }
+
+                        if (event.key.match(/[0-9]/))
+                        {
+                          document.getElementById("secondCodeInput").value = event.key;
+                          setVerificationCode2(event.key);
+                          setVerificationCode(verificationCode1 +
+                            event.key +
+                            verificationCode3 +
+                            verificationCode4 +
+                            verificationCode5 +
+                            verificationCode6);
+                          setIsValidVerificationCode2("valid");
+                          document.getElementById("thirdCodeInput").focus();
+                        }
+                      }}
+                      isValid={isValidVerificationCode2 === "valid"}
+                      isInvalid={isValidVerificationCode2 === "invalid"}
+                    />
+                    <Form.Control
+                      id={"thirdCodeInput"}
+                      className={"codeInput"}
+                      maxLength={1}
+                      onChange={(event) =>
+                      {
+                        if (!event.target.value.match(/[0-9]/))
+                        {
+                          event.target.value = "";
+                        }
+
+                        if (event.target.value.length === 1)
+                        {
+                          setIsValidVerificationCode3("valid");
+                        }
+                        else
+                        {
+                          setIsValidVerificationCode3("invalid");
+                        }
+                      }}
+                      onKeyDown={(event) =>
+                      {
+                        if (!(
+                          event.key.match(/[0-9]/) || event.key === "Backspace" || event.key === "Tab"
+                        ))
+                        {
+                          event.preventDefault();
+                        }
+
+                        if (event.key.match(/[0-9]/))
+                        {
+                          document.getElementById("thirdCodeInput").value = event.key;
+                          setVerificationCode3(event.key);
+                          setVerificationCode(verificationCode1 +
+                            verificationCode2 +
+                            event.key +
+                            verificationCode4 +
+                            verificationCode5 +
+                            verificationCode6);
+                          setIsValidVerificationCode3("valid");
+                          document.getElementById("fourthCodeInput").focus();
+                        }
+                      }}
+                      isValid={isValidVerificationCode3 === "valid"}
+                      isInvalid={isValidVerificationCode3 === "invalid"}
+                    />
+                    <Form.Control
+                      id={"fourthCodeInput"}
+                      className={"codeInput"}
+                      maxLength={1}
+                      onChange={(event) =>
+                      {
+                        if (!event.target.value.match(/[0-9]/))
+                        {
+                          event.target.value = "";
+                        }
+
+                        if (event.target.value.length === 1)
+                        {
+                          setIsValidVerificationCode4("valid");
+                        }
+                        else
+                        {
+                          setIsValidVerificationCode4("invalid");
+                        }
+                      }}
+                      onKeyDown={(event) =>
+                      {
+                        if (!(
+                          event.key.match(/[0-9]/) || event.key === "Backspace" || event.key === "Tab"
+                        ))
+                        {
+                          event.preventDefault();
+                        }
+
+                        if (event.key.match(/[0-9]/))
+                        {
+                          document.getElementById("fourthCodeInput").value = event.key;
+                          setVerificationCode4(event.key);
+                          setVerificationCode(verificationCode1 +
+                            verificationCode2 +
+                            verificationCode3 +
+                            event.key +
+                            verificationCode5 +
+                            verificationCode6);
+                          setIsValidVerificationCode4("valid");
+                          document.getElementById("fifthCodeInput").focus();
+                        }
+                      }}
+                      isValid={isValidVerificationCode4 === "valid"}
+                      isInvalid={isValidVerificationCode4 === "invalid"}
+                    />
+                    <Form.Control
+                      id={"fifthCodeInput"}
+                      className={"codeInput"}
+                      maxLength={1}
+                      onChange={(event) =>
+                      {
+                        if (!event.target.value.match(/[0-9]/))
+                        {
+                          event.target.value = "";
+                        }
+
+                        if (event.target.value.length === 1)
+                        {
+                          setIsValidVerificationCode5("valid");
+                        }
+                        else
+                        {
+                          setIsValidVerificationCode5("invalid");
+                        }
+                      }}
+                      onKeyDown={(event) =>
+                      {
+                        if (!(
+                          event.key.match(/[0-9]/) || event.key === "Backspace" || event.key === "Tab"
+                        ))
+                        {
+                          event.preventDefault();
+                        }
+
+                        if (event.key.match(/[0-9]/))
+                        {
+                          document.getElementById("fifthCodeInput").value = event.key;
+                          setVerificationCode5(event.key);
+                          setVerificationCode(verificationCode1 +
+                            verificationCode2 +
+                            verificationCode3 +
+                            verificationCode4 +
+                            event.key +
+                            verificationCode6);
+                          setIsValidVerificationCode5("valid");
+                          document.getElementById("sixthCodeInput").focus();
+                        }
+                      }}
+                      isValid={isValidVerificationCode5 === "valid"}
+                      isInvalid={isValidVerificationCode5 === "invalid"}
+                    />
+                    <Form.Control
+                      id={"sixthCodeInput"}
+                      className={"codeInput"}
+                      maxLength={1}
+                      onChange={(event) =>
+                      {
+                        if (!event.target.value.match(/[0-9]/))
+                        {
+                          event.target.value = "";
+                        }
+
+                        if (event.target.value.length === 1)
+                        {
+                          setIsValidVerificationCode6("valid");
+                        }
+                        else
+                        {
+                          setIsValidVerificationCode6("invalid");
+                        }
+                      }}
+                      onKeyDown={(event) =>
+                      {
+                        if (!(
+                          event.key.match(/[0-9]/) || event.key === "Backspace" || event.key === "Tab"
+                        ))
+                        {
+                          event.preventDefault();
+                        }
+
+                        if (event.key.match(/[0-9]/))
+                        {
+                          document.getElementById("sixthCodeInput").value = event.key;
+                          setVerificationCode6(event.key);
+                          setVerificationCode(verificationCode1 +
+                            verificationCode2 +
+                            verificationCode3 +
+                            verificationCode4 +
+                            verificationCode5 +
+                            event.key);
+                          setIsValidVerificationCode6("valid");
+                          document.getElementById("verificationCodeButton").focus();
+                        }
+                      }}
+                      isValid={isValidVerificationCode6 === "valid"}
+                      isInvalid={isValidVerificationCode6 === "invalid"}
+                    />
+                  </div>
+                </Form.Group>
+                <Button
+                  id={"verificationCodeButton"}
+                  className={"mb-4 w-100 button"}
+                  size={"lg"}
+                  onClick={handleNextPage}
+                  onKeyDown={(event) =>
+                  {
+                    if (event.key === "Tab")
+                    {
+                      event.preventDefault();
+                      document.getElementById("firstCodeInput").focus();
+                    }
+                  }}
+                >
+                  Registrarse
+                </Button>
+              </Form>
             </div>
           </SwiperSlide>
 
@@ -516,6 +1004,7 @@ const Register = () =>
           <SwiperSlide>
             <div
               id={"confirmationSlide"}
+              style={{ height: height }}
               className={"swiperSlide"}
             >
               <div className={"d-flex justify-content-center"}>

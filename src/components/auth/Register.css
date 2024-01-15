@@ -4,19 +4,37 @@
   width: 90%;
 }
 
-#registerCard .swiperSlide
+.swiperSlide
 {
-  margin: 10px 1px;
-  height: 400px;
+  max-height: 70vh !important;
 }
 
-#loginBodyCard
+/* Campos de Texto */
+.inputIcon
 {
-  height: 450px;
+  position: absolute !important;
+  padding-left: 10px !important;
+  padding-top: 10px !important;
+}
+
+.input
+{
+  padding-left: 30px !important;
+}
+
+#passwordInput
+{
+  padding-right: 30px !important;
+}
+
+#showPassword {
+  position: absolute;
+  right: 10px;
+  padding-top: 10px;
+  cursor: pointer;
 }
 
 /* Correo electrónico */
-
 #emailSlider
 {
   display: flex;
@@ -26,10 +44,10 @@
 }
 
 /* Datos personales */
-
 #dataSlider
 {
-  overflow-y: scroll;
+  position: relative;
+  overflow-y: auto;
 }
 
 /* Foto de perfil */
@@ -96,4 +114,49 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
+}
+
+/* Botones */
+.button
+{
+  background-color: var(--green) !important;
+  border-radius: var(--radius-12) !important;
+  color: var(--gray) !important;
+  border: none !important;
+  padding: 8px 20px !important;
+}
+
+.button:hover
+{
+  box-shadow: inset 0 10px 15px -3px rgba(0, 0, 0, 0.1) !important;
+}
+
+#showPasswordButton
+{
+  background-color: var(--green);
+  color: var(--gray);
+  border: none;
+}
+
+#showPasswordButton:hover
+{
+  box-shadow: inset 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+}
+
+/* Íconos de validación */
+.form-control.is-valid,
+.form-control.is-invalid {
+  background-image: none !important;
+  padding-right: inherit !important;
+}
+
+/* Campos de código de verificación */
+.codeInput
+{
+  margin: 0 5px;
+  width: 40px !important;
+  height: 50px !important;
+  padding: 0 !important;
+  text-align: center !important;
+  font-size: 20px !important;
 }
